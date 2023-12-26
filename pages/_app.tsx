@@ -12,9 +12,6 @@ interface IRootProps extends AppProps {
   Component: NextPage<any, IPageProps>;
 }
 
-const CHAIN_ID = `0x${process.env.CHAIN_ID}`;
-const NETWORK_NAME = process.env.IS_DEV === "true" ? "sepolia" : "mainnet";
-
 export default function App(props: IRootProps) {
   const { Component } = props;
 

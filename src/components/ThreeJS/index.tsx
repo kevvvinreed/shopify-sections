@@ -1,4 +1,4 @@
-import { Color } from "three";
+import { Color, Object3D } from "three";
 import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
@@ -9,9 +9,12 @@ import {
 } from "@react-three/drei";
 import React from "react";
 
+const AnyCanvas = Canvas as any;
+const AnySuspense = Suspense as any;
+
 interface Props {}
 
-const Model: any = (props: any) => {
+const Model = (props: any): any => {
   const { scene, nodes, materials } = useGLTF("/lambo.glb");
   useLayoutEffect(() => {
     scene.traverse(
@@ -35,10 +38,10 @@ const Model: any = (props: any) => {
 
 const ThreeJS: any = () => {
   const [rotation, setRotation] = useState(0.9999);
-  const modelRef = useRef();
+  const modelRef = useRef<Object3D>(null);
 
   useEffect(() => {
-    const handleScroll = (event: any) => {
+    const handleScroll = (event: WheelEvent) => {
       const delta = event.deltaY;
       setRotation((r) => r + delta * 0.002);
     };
@@ -51,10 +54,10 @@ const ThreeJS: any = () => {
   }, []);
   return (
     <>
-      <Canvas dpr={[1, 2]} shadows camera={{ fov: 45 }}>
+      <AnyCanvas dpr={[1, 2]} shadows camera={{ fov: 45 }}>
         <color attach="background" args={["#101010"]} />
         <fog attach="fog" args={["#101010", 10, 20]} />
-        <Suspense fallback={null}>
+        <AnySuspense fallback={null}>
           <Environment path="/cube" />
           <PresentationControls
             speed={1.5}
@@ -63,11 +66,15 @@ const ThreeJS: any = () => {
             polar={[-0.1, Math.PI / 4]}
           >
             <Stage environment={null} intensity={0.5} shadows={false}>
-              <Model ref={modelRef} scale={0.01} rotation={[0, rotation, 0]} />
+              <Model
+                ref={modelRef}
+                scale={0.01}
+                rotation={[0.2, rotation, 0]}
+              />
             </Stage>
           </PresentationControls>
-        </Suspense>
-      </Canvas>
+        </AnySuspense>
+      </AnyCanvas>
     </>
   );
 };
