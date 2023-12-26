@@ -1,14 +1,22 @@
 import { useRouter } from "next/router";
+import ThreeJS from "../src/components/ThreeJS";
 
 const SectionPage = () => {
   const router = useRouter();
   const { section_id } = router.query;
 
-  return (
-    <div>
-      <h1>Shopify Section: {section_id}</h1>
-    </div>
-  );
+  let component;
+
+  switch (section_id) {
+    case "three-js":
+      component = <ThreeJS></ThreeJS>;
+      break;
+    default:
+      component = <></>;
+      break;
+  }
+
+  return <>{component}</>;
 };
 
 export default SectionPage;
