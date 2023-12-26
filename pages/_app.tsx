@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { AppProps } from "next/app";
+import type { AppProps } from "next/app";
 import React, { useEffect, useState } from "react";
 import "../src/styles/globals.css";
 
@@ -8,13 +8,7 @@ export interface IPageProps {
   setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface IRootProps extends AppProps {
-  Component: NextPage<any, IPageProps>;
-}
-
-export default function App(props: IRootProps) {
-  const { Component } = props;
-
+export default function App({ Component }: AppProps<IPageProps>): JSX.Element {
   const [darkMode, setDarkMode] = useState<boolean>();
 
   useEffect(() => {
@@ -42,7 +36,7 @@ export default function App(props: IRootProps) {
 
   return (
     <>
-      <Component darkMode={darkMode} setDarkMode={setDarkMode} />
+      <Component pageProps={{ darkMode, setDarkMode }} />
     </>
   );
 }
