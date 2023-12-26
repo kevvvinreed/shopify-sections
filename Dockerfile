@@ -1,4 +1,4 @@
-FROM node:16-alpine as react-builder
+FROM node:18-alpine as react-builder
 
 ENV NODE_ENV production
 
@@ -9,8 +9,6 @@ COPY package.json package.json
 RUN apk add --no-cache git
 
 RUN yarn install --frozen-lockfile
-
-RUN yarn add --dev @types/node @types/react@18.0.0
 
 COPY . .
 
