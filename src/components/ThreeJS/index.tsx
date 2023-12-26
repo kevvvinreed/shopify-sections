@@ -36,7 +36,7 @@ const Model = (props: any): any => {
   return <primitive object={scene} {...props} />;
 };
 
-const ThreeJS: any = () => {
+const ThreeJS: React.FC<Props> = () => {
   const [rotation, setRotation] = useState(0.9999);
   const modelRef = useRef<Object3D>(null);
 
