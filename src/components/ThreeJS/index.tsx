@@ -1,4 +1,4 @@
-import * as THREE from "three";
+import { Color } from "three";
 import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
@@ -11,7 +11,7 @@ import React from "react";
 
 interface Props {}
 
-const Model = (props: any) => {
+const Model: any = (props: any) => {
   const { scene, nodes, materials } = useGLTF("/lambo.glb");
   useLayoutEffect(() => {
     scene.traverse(
@@ -21,12 +21,12 @@ const Model = (props: any) => {
     Object.assign((nodes.wheel003_020_2_Chrome_0 as any).material, {
       metalness: 0.9,
       roughness: 0.4,
-      color: new THREE.Color("#020202"),
+      color: new Color("#020202"),
     });
     Object.assign(materials.WhiteCar, {
       roughness: 0.0,
       metalness: 0.1,
-      emissive: new THREE.Color("#500000"),
+      emissive: new Color("#500000"),
       envMapIntensity: 0.5,
     });
   }, [scene, nodes, materials]);
