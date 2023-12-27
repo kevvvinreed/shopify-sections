@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your App Title</title>
+    <!-- Other head elements like stylesheets, etc. -->
+</head>
+<body style="position: absolute; top: 0px; left: 0px; width: 100vw; height: 100vh; margin: 0">
+    <div id="three-js-template--21725542809880__threejs_banner" style="width: 100%; height: 100%"></div>
+    <script id="widget-script" type="module" src="/src/index.tsx"></script>
+    <script>
+        document.getElementById('widget-script').addEventListener('load', function () {
+        if (window.initReactComponent) {
+            window.initReactComponent({
+                section_id: 'three-js',
+                shop_id: 'template--21725542809880__threejs_banner',
+            });
+            console.log('initReactComponent called');
+            } else {
+            console.error('initReactComponent function not defined.');
+            }
+        });
+    </script>
+</body>
+</html>
