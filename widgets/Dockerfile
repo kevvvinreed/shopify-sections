@@ -14,4 +14,12 @@ COPY . .
 
 RUN yarn build
 
+CMD ["cd", "./widgets"]
+
+RUN yarn install --frozen-lockfile
+
+RUN yarn build
+
+cmd ["cd", ".."]
+
 CMD ["yarn", "start"]

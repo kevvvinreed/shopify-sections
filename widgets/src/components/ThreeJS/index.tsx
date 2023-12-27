@@ -22,7 +22,7 @@ const Model = (props: any): any => {
   );
   useLayoutEffect(() => {
     scene.traverse(
-      (obj) =>
+      (obj: any) =>
         obj.type === "Mesh" && (obj.receiveShadow = obj.castShadow = true)
     );
     Object.assign((nodes.wheel003_020_2_Chrome_0 as any).material, {
