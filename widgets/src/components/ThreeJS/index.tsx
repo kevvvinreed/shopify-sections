@@ -69,13 +69,15 @@ const ThreeJS: React.FC = () => {
 
           .Three-js__sceneContainer { 
               border: 1px solid #fff;
-              width: 800px;
-              height: 800px;
+              width: 100%;
+              height: 100%;
           }
 
           .Three-js__editorContainer {
-              height: 800px;
+
+              height: 100%;
               width: 400px;
+              min-width: 400px;
               
               border-top: 1px solid #fff;
               border-right: 1px solid #fff;
