@@ -6,7 +6,7 @@ const Home: NextPage<IPageProps> = ({}) => {
   useLayoutEffect(() => {
     // Create a new script element
     const script = document.createElement("script");
-    script.src = "https://shopify-sections-yeqggr54rq-uk.a.run.app/api/widget";
+    script.src = "/api/widget";
     script.id = "widget-script";
 
     // Attach the load event listener to the script
@@ -32,7 +32,7 @@ const Home: NextPage<IPageProps> = ({}) => {
   }, []);
   return (
     <>
-      <div id="root" style={{ height: "100%", width: "100%" }}></div>
+      <div id="three-js-root" style={{ height: "100vh", width: "100vw" }}></div>
     </>
   );
 };

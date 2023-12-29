@@ -1,0 +1,43 @@
+# Blender 3.6.4 MTL File: 'Trucker_Hat_Grey_blender_base.blend'
+# www.blender.org
+
+newmtl CapTr_Grey_001
+Ns 314.052155
+Ka 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd C:/Users/kevin/Downloads/Cap_Tr_Grey_Diffuse.png
+map_Ks C:/Users/kevin/Downloads/Cap_Tr_Grey_Reflect.png
+map_d C:/Users/kevin/Downloads/Cap_Tr_Grey_Opacity.png
+map_Bump -bm 1.000000 C:/Users/kevin/Downloads/Cap_Tr_Grey_NM.png
+
+newmtl Fabric
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Fabric036_2K_Color.png
+map_Ns C:/Fabric036_2K_Roughness.png
+
+newmtl Mesh_drill
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl Sage_Blue_Miracle_soft_Fabric
+Ns 360.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2

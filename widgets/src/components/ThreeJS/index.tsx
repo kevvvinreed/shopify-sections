@@ -1,5 +1,5 @@
 import { Color, Object3D } from "three";
-import { Suspense, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import {
   useGLTF,
@@ -8,46 +8,37 @@ import {
   PresentationControls,
 } from "@react-three/drei";
 import React from "react";
-import styles from "./index.module.css";
+import { handleGLB } from "./handleGLB";
 
 const AnyCanvas = Canvas as any;
 const AnySuspense = Suspense as any;
 
 const baseUrl = import.meta.env.VITE_BASE_ASSET_URL || "";
+type ObjectKey = "crown-of-thorns" | "lambo" | "lambo-suede" | "trucker-hat";
+export interface ThreeProps {
+  selectedColor: string;
+  objectKey: ObjectKey;
+  scale?: number;
+  rotation?: number[];
+}
 
-interface Props {}
+const Model = React.forwardRef((props: ThreeProps, ref): any => {
+  return handleGLB(props, ref);
+});
 
-const Model = (props: any): any => {
-  const { scene, nodes, materials } = useGLTF(
-    `https://pub-201533c97c3b4e169c75945e8e2f95fc.r2.dev/lambo.glb`
-  );
-  const { selectedColor } = props;
-  useEffect(() => {
-    scene.traverse(
-      (obj: any) =>
-        obj.type === "Mesh" && (obj.receiveShadow = obj.castShadow = true)
-    );
-    Object.assign((nodes.wheel003_020_2_Chrome_0 as any).material, {
-      metalness: 0.9,
-      roughness: 0.4,
-      color: new Color("#020202"),
-    });
-    Object.assign(materials.WhiteCar, {
-      roughness: 0.0,
-      metalness: 0.1,
-      emissive: new Color(selectedColor),
-      envMapIntensity: 0.5,
-    });
-  }, [scene, nodes, materials, selectedColor]);
-  return <primitive object={scene} {...props} />;
-};
-
-const ThreeJS: React.FC<Props> = () => {
+const ThreeJS: React.FC = () => {
   const [rotation, setRotation] = useState(0.9999);
   const [selectedOption, setSelectedOption] = useState<number>(0);
   const modelRef = useRef<Object3D>(null);
 
-  const colors = ["#ddd", "#f80", "#1b1"];
+  // const colors = ["#ddf", "#f92", "#1b1", "#f765af"];
+  const colors = [
+    { label: "no.1", value: "#b6b5ac" },
+    { label: "no.2", value: "#8b6245" },
+    { label: "no.3", value: "#3d2019" },
+    { label: "no.5", value: "#966b22" },
+    { label: "no.6", value: "#6f797e" },
+  ];
 
   useEffect(() => {
     const handleScroll = (event: WheelEvent) => {
@@ -61,10 +52,70 @@ const ThreeJS: React.FC<Props> = () => {
       window.removeEventListener("wheel", handleScroll);
     };
   }, []);
+
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles.sceneContainer}>
+      <style>
+        {`
+          .Three-js__container {
+              width: 100%;
+              height: 100%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              background-color: #101010;
+          }
+
+          .Three-js__sceneContainer { 
+              border: 1px solid #fff;
+              width: 800px;
+              height: 800px;
+          }
+
+          .Three-js__editorContainer {
+              height: 800px;
+              width: 400px;
+              
+              border-top: 1px solid #fff;
+              border-right: 1px solid #fff;
+              border-bottom: 1px solid #fff;
+          }
+
+          .Three-js__colorSelectorLabel {
+              font-size: large;
+              font-family: "Serif";
+              font-weight: bold;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+              padding: 12px;
+              padding-bottom: 0px;
+              color: #fff;
+          }
+
+          .Three-js__colorSelectorRow {
+              display: flex;
+              gap: 10px;
+              align-items: center;
+              justify-content: flex-start;
+              padding: 12px;
+              border-bottom: 1px solid #fff;
+          }
+
+          .Three-js__selectorOption {
+              width: 24px;
+              height: 24px;
+
+              border-radius: 100%;
+              border: 1px solid #fff;
+
+              cursor: pointer;
+          }
+        `}
+      </style>
+      <div className={`Three-js__container`}>
+        <div className={`Three-js__sceneContainer`}>
           <AnyCanvas dpr={[1, 2]} shadows camera={{ fov: 45 }}>
             <color attach="background" args={["#101010"]} />
             <fog attach="fog" args={["#101010", 10, 20]} />
@@ -80,30 +131,34 @@ const ThreeJS: React.FC<Props> = () => {
               >
                 <Stage environment={null} intensity={0.5} shadows={false}>
                   <Model
+                    objectKey="trucker-hat"
                     ref={modelRef}
                     scale={0.01}
                     rotation={[0, rotation, 0]}
-                    selectedColor={colors[selectedOption]}
+                    selectedColor={colors[selectedOption].value}
                   />
                 </Stage>
               </PresentationControls>
             </AnySuspense>
           </AnyCanvas>
         </div>
-        <div className={styles.editorContainer}>
-          <div className={styles.colorSelectorLabel}>Color</div>
-          <div className={styles.colorSelectorRow}>
-            {colors.map((color: string, index: number) => {
-              return (
-                <div
-                  className={styles.selectorOption}
-                  style={{ backgroundColor: color }}
-                  onClick={() => {
-                    setSelectedOption(index);
-                  }}
-                />
-              );
-            })}
+        <div className={`Three-js__editorContainer`}>
+          <div className={`Three-js__colorSelectorLabel`}>Color</div>
+          <div className={`Three-js__colorSelectorRow`}>
+            {colors.map(
+              (opt: { value: string; label: string }, index: number) => {
+                return (
+                  <div
+                    key={`${opt.value}-${index}`}
+                    className={`Three-js__selectorOption`}
+                    style={{ backgroundColor: opt.value }}
+                    onClick={() => {
+                      setSelectedOption(index);
+                    }}
+                  />
+                );
+              }
+            )}
           </div>
         </div>
       </div>
