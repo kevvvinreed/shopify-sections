@@ -15,6 +15,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
       const filePath = path.join(directoryPath, foundFile);
       const fileContents = fs.readFileSync(filePath, "utf8");
 
+      const allowedOrigins = ["shopify.com", "myshopify.com"];
+      const origin = req.headers.origin || "";
+      if (allowedOrigins.includes(origin)) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+      }
+      res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader("Content-Type", "application/javascript");
       res.send(fileContents);
     } else {

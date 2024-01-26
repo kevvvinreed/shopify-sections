@@ -32,6 +32,6 @@ const App: React.FC<IConfig> = ({ section_id, shop_id, config }) => {
 window.initReactComponent = ({ section_id, shop_id, config }: IConfig) => {
   ReactDOM.render(
     <App section_id={section_id} shop_id={shop_id} config={config} />,
-    document.getElementById(`${section_id}-${shop_id}`)
+    document.getElementById(`${shop_id}`)
   );
 };

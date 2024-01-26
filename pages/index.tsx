@@ -15,6 +15,7 @@ const Home: NextPage<IPageProps> = ({}) => {
         (window as any).initReactComponent({
           section_id: "5rc-hero",
           shop_id: "root",
+          config: JSON.stringify({}),
         });
         console.log("initReactComponent called");
       } else {
@@ -32,7 +33,7 @@ const Home: NextPage<IPageProps> = ({}) => {
   }, []);
   return (
     <>
-      <div id="5rc-hero-root" style={{ height: "100vh", width: "100vw" }}></div>
+      <div id="root" style={{ height: "100vh", width: "100vw" }}></div>
     </>
   );
 };
