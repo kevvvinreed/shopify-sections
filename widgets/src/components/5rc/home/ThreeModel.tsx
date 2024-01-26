@@ -1,35 +1,32 @@
-import { Color, Object3D } from "three";
+import { Object3D } from "three";
 import { Suspense, useEffect, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import {
-  useGLTF,
-  Environment,
-  Stage,
-  PresentationControls,
-} from "@react-three/drei";
+import { Environment, Stage, PresentationControls } from "@react-three/drei";
 import React from "react";
-import { handleGLB } from "../../ThreeJS/handleGLB";
-import { ThreeProps } from "../../ThreeJS";
+import config from "../core/config";
+import { handle3dModel } from "../core/handle3dModel";
 
 const AnyCanvas = Canvas as any;
 const AnySuspense = Suspense as any;
 
 export interface ThreeModelProps {
-  objectKey: string;
+  objectUrl: string;
   offset?: number;
+  scale?: number;
+  rotation?: number[];
 }
-const Model = React.forwardRef((props: ThreeProps, ref): any => {
-  return handleGLB(props, ref);
+const Model = React.forwardRef((props: ThreeModelProps, ref): any => {
+  return handle3dModel(props, ref);
 });
 
-const ThreeModel: React.FC<ThreeModelProps> = ({ objectKey, offset = 0 }) => {
+const ThreeModel: React.FC<ThreeModelProps> = ({ objectUrl, offset = 0 }) => {
   const [rotation, setRotation] = useState(0.9999);
   const modelRef = useRef<Object3D>(null);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      setRotation((r) => scrollY * 0.002); // Adjust the multiplier as needed
+      setRotation((r) => scrollY * 0.002);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -42,9 +39,7 @@ const ThreeModel: React.FC<ThreeModelProps> = ({ objectKey, offset = 0 }) => {
     <>
       <AnyCanvas dpr={[1, 2]} shadows camera={{ fov: 45 }}>
         <AnySuspense fallback={null}>
-          <Environment
-            path={`https://pub-201533c97c3b4e169c75945e8e2f95fc.r2.dev/cube`}
-          />
+          <Environment path={`${config.assetBaseUrl}/cube`} />
           <PresentationControls
             speed={1.5}
             global
@@ -53,11 +48,10 @@ const ThreeModel: React.FC<ThreeModelProps> = ({ objectKey, offset = 0 }) => {
           >
             <Stage environment={null} intensity={0.5} shadows={false}>
               <Model
-                objectKey={objectKey}
+                objectUrl={objectUrl}
                 ref={modelRef}
                 scale={0.01}
                 rotation={[0, rotation + offset, 0]}
-                selectedColor=""
               />
             </Stage>
           </PresentationControls>

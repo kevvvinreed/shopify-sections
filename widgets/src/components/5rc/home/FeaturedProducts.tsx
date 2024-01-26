@@ -2,6 +2,7 @@ import ThreeModel from "./ThreeModel";
 import React, { forwardRef } from "react";
 import hexToRgba from "./util/hexToRGBA";
 import theme from "../core/theme";
+import assets from "../core/assets";
 
 export interface FeaturedProductsProps {}
 
@@ -49,7 +50,7 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
         <div className="frc-landing__featured-product-section" ref={ref}>
           <div className="frc-landing__featured-product-card">
             <div className="frc-landing__product-display">
-              <ThreeModel objectKey="treadmill" />
+              <ThreeModel objectUrl={assets.products[0].glbUrl} />
             </div>
             <p className="frc-landing__product-description">
               Lorem ipsum dolor sit amet. Ad quia impedit et maxime dignissimos
@@ -59,7 +60,7 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
           </div>
           <div className="frc-landing__featured-product-card">
             <div className="frc-landing__product-display">
-              <ThreeModel objectKey="treadmill-2" offset={180} />
+              <ThreeModel objectUrl={assets.products[1].glbUrl} offset={180} />
             </div>
             <p className="frc-landing__product-description">
               Lorem ipsum dolor sit amet. Ad quia impedit et maxime dignissimos

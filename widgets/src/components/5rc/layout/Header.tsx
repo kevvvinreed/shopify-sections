@@ -1,3 +1,4 @@
+import assets from "../core/assets";
 import config from "../core/config";
 
 const Header = () => {
@@ -42,7 +43,7 @@ const Header = () => {
       <div className="frc-landing__header-container">
         <img
           className="frc-landing__header-home-icon"
-          src="/transparent-icon-white.webp"
+          src={assets.brand.transparentLogoWhite}
         />
         <div className="frc-landing__header-right-tray">
           <img className="frc-landing__header-cart-icon" src="/cart.svg" />

@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import React, { useEffect, useState } from "react";
 import "./styles/index.css";
 import ThreeJS from "./components/ThreeJS";
-import FrcHero from "./components/5rc/hero";
+import FrcHero from "./components/5rc/home";
 import FrcCheckout from "./components/5rc/checkout";
 interface IConfig {
   section_id: string;

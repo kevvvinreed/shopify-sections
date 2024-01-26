@@ -1,6 +1,7 @@
 import { forwardRef, useEffect, useRef, useState } from "react";
 import config from "../core/config";
 import theme from "../core/theme";
+import assets from "../core/assets";
 interface HeroProps {
   scrollIndex: number;
   setScrollIndex: (index: number) => void;
@@ -49,7 +50,7 @@ const Hero: React.FC<HeroProps> = ({ scrollIndex, setScrollIndex }) => {
                 display: flex;
                 width: 100%;
                 height: 100%;
-                background: url("/example-hero.gif");
+                background: url("${assets.home.heroGif}");
                 background-size: cover;
                 background-repeat: no-repeat;
                 background-position: center;

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Header from "../layout/Header";
-import assets from "../core/products";
+import assets from "../core/assets";
 
 const theme = {
   primary: "#121212",
