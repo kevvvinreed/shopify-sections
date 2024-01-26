@@ -6,15 +6,24 @@
     <title>Your App Title</title>
     <!-- Other head elements like stylesheets, etc. -->
 </head>
-<body style="position: absolute; top: 0px; left: 0px; width: 100vw; height: 100vh; margin: 0">
-    <div id="three-js-template--21725542809880__threejs_banner" style="width: 100%; height: 100%"></div>
-    <script id="widget-script" type="module" src="/src/index.tsx"></script>
+<style>
+html, body {
+    box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+</style>
+<body style="position: absolute; top: 0px; left: 0px; width: 100vw; height: 200vh; margin: 0; overflow-x: hidden">
+    <div id="5rc-checkout-root" style="width: 100%; height: 100%"></div>
+<script id="widget-script" type="module" src="/src/index.tsx"></script>
     <script>
         document.getElementById('widget-script').addEventListener('load', function () {
         if (window.initReactComponent) {
             window.initReactComponent({
-                section_id: 'three-js',
-                shop_id: 'template--21725542809880__threejs_banner',
+                section_id: '5rc-checkout',
+                shop_id: 'root',
+                config: JSON.stringify({sku: 0})
             });
             console.log('initReactComponent called');
             } else {

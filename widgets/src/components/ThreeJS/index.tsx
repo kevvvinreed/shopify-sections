@@ -14,10 +14,9 @@ const AnyCanvas = Canvas as any;
 const AnySuspense = Suspense as any;
 
 const baseUrl = import.meta.env.VITE_BASE_ASSET_URL || "";
-type ObjectKey = "crown-of-thorns" | "lambo" | "lambo-suede" | "trucker-hat";
 export interface ThreeProps {
   selectedColor: string;
-  objectKey: ObjectKey;
+  objectKey: string;
   scale?: number;
   rotation?: number[];
 }

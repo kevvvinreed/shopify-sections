@@ -13,7 +13,7 @@ const Home: NextPage<IPageProps> = ({}) => {
     script.addEventListener("load", function () {
       if ((window as any).initReactComponent) {
         (window as any).initReactComponent({
-          section_id: "three-js",
+          section_id: "5rc-hero",
           shop_id: "root",
         });
         console.log("initReactComponent called");
@@ -32,7 +32,7 @@ const Home: NextPage<IPageProps> = ({}) => {
   }, []);
   return (
     <>
-      <div id="three-js-root" style={{ height: "100vh", width: "100vw" }}></div>
+      <div id="5rc-hero-root" style={{ height: "100vh", width: "100vw" }}></div>
     </>
   );
 };

@@ -5,6 +5,7 @@ declare global {
     initReactComponent: (config: {
       shop_id: string;
       section_id: string;
+      config: string;
     }) => void;
   }
 }

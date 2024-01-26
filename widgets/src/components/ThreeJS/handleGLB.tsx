@@ -10,7 +10,7 @@ export const handleGLB = (
   ref: React.ForwardedRef<unknown>
 ) => {
   const obj = useGLTF(`${baseUrl}/${props.objectKey}.glb`);
-  // console.log({ obj });
+
   const { scene, nodes, materials } = obj;
   const { selectedColor } = props;
 
@@ -75,6 +75,8 @@ export const handleGLB = (
           ...materials["Sage_Blue_Miracle_soft_Fabric"],
         });
 
+        break;
+      default:
         break;
     }
 
