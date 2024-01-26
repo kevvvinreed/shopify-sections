@@ -43,10 +43,13 @@ const Header = () => {
       <div className="frc-landing__header-container">
         <img
           className="frc-landing__header-home-icon"
-          src={assets.brand.transparentLogoWhite}
+          src={assets.nav.transparentLogoWhite}
         />
         <div className="frc-landing__header-right-tray">
-          <img className="frc-landing__header-cart-icon" src="/cart.svg" />
+          <img
+            className="frc-landing__header-cart-icon"
+            src={assets.nav.cart}
+          />
         </div>
       </div>
     </>

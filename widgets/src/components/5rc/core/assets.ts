@@ -1,9 +1,10 @@
 import config from "./config";
 
 const assets = {
-  brand: {
+  nav: {
     transparentLogoWhite:
-      config.assetBaseUrl + "/5rc/brand/transparent-icon-white.webp",
+      config.assetBaseUrl + "/5rc/nav/transparent-icon-white.webp",
+    cart: config.assetBaseUrl + "/5rc/nav/cart.svg",
   },
   home: {
     heroGif: config.assetBaseUrl + "/5rc/home/example-hero.gif",
