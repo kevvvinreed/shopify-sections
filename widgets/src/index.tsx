@@ -4,6 +4,7 @@ import "./styles/index.css";
 import ThreeJS from "./components/ThreeJS";
 import FrcHero from "./components/5rc/home";
 import FrcCheckout from "./components/5rc/checkout";
+import { BrowserRouter } from "react-router-dom";
 interface IConfig {
   section_id: string;
   shop_id: string;
@@ -31,7 +32,9 @@ const App: React.FC<IConfig> = ({ section_id, shop_id, config }) => {
 
 window.initReactComponent = ({ section_id, shop_id, config }: IConfig) => {
   ReactDOM.render(
-    <App section_id={section_id} shop_id={shop_id} config={config} />,
+    <BrowserRouter>
+      <App section_id={section_id} shop_id={shop_id} config={config} />
+    </BrowserRouter>,
     document.getElementById(`${shop_id}`)
   );
 };

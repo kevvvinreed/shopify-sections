@@ -15,7 +15,7 @@ const Home: NextPage<IPageProps> = ({}) => {
         (window as any).initReactComponent({
           section_id: "5rc-hero",
           shop_id: "root",
-          config: JSON.stringify({}),
+          config: JSON.stringify({ sku: 0 }),
         });
         console.log("initReactComponent called");
       } else {

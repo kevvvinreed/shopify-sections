@@ -3,11 +3,13 @@ import React, { forwardRef } from "react";
 import hexToRgba from "./util/hexToRGBA";
 import theme from "../core/theme";
 import assets from "../core/assets";
+import { useNavigate } from "react-router-dom";
 
 export interface FeaturedProductsProps {}
 
 const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
   ({}, ref) => {
+    let nav = useNavigate();
     return (
       <>
         <style>
@@ -45,6 +47,17 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
               font-weight: 400;
               color: ${theme.textColor};
             }
+            .frc-landing__product-description-wrapper {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: flex-start;
+              width: 100%;
+              height: 100%;
+            }
+            .no-animate {
+              animation: none !important;
+            }
         `}
         </style>
         <div className="frc-landing__featured-product-section" ref={ref}>
@@ -52,21 +65,47 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
             <div className="frc-landing__product-display">
               <ThreeModel objectUrl={assets.products[0].glbUrl} />
             </div>
-            <p className="frc-landing__product-description">
-              Lorem ipsum dolor sit amet. Ad quia impedit et maxime dignissimos
-              id tenetur illo nam eveniet internos qui vitae labore. Et quia
-              perspiciatis et officia aspernatur eos enim voluptatum!
-            </p>
+            <div className="frc-landing__product-description-wrapper">
+              <p className="frc-landing__product-description">
+                Lorem ipsum dolor sit amet. Ad quia impedit et maxime
+                dignissimos id tenetur illo nam eveniet internos qui vitae
+                labore. Et quia perspiciatis et officia aspernatur eos enim
+                voluptatum!
+              </p>
+              <button
+                className={`frc-landing__hero-cta-button-wrapper no-animate`}
+                onClick={() => {
+                  nav("/pages/product/0");
+                }}
+              >
+                <span className="frc-landing__hero-cta-button">
+                  View Product
+                </span>
+              </button>
+            </div>
           </div>
           <div className="frc-landing__featured-product-card">
             <div className="frc-landing__product-display">
               <ThreeModel objectUrl={assets.products[1].glbUrl} offset={180} />
             </div>
-            <p className="frc-landing__product-description">
-              Lorem ipsum dolor sit amet. Ad quia impedit et maxime dignissimos
-              id tenetur illo nam eveniet internos qui vitae labore. Et quia
-              perspiciatis et officia aspernatur eos enim voluptatum!
-            </p>
+            <div className="frc-landing__product-description-wrapper">
+              <p className="frc-landing__product-description">
+                Lorem ipsum dolor sit amet. Ad quia impedit et maxime
+                dignissimos id tenetur illo nam eveniet internos qui vitae
+                labore. Et quia perspiciatis et officia aspernatur eos enim
+                voluptatum!
+              </p>
+              <button
+                className={`frc-landing__hero-cta-button-wrapper no-animate`}
+                onClick={() => {
+                  nav("/pages/product/1");
+                }}
+              >
+                <span className="frc-landing__hero-cta-button">
+                  View Product
+                </span>
+              </button>
+            </div>
           </div>
           <div className="frc-landing__featured-product-card">
             <div className="frc-landing__product-display">
