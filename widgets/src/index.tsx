@@ -1,40 +1,34 @@
 import ReactDOM from "react-dom";
 import React, { useEffect, useState } from "react";
 import "./styles/index.css";
-import ThreeJS from "./components/ThreeJS";
-import FrcHero from "./components/5rc/home";
 import FrcCheckout from "./components/5rc/checkout";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import FrcLanding from "./components/5rc/home";
 interface IConfig {
   section_id: string;
-  shop_id: string;
+  mount_id: string;
   config: string;
 }
 
-const App: React.FC<IConfig> = ({ section_id, shop_id, config }) => {
-  let Section;
-  switch (section_id) {
-    case "5rc-hero":
-      Section = FrcHero;
-      break;
-    case "5rc-checkout":
-      Section = FrcCheckout;
-      break;
-    case "three-js":
-      Section = ThreeJS;
-      break;
-    default:
-      Section = () => <div></div>;
-      break;
-  }
-  return <Section config={config} />;
+const App: React.FC<IConfig> = ({ section_id, config }) => {
+  const routeConfig = [
+    { path: "/", component: FrcLanding },
+    { path: "/pages/product/:sku", component: FrcCheckout },
+  ];
+  return (
+    <Routes>
+      {routeConfig.map(({ path, component: Component }) => (
+        <Route key={path} path={path} element={<Component config={config} />} />
+      ))}
+    </Routes>
+  );
 };
 
-window.initReactComponent = ({ section_id, shop_id, config }: IConfig) => {
+window.initReactComponent = ({ section_id, mount_id, config }: IConfig) => {
   ReactDOM.render(
     <BrowserRouter>
-      <App section_id={section_id} shop_id={shop_id} config={config} />
+      <App section_id={section_id} mount_id={mount_id} config={config} />
     </BrowserRouter>,
-    document.getElementById(`${shop_id}`)
+    document.getElementById(`${mount_id}`)
   );
 };

@@ -1,13 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import FeaturedProducts from "./FeaturedProducts";
 import Header from "../layout/Header";
 import config from "../core/config";
 import smoothScrollTo from "./util/smoothScrollTo";
 import Hero from "./Hero";
 import theme from "../core/theme";
+import { useLocation } from "react-router-dom";
 
 const FrcLanding: React.FC = () => {
-  const featuredProductRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+  const featuredProductRef = useRef<HTMLDivElement | null>(null);
   const sectionIndexRef = useRef<number>(0);
   const lastIndexSwitchTime = useRef<number>(0);
   const [scrollIndex, setScrollIndex] = useState<number>(0);
@@ -88,6 +90,15 @@ const FrcLanding: React.FC = () => {
       window.removeEventListener("touchend", handleTouchEnd);
     };
   }, []);
+
+  useEffect(() => {
+    // Reset the scrollIndex and other relevant states/refs
+    featuredProductRef.current = null;
+    sectionIndexRef.current = 0;
+    lastIndexSwitchTime.current = 0;
+    setScrollIndex(0);
+    // You can also reset other states or perform other actions as needed
+  }, [location]);
 
   return (
     <>

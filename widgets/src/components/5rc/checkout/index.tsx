@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Header from "../layout/Header";
 import assets from "../core/assets";
+import { useParams } from "react-router-dom";
 
 const theme = {
   primary: "#121212",
@@ -14,8 +15,10 @@ interface CheckoutProps {
 }
 
 const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
+  let { sku } = useParams();
+
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [sku, setSku] = useState<string>("");
+  // const [sku, setSku] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<number>(0);
   const [productImages, setProductImages] = useState<
     Record<"src", string>[] | undefined
@@ -24,15 +27,15 @@ const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
   const [productCost, setProductCost] = useState<number>(0);
   const [productDescription, setProductDescription] = useState<string>("");
 
-  useEffect(() => {
-    try {
-      const _config = JSON.parse(config);
-      setSku(_config.sku);
-    } catch (error) {}
-  }, []);
+  // useEffect(() => {
+  //   try {
+  //     const _config = JSON.parse(config);
+  //     setSku(_config.sku);
+  //   } catch (error) {}
+  // }, []);
 
   useEffect(() => {
-    if (sku !== "") {
+    if (sku && sku !== "") {
       setProductImages((assets.products as any)[sku].images);
       setProductName((assets.products as any)[sku].name);
       setProductCost((assets.products as any)[sku].cost);

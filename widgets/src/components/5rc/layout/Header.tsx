@@ -1,7 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import assets from "../core/assets";
 import config from "../core/config";
 
 const Header = () => {
+  let nav = useNavigate();
   return (
     <>
       <style>
@@ -44,6 +46,7 @@ const Header = () => {
         <img
           className="frc-landing__header-home-icon"
           src={assets.nav.transparentLogoWhite}
+          onClick={() => nav("/")}
         />
         <div className="frc-landing__header-right-tray">
           <img
