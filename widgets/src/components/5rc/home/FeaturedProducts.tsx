@@ -3,13 +3,11 @@ import React, { forwardRef } from "react";
 import hexToRgba from "./util/hexToRGBA";
 import theme from "../core/theme";
 import assets from "../core/assets";
-import { useNavigate } from "react-router-dom";
 
 export interface FeaturedProductsProps {}
 
 const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
   ({}, ref) => {
-    let nav = useNavigate();
     return (
       <>
         <style>
@@ -75,7 +73,7 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
               <button
                 className={`frc-landing__hero-cta-button-wrapper no-animate`}
                 onClick={() => {
-                  nav("/pages/product/0");
+                  window.open("/pages/product/0", "_self");
                 }}
               >
                 <span className="frc-landing__hero-cta-button">
@@ -98,7 +96,7 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
               <button
                 className={`frc-landing__hero-cta-button-wrapper no-animate`}
                 onClick={() => {
-                  nav("/pages/product/1");
+                  window.open("/pages/product/1", "_self");
                 }}
               >
                 <span className="frc-landing__hero-cta-button">
