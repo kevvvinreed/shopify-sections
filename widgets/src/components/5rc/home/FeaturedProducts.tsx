@@ -73,7 +73,7 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
               <button
                 className={`frc-landing__hero-cta-button-wrapper no-animate`}
                 onClick={() => {
-                  window.open("/pages/product/0", "_self");
+                  window.open("/product/0", "_self");
                 }}
               >
                 <span className="frc-landing__hero-cta-button">
@@ -96,7 +96,7 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
               <button
                 className={`frc-landing__hero-cta-button-wrapper no-animate`}
                 onClick={() => {
-                  window.open("/pages/product/1", "_self");
+                  window.open("/product/1", "_self");
                 }}
               >
                 <span className="frc-landing__hero-cta-button">

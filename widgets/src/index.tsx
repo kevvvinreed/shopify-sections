@@ -1,10 +1,10 @@
 import ReactDOM from "react-dom";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./styles/index.css";
 import ThreeJS from "./components/ThreeJS";
 import FrcHero from "./components/5rc/home";
-import FrcCheckout from "./components/5rc/checkout";
 import { BrowserRouter } from "react-router-dom";
+import FrcProduct from "./components/5rc/product";
 interface IConfig {
   section_id: string;
   shop_id: string;
@@ -17,8 +17,8 @@ const App: React.FC<IConfig> = ({ section_id, shop_id, config }) => {
     case "5rc-hero":
       Section = FrcHero;
       break;
-    case "5rc-checkout":
-      Section = FrcCheckout;
+    case "5rc-product":
+      Section = FrcProduct;
       break;
     case "three-js":
       Section = ThreeJS;

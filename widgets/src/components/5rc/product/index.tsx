@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Header from "../layout/Header";
 import assets from "../core/assets";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const theme = {
   primary: "#121212",
@@ -14,7 +14,7 @@ interface CheckoutProps {
   config: string;
 }
 
-const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
+const FrcProduct: React.FC<CheckoutProps> = ({ config }) => {
   let location = useLocation();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [sku, setSku] = useState<string>("");
@@ -27,8 +27,8 @@ const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
   const [productDescription, setProductDescription] = useState<string>("");
 
   useEffect(() => {
-    if (location && location.pathname.includes("/pages/product/")) {
-      setSku(location.pathname.replace("/pages/product/", "").split("/")[0]);
+    if (location && location.pathname.includes("/product/")) {
+      setSku(location.pathname.replace("/product/", "").split("/")[0]);
     }
   }, [location]);
 
@@ -47,7 +47,7 @@ const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
         {`
           @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
          
-          .frc-checkout__container {
+          .frc-product__container {
             width: 100%;
             height: 100%;
             display: flex;
@@ -55,7 +55,7 @@ const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
             align-items: center;
           }
           
-          .frc-checkout__content-container {
+          .frc-product__content-container {
             position: fixed;
             left: 0px;
             top: 0px;
@@ -77,26 +77,26 @@ const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
             border-bottom: 1px solid ${theme.secondary};
           }
 
-          .frc-checkout__selected-image {
+          .frc-product__selected-image {
             width: 700px;
             height: 700px;
             border-radius: 25px;
           }
 
-          .frc-checkout__image-preview-col {
+          .frc-product__image-preview-col {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
           }
-          .frc-checkout__image-preview {
+          .frc-product__image-preview {
             width: 94px;
             height: 94px;
             border-radius: 25px;
 
             cursor: pointer;
           }
-          .frc-checkout__image-preview-selected {
+          .frc-product__image-preview-selected {
             width: 100px;
             height: 100px;
             box-sizing: border-box;
@@ -104,11 +104,11 @@ const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
             margin-top: -3px;
             margin-bottom: -3px;
           }
-          .frc-checkout__carousel-container {
+          .frc-product__carousel-container {
             display: flex;
             gap: 15px;
           }
-          .frc-checkout__product-specs {
+          .frc-product__product-specs {
             display: flex;
             flex-direction: column;
             padding-left: 60px;
@@ -116,7 +116,7 @@ const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
 
             max-width: 600px;
           }
-          .frc-checkout__product-title {
+          .frc-product__product-title {
             font-family: 'Oswald', sans-serif;
             color: ${theme.textColor};
             text-transform: uppercase;
@@ -133,7 +133,7 @@ const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
 
             user-select: none;
           }
-          .frc-checkout__product-cost {
+          .frc-product__product-cost {
             font-family: 'Oswald', sans-serif;
             font-weight: 400;
             color: ${theme.textColor};
@@ -149,7 +149,7 @@ const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
 
             user-select: none;
           }
-          .frc-checkout__product-description {
+          .frc-product__product-description {
             font-family: 'Oswald', sans-serif;
             font-weight: 400;
             margin-top: 20px;
@@ -189,20 +189,21 @@ const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
           }
         `}
       </style>
-      <div className={`frc-checkout__container`}>
+      <div className={`frc-product__container`}>
         <Header />
-        <div className="frc-checkout__content-container">
-          <div className="frc-checkout__carousel-container">
-            <div className="frc-checkout__image-preview-col">
+        <div className="frc-product__content-container">
+          <div className="frc-product__carousel-container">
+            <div className="frc-product__image-preview-col">
               {productImages &&
                 productImages.map(({ src }, index) => {
                   return (
                     <img
-                      className={`frc-checkout__image-preview ${
+                      className={`frc-product__image-preview ${
                         index === selectedImage
-                          ? "frc-checkout__image-preview-selected"
+                          ? "frc-product__image-preview-selected"
                           : ""
                       }`}
+                      key={`frc-product__image-preview-selected-${index}`}
                       src={src}
                       onClick={() => {
                         setSelectedImage(index);
@@ -213,13 +214,13 @@ const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
             </div>
 
             <img
-              className="frc-checkout__selected-image"
+              className="frc-product__selected-image"
               src={productImages && productImages[selectedImage].src}
             />
-            <div className="frc-checkout__product-specs">
-              <div className="frc-checkout__product-title">{productName}</div>
-              <div className="frc-checkout__product-cost">{`$${productCost}`}</div>
-              <div className="frc-checkout__product-description">
+            <div className="frc-product__product-specs">
+              <div className="frc-product__product-title">{productName}</div>
+              <div className="frc-product__product-cost">{`$${productCost}`}</div>
+              <div className="frc-product__product-description">
                 {productDescription}
               </div>
 
@@ -241,4 +242,4 @@ const FrcCheckout: React.FC<CheckoutProps> = ({ config }) => {
   );
 };
 
-export default FrcCheckout;
+export default FrcProduct;

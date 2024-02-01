@@ -4028,7 +4028,7 @@ vec3 texelOld = texture2D(previousShadowMap, vUv).rgb;
             .no-animate {
               animation: none !important;
             }
-        `}),Be.jsxs("div",{className:"frc-landing__featured-product-section",ref:n,children:[Be.jsxs("div",{className:"frc-landing__featured-product-card",children:[Be.jsx("div",{className:"frc-landing__product-display",children:Be.jsx(bT,{objectUrl:so.products[0].glbUrl})}),Be.jsxs("div",{className:"frc-landing__product-description-wrapper",children:[Be.jsx("p",{className:"frc-landing__product-description",children:"Lorem ipsum dolor sit amet. Ad quia impedit et maxime dignissimos id tenetur illo nam eveniet internos qui vitae labore. Et quia perspiciatis et officia aspernatur eos enim voluptatum!"}),Be.jsx("button",{className:"frc-landing__hero-cta-button-wrapper no-animate",onClick:()=>{window.open("/pages/product/0","_self")},children:Be.jsx("span",{className:"frc-landing__hero-cta-button",children:"View Product"})})]})]}),Be.jsxs("div",{className:"frc-landing__featured-product-card",children:[Be.jsx("div",{className:"frc-landing__product-display",children:Be.jsx(bT,{objectUrl:so.products[1].glbUrl,offset:180})}),Be.jsxs("div",{className:"frc-landing__product-description-wrapper",children:[Be.jsx("p",{className:"frc-landing__product-description",children:"Lorem ipsum dolor sit amet. Ad quia impedit et maxime dignissimos id tenetur illo nam eveniet internos qui vitae labore. Et quia perspiciatis et officia aspernatur eos enim voluptatum!"}),Be.jsx("button",{className:"frc-landing__hero-cta-button-wrapper no-animate",onClick:()=>{window.open("/pages/product/1","_self")},children:Be.jsx("span",{className:"frc-landing__hero-cta-button",children:"View Product"})})]})]}),Be.jsxs("div",{className:"frc-landing__featured-product-card",children:[Be.jsx("div",{className:"frc-landing__product-display"}),Be.jsx("p",{className:"frc-landing__product-description",children:"Lorem ipsum dolor sit amet. Ad quia impedit et maxime dignissimos id tenetur illo nam eveniet internos qui vitae labore. Et quia perspiciatis et officia aspernatur eos enim voluptatum!"})]})]})]})),AP=()=>Be.jsxs(Be.Fragment,{children:[Be.jsx("style",{children:`
+        `}),Be.jsxs("div",{className:"frc-landing__featured-product-section",ref:n,children:[Be.jsxs("div",{className:"frc-landing__featured-product-card",children:[Be.jsx("div",{className:"frc-landing__product-display",children:Be.jsx(bT,{objectUrl:so.products[0].glbUrl})}),Be.jsxs("div",{className:"frc-landing__product-description-wrapper",children:[Be.jsx("p",{className:"frc-landing__product-description",children:"Lorem ipsum dolor sit amet. Ad quia impedit et maxime dignissimos id tenetur illo nam eveniet internos qui vitae labore. Et quia perspiciatis et officia aspernatur eos enim voluptatum!"}),Be.jsx("button",{className:"frc-landing__hero-cta-button-wrapper no-animate",onClick:()=>{window.open("/product/0","_self")},children:Be.jsx("span",{className:"frc-landing__hero-cta-button",children:"View Product"})})]})]}),Be.jsxs("div",{className:"frc-landing__featured-product-card",children:[Be.jsx("div",{className:"frc-landing__product-display",children:Be.jsx(bT,{objectUrl:so.products[1].glbUrl,offset:180})}),Be.jsxs("div",{className:"frc-landing__product-description-wrapper",children:[Be.jsx("p",{className:"frc-landing__product-description",children:"Lorem ipsum dolor sit amet. Ad quia impedit et maxime dignissimos id tenetur illo nam eveniet internos qui vitae labore. Et quia perspiciatis et officia aspernatur eos enim voluptatum!"}),Be.jsx("button",{className:"frc-landing__hero-cta-button-wrapper no-animate",onClick:()=>{window.open("/product/1","_self")},children:Be.jsx("span",{className:"frc-landing__hero-cta-button",children:"View Product"})})]})]}),Be.jsxs("div",{className:"frc-landing__featured-product-card",children:[Be.jsx("div",{className:"frc-landing__product-display"}),Be.jsx("p",{className:"frc-landing__product-description",children:"Lorem ipsum dolor sit amet. Ad quia impedit et maxime dignissimos id tenetur illo nam eveniet internos qui vitae labore. Et quia perspiciatis et officia aspernatur eos enim voluptatum!"})]})]})]})),AP=()=>Be.jsxs(Be.Fragment,{children:[Be.jsx("style",{children:`
             .frc-landing__header-container {
                 position: fixed;
                 z-index: 9999;
@@ -4261,10 +4261,10 @@ vec3 texelOld = texture2D(previousShadowMap, vUv).rgb;
  * LICENSE.md file in the root directory of this source tree.
  *
  * @license MIT
- */const OV="startTransition",FT=IL[OV];function kV(n){let{basename:e,children:t,future:i,window:r}=n,s=V.useRef();s.current==null&&(s.current=IV({window:r,v5Compat:!0}));let o=s.current,[a,l]=V.useState({action:o.action,location:o.location}),{v7_startTransition:f}=i||{},h=V.useCallback(d=>{f&&FT?FT(()=>l(d)):l(d)},[l,f]);return V.useLayoutEffect(()=>o.listen(h),[o,h]),V.createElement(NV,{basename:e,children:t,location:a.location,navigationType:a.action,navigator:o,future:i})}var UT;(function(n){n.UseScrollRestoration="useScrollRestoration",n.UseSubmit="useSubmit",n.UseSubmitFetcher="useSubmitFetcher",n.UseFetcher="useFetcher",n.useViewTransitionState="useViewTransitionState"})(UT||(UT={}));var NT;(function(n){n.UseFetcher="useFetcher",n.UseFetchers="useFetchers",n.UseScrollRestoration="useScrollRestoration"})(NT||(NT={}));const gs={primary:"#121212",secondary:"#271d23",accent:"#df2935",textColor:"#fff"},zV=({config:n})=>{let e=UV();const t=V.useRef(null),[i,r]=V.useState(""),[s,o]=V.useState(0),[a,l]=V.useState(void 0),[f,h]=V.useState(""),[d,p]=V.useState(0),[g,y]=V.useState("");return V.useEffect(()=>{e&&e.pathname.includes("/pages/product/")&&r(e.pathname.replace("/pages/product/","").split("/")[0])},[e]),V.useEffect(()=>{i&&i!==""&&(l(so.products[i].images),h(so.products[i].name),p(so.products[i].cost),y(so.products[i].description))},[i]),Be.jsxs(Be.Fragment,{children:[Be.jsx("style",{children:`
+ */const OV="startTransition",FT=IL[OV];function kV(n){let{basename:e,children:t,future:i,window:r}=n,s=V.useRef();s.current==null&&(s.current=IV({window:r,v5Compat:!0}));let o=s.current,[a,l]=V.useState({action:o.action,location:o.location}),{v7_startTransition:f}=i||{},h=V.useCallback(d=>{f&&FT?FT(()=>l(d)):l(d)},[l,f]);return V.useLayoutEffect(()=>o.listen(h),[o,h]),V.createElement(NV,{basename:e,children:t,location:a.location,navigationType:a.action,navigator:o,future:i})}var UT;(function(n){n.UseScrollRestoration="useScrollRestoration",n.UseSubmit="useSubmit",n.UseSubmitFetcher="useSubmitFetcher",n.UseFetcher="useFetcher",n.useViewTransitionState="useViewTransitionState"})(UT||(UT={}));var NT;(function(n){n.UseFetcher="useFetcher",n.UseFetchers="useFetchers",n.UseScrollRestoration="useScrollRestoration"})(NT||(NT={}));const gs={primary:"#121212",secondary:"#271d23",accent:"#df2935",textColor:"#fff"},zV=({config:n})=>{let e=UV();const t=V.useRef(null),[i,r]=V.useState(""),[s,o]=V.useState(0),[a,l]=V.useState(void 0),[f,h]=V.useState(""),[d,p]=V.useState(0),[g,y]=V.useState("");return V.useEffect(()=>{e&&e.pathname.includes("/product/")&&r(e.pathname.replace("/product/","").split("/")[0])},[e]),V.useEffect(()=>{i&&i!==""&&(l(so.products[i].images),h(so.products[i].name),p(so.products[i].cost),y(so.products[i].description))},[i]),Be.jsxs(Be.Fragment,{children:[Be.jsx("style",{children:`
           @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
          
-          .frc-checkout__container {
+          .frc-product__container {
             width: 100%;
             height: 100%;
             display: flex;
@@ -4272,7 +4272,7 @@ vec3 texelOld = texture2D(previousShadowMap, vUv).rgb;
             align-items: center;
           }
           
-          .frc-checkout__content-container {
+          .frc-product__content-container {
             position: fixed;
             left: 0px;
             top: 0px;
@@ -4294,26 +4294,26 @@ vec3 texelOld = texture2D(previousShadowMap, vUv).rgb;
             border-bottom: 1px solid ${gs.secondary};
           }
 
-          .frc-checkout__selected-image {
+          .frc-product__selected-image {
             width: 700px;
             height: 700px;
             border-radius: 25px;
           }
 
-          .frc-checkout__image-preview-col {
+          .frc-product__image-preview-col {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
           }
-          .frc-checkout__image-preview {
+          .frc-product__image-preview {
             width: 94px;
             height: 94px;
             border-radius: 25px;
 
             cursor: pointer;
           }
-          .frc-checkout__image-preview-selected {
+          .frc-product__image-preview-selected {
             width: 100px;
             height: 100px;
             box-sizing: border-box;
@@ -4321,11 +4321,11 @@ vec3 texelOld = texture2D(previousShadowMap, vUv).rgb;
             margin-top: -3px;
             margin-bottom: -3px;
           }
-          .frc-checkout__carousel-container {
+          .frc-product__carousel-container {
             display: flex;
             gap: 15px;
           }
-          .frc-checkout__product-specs {
+          .frc-product__product-specs {
             display: flex;
             flex-direction: column;
             padding-left: 60px;
@@ -4333,7 +4333,7 @@ vec3 texelOld = texture2D(previousShadowMap, vUv).rgb;
 
             max-width: 600px;
           }
-          .frc-checkout__product-title {
+          .frc-product__product-title {
             font-family: 'Oswald', sans-serif;
             color: ${gs.textColor};
             text-transform: uppercase;
@@ -4350,7 +4350,7 @@ vec3 texelOld = texture2D(previousShadowMap, vUv).rgb;
 
             user-select: none;
           }
-          .frc-checkout__product-cost {
+          .frc-product__product-cost {
             font-family: 'Oswald', sans-serif;
             font-weight: 400;
             color: ${gs.textColor};
@@ -4366,7 +4366,7 @@ vec3 texelOld = texture2D(previousShadowMap, vUv).rgb;
 
             user-select: none;
           }
-          .frc-checkout__product-description {
+          .frc-product__product-description {
             font-family: 'Oswald', sans-serif;
             font-weight: 400;
             margin-top: 20px;
@@ -4404,4 +4404,4 @@ vec3 texelOld = texture2D(previousShadowMap, vUv).rgb;
               background-position: 100% 100%;
               background-size: 100% 1px;
           }
-        `}),Be.jsxs("div",{className:"frc-checkout__container",children:[Be.jsx(AP,{}),Be.jsx("div",{className:"frc-checkout__content-container",children:Be.jsxs("div",{className:"frc-checkout__carousel-container",children:[Be.jsx("div",{className:"frc-checkout__image-preview-col",children:a&&a.map(({src:S},_)=>Be.jsx("img",{className:`frc-checkout__image-preview ${_===s?"frc-checkout__image-preview-selected":""}`,src:S,onClick:()=>{o(_)}}))}),Be.jsx("img",{className:"frc-checkout__selected-image",src:a&&a[s].src}),Be.jsxs("div",{className:"frc-checkout__product-specs",children:[Be.jsx("div",{className:"frc-checkout__product-title",children:f}),Be.jsx("div",{className:"frc-checkout__product-cost",children:`$${d}`}),Be.jsx("div",{className:"frc-checkout__product-description",children:g}),Be.jsx("button",{ref:t,className:"frc-landing__hero-cta-button-wrapper",children:Be.jsx("span",{className:"frc-landing__hero-cta-button",children:"Add to Cart"})})]})]})}),Be.jsx("div",{className:"footer-placeholder"})]})]})},GV=({section_id:n,shop_id:e,config:t})=>{let i;switch(n){case"5rc-hero":i=bV;break;case"5rc-checkout":i=zV;break;case"three-js":i=SV;break;default:i=()=>Be.jsx("div",{});break}return Be.jsx(i,{config:t})};window.initReactComponent=({section_id:n,shop_id:e,config:t})=>{z3.render(Be.jsx(kV,{children:Be.jsx(GV,{section_id:n,shop_id:e,config:t})}),document.getElementById(`${e}`))};
+        `}),Be.jsxs("div",{className:"frc-product__container",children:[Be.jsx(AP,{}),Be.jsx("div",{className:"frc-product__content-container",children:Be.jsxs("div",{className:"frc-product__carousel-container",children:[Be.jsx("div",{className:"frc-product__image-preview-col",children:a&&a.map(({src:S},_)=>Be.jsx("img",{className:`frc-product__image-preview ${_===s?"frc-product__image-preview-selected":""}`,src:S,onClick:()=>{o(_)}},`frc-product__image-preview-selected-${_}`))}),Be.jsx("img",{className:"frc-product__selected-image",src:a&&a[s].src}),Be.jsxs("div",{className:"frc-product__product-specs",children:[Be.jsx("div",{className:"frc-product__product-title",children:f}),Be.jsx("div",{className:"frc-product__product-cost",children:`$${d}`}),Be.jsx("div",{className:"frc-product__product-description",children:g}),Be.jsx("button",{ref:t,className:"frc-landing__hero-cta-button-wrapper",children:Be.jsx("span",{className:"frc-landing__hero-cta-button",children:"Add to Cart"})})]})]})}),Be.jsx("div",{className:"footer-placeholder"})]})]})},GV=({section_id:n,shop_id:e,config:t})=>{let i;switch(n){case"5rc-hero":i=bV;break;case"5rc-product":i=zV;break;case"three-js":i=SV;break;default:i=()=>Be.jsx("div",{});break}return Be.jsx(i,{config:t})};window.initReactComponent=({section_id:n,shop_id:e,config:t})=>{z3.render(Be.jsx(kV,{children:Be.jsx(GV,{section_id:n,shop_id:e,config:t})}),document.getElementById(`${e}`))};
