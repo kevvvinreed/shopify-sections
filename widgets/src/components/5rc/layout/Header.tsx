@@ -44,6 +44,9 @@ const Header = () => {
         <img
           className="frc-landing__header-home-icon"
           src={assets.nav.transparentLogoWhite}
+          onClick={() => {
+            window.open("/", "_self");
+          }}
         />
         <div className="frc-landing__header-right-tray">
           <img
