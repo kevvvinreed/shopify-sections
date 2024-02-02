@@ -4,7 +4,7 @@ import "./styles/index.css";
 import ThreeJS from "./components/ThreeJS";
 import FrcHero from "./components/5rc/home";
 import { BrowserRouter } from "react-router-dom";
-import FrcProduct from "./components/5rc/product";
+import FrcProduct from "./components/5rc/products";
 interface IConfig {
   section_id: string;
   shop_id: string;
