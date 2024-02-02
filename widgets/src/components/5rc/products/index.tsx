@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import Header from "../layout/Header";
 import assets from "../core/assets";
 import { useLocation } from "react-router-dom";
+import addToCart from "../core/shopify/addToCart";
+import { IAppConfig } from "@/src/index";
+import getCheckoutUrl from "../core/shopify/getCheckoutUrl";
 
 const theme = {
   primary: "#121212",
@@ -10,11 +13,7 @@ const theme = {
   textColor: "#fff",
 };
 
-interface CheckoutProps {
-  config: string;
-}
-
-const FrcProduct: React.FC<CheckoutProps> = ({ config }) => {
+const FrcProduct: React.FC<IAppConfig> = ({ shopifyClient }) => {
   let location = useLocation();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [sku, setSku] = useState<string>("");
@@ -25,6 +24,7 @@ const FrcProduct: React.FC<CheckoutProps> = ({ config }) => {
   const [productName, setProductName] = useState<string>("");
   const [productCost, setProductCost] = useState<number>(0);
   const [productDescription, setProductDescription] = useState<string>("");
+  const [quantity, setQuantity] = useState<number>(0);
 
   useEffect(() => {
     if (location && location.pathname.includes("/products/")) {
@@ -159,7 +159,7 @@ const FrcProduct: React.FC<CheckoutProps> = ({ config }) => {
             padding-top: 20px;
             padding-bottom: 20px;
           }
-          .frc-landing__hero-cta-button-wrapper {
+          .frc-product__cta-button-wrapper {
               margin-top: 12px;
               width: 180px;
               height: 60px;
@@ -167,7 +167,7 @@ const FrcProduct: React.FC<CheckoutProps> = ({ config }) => {
               border: none;
               cursor: pointer;
           }
-          .frc-landing__hero-cta-button {
+          .frc-product__cta-button {
               user-select: none;
               font-family: 'Oswald', sans-serif;
               font-weight: 400;
@@ -183,7 +183,7 @@ const FrcProduct: React.FC<CheckoutProps> = ({ config }) => {
               background-repeat: no-repeat;
               transition: background-size 0.3s, background-position 0s 0.3s;
           }
-          .frc-landing__hero-cta-button-wrapper:hover .frc-landing__hero-cta-button {
+          .frc-product__cta-button-wrapper:hover .frc-product__cta-button {
               background-position: 100% 100%;
               background-size: 100% 1px;
           }
@@ -226,11 +226,27 @@ const FrcProduct: React.FC<CheckoutProps> = ({ config }) => {
 
               <button
                 ref={buttonRef}
-                className={`frc-landing__hero-cta-button-wrapper`}
+                className={`frc-product__cta-button-wrapper`}
+                style={{ backgroundColor: theme.secondary }}
+                onClick={async () => {
+                  const cartId = await addToCart(shopifyClient, sku, quantity);
+                  if (cartId) {
+                    const checkoutUrl = await getCheckoutUrl(
+                      shopifyClient,
+                      cartId
+                    );
+                    console.log(checkoutUrl);
+                  }
+                }}
               >
-                <span className="frc-landing__hero-cta-button">
-                  Add to Cart
-                </span>
+                <span className="frc-product__cta-button">Add to Cart</span>
+              </button>
+
+              <button
+                ref={buttonRef}
+                className={`frc-product__cta-button-wrapper`}
+              >
+                <span className="frc-product__cta-button">Buy Now</span>
               </button>
             </div>
           </div>

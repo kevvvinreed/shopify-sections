@@ -5,14 +5,20 @@ import ThreeJS from "./components/ThreeJS";
 import FrcHero from "./components/5rc/home";
 import { BrowserRouter } from "react-router-dom";
 import FrcProduct from "./components/5rc/products";
-interface IConfig {
+import Client from "shopify-buy";
+
+interface IInitConfig {
   section_id: string;
   shop_id: string;
-  config: string;
+}
+export interface IAppConfig {
+  section_id?: string;
+  shopifyClient: Client;
 }
 
-const App: React.FC<IConfig> = ({ section_id, shop_id, config }) => {
+const App: React.FC<IAppConfig> = ({ section_id, shopifyClient }) => {
   let Section;
+
   switch (section_id) {
     case "5rc-hero":
       Section = FrcHero;
@@ -27,13 +33,17 @@ const App: React.FC<IConfig> = ({ section_id, shop_id, config }) => {
       Section = () => <div></div>;
       break;
   }
-  return <Section config={config} />;
+  return <Section shopifyClient={shopifyClient} />;
 };
 
-window.initReactComponent = ({ section_id, shop_id, config }: IConfig) => {
+window.initReactComponent = ({ section_id, shop_id }: IInitConfig) => {
+  const shopifyClient = Client.buildClient({
+    storefrontAccessToken: "9c93da58e86d7071b6656a318ccd1d8f",
+    domain: "266823-3.myshopify.com",
+  });
   ReactDOM.render(
     <BrowserRouter>
-      <App section_id={section_id} shop_id={shop_id} config={config} />
+      <App section_id={section_id} shopifyClient={shopifyClient} />
     </BrowserRouter>,
     document.getElementById(`${shop_id}`)
   );
