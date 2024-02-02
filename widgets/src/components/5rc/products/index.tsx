@@ -27,7 +27,7 @@ const FrcProduct: React.FC<CheckoutProps> = ({ config }) => {
   const [productDescription, setProductDescription] = useState<string>("");
 
   useEffect(() => {
-    if (location && location.pathname.includes("/product/")) {
+    if (location && location.pathname.includes("/products/")) {
       setSku(location.pathname.replace("/products/", "").split("/")[0]);
     }
   }, [location]);
