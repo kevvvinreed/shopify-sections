@@ -18,8 +18,8 @@ export interface IAppConfig {
 }
 
 export interface IAppStore {
-  checkout: ShopifyBuy.Checkout | null;
   shopifyClient: Client;
+  checkout: ShopifyBuy.Checkout | null;
   checkoutId: string | null;
   cartQuantity: number | null;
   checkoutUrl: string | null;
@@ -38,9 +38,11 @@ const App: React.FC<IAppConfig> = ({ section_id }) => {
   const shopifyClient = Client.buildClient({
     storefrontAccessToken: "9c93da58e86d7071b6656a318ccd1d8f",
     domain: "266823-3.myshopify.com",
+    apiVersion: "",
   });
 
-  const defaultState = {
+  const defaultState: IAppStore = {
+    shopifyClient: shopifyClient,
     checkout: null,
     checkoutId: null,
     checkoutUrl: null,
@@ -49,10 +51,7 @@ const App: React.FC<IAppConfig> = ({ section_id }) => {
     loading: true,
   };
 
-  const [store, setStore] = useState<IAppStore>({
-    shopifyClient: shopifyClient,
-    ...defaultState,
-  });
+  const [store, setStore] = useState<IAppStore>(defaultState);
 
   useEffect(() => {
     console.log(store.cartQuantity);

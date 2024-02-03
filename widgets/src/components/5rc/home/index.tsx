@@ -5,7 +5,7 @@ import config from "../core/config";
 import smoothScrollTo from "./util/smoothScrollTo";
 import Hero from "./Hero";
 import theme from "../core/theme";
-import { IAppStore, ISectionProps } from "@/src/index";
+import { ISectionProps } from "@/src/index";
 
 const FrcLanding: React.FC<ISectionProps> = ({ store, setStore }) => {
   const featuredProductRef = useRef<HTMLDivElement>(null);

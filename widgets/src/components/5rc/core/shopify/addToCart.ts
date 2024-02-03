@@ -28,7 +28,6 @@ const addToCart = async (
     await updateCheckoutState(store, setStore);
   } catch (error) {
     console.error("Error adding item to cart:", error);
-    return null;
   }
 };
 

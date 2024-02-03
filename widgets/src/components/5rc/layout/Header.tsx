@@ -43,10 +43,29 @@ const Header: React.FC<ISectionProps> = ({ store, setStore }) => {
                 width: 35px;
                 height: 35px;
                 color: #fff;
-                cursor: pointer;
             }
-            .frc-landing__header-cart-icon:hover {
+            .frc-header__cart-button:hover .frc-landing__header-cart-icon {
                 filter: brightness(90%);
+            }
+            .frc-header__cart-quantity {
+              color: white;
+              background: rgba(255, 0, 0, 0.6);
+              border-radius: 50px;
+              width: 23px;
+              height: 23px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              position: absolute;
+              top: 22px;
+              margin-left: 15px;
+              font-family: 'Oswald', sans-serif;
+              font-size: 15px;
+              line-height: 23px;
+            }
+            .frc-header__cart-button {
+              user-select: none;
+              cursor: pointer;
             }
         `}
       </style>
@@ -58,38 +77,23 @@ const Header: React.FC<ISectionProps> = ({ store, setStore }) => {
             window.open("/", "_self");
           }}
         />
-        <div className="frc-landing__header-right-tray">
-          <img
-            className="frc-landing__header-cart-icon"
-            src={assets.nav.cart}
-            onClick={async () => {
-              const checkoutUrl = await getCheckoutUrl(store);
-              window.open(checkoutUrl, "_self");
-            }}
-          />
+        <div
+          className="frc-landing__header-right-tray"
+          onClick={async () => {
+            const checkoutUrl = await getCheckoutUrl(store);
+            window.open(checkoutUrl, "_self");
+          }}
+        >
+          <div className="frc-header__cart-button">
+            <img
+              className="frc-landing__header-cart-icon"
+              src={assets.nav.cart}
+            />
 
-          {cartQuantity > 0 && (
-            <div
-              style={{
-                color: "white",
-                background: "rgba(255, 0, 0, 0.6)",
-                borderRadius: 50,
-                width: 23,
-                height: 23,
-                lineHeight: 23,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "absolute",
-                top: 22,
-                marginLeft: 15,
-                fontFamily: "Oswald",
-                fontSize: 15,
-              }}
-            >
-              {cartQuantity}
-            </div>
-          )}
+            {cartQuantity > 0 && (
+              <div className="frc-header__cart-quantity">{cartQuantity}</div>
+            )}
+          </div>
         </div>
       </div>
     </>
