@@ -1,5 +1,10 @@
-const getCheckoutUrl = async (shopifyClient: Client, checkoutId: string) => {
-  const checkoutObject = await shopifyClient.checkout.fetch(checkoutId);
+import { IAppStore } from "@/src/index";
+import getCheckoutId from "./getCheckoutId";
+
+const getCheckoutUrl = async (store: IAppStore) => {
+  const checkoutId = await getCheckoutId(store);
+
+  const checkoutObject = await store.shopifyClient.checkout.fetch(checkoutId);
   return checkoutObject.webUrl;
 };
 

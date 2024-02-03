@@ -1,7 +1,17 @@
+import { ISectionProps } from "@/src/index";
 import assets from "../core/assets";
 import config from "../core/config";
+import getCheckoutUrl from "../core/shopify/getCheckoutUrl";
+import { useEffect, useState } from "react";
 
-const Header = () => {
+const Header: React.FC<ISectionProps> = ({ store, setStore }) => {
+  const [cartQuantity, setCartQuantity] = useState<number>(0);
+  useEffect(() => {
+    console.log({ store });
+    if (store.cartQuantity !== null && cartQuantity !== store.cartQuantity) {
+      setCartQuantity(store.cartQuantity);
+    }
+  }, [store]);
   return (
     <>
       <style>
@@ -52,7 +62,34 @@ const Header = () => {
           <img
             className="frc-landing__header-cart-icon"
             src={assets.nav.cart}
+            onClick={async () => {
+              const checkoutUrl = await getCheckoutUrl(store);
+              window.open(checkoutUrl, "_self");
+            }}
           />
+
+          {cartQuantity > 0 && (
+            <div
+              style={{
+                color: "white",
+                background: "rgba(255, 0, 0, 0.6)",
+                borderRadius: 50,
+                width: 23,
+                height: 23,
+                lineHeight: 23,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "absolute",
+                top: 22,
+                marginLeft: 15,
+                fontFamily: "Oswald",
+                fontSize: 15,
+              }}
+            >
+              {cartQuantity}
+            </div>
+          )}
         </div>
       </div>
     </>

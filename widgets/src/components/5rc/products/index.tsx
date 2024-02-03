@@ -3,7 +3,7 @@ import Header from "../layout/Header";
 import assets from "../core/assets";
 import { useLocation } from "react-router-dom";
 import addToCart from "../core/shopify/addToCart";
-import { IAppConfig } from "@/src/index";
+import { ISectionProps } from "@/src/index";
 import getCheckoutUrl from "../core/shopify/getCheckoutUrl";
 
 const theme = {
@@ -13,7 +13,7 @@ const theme = {
   textColor: "#fff",
 };
 
-const FrcProduct: React.FC<IAppConfig> = ({ shopifyClient }) => {
+const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
   let location = useLocation();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [sku, setSku] = useState<string>("");
@@ -24,7 +24,7 @@ const FrcProduct: React.FC<IAppConfig> = ({ shopifyClient }) => {
   const [productName, setProductName] = useState<string>("");
   const [productCost, setProductCost] = useState<number>(0);
   const [productDescription, setProductDescription] = useState<string>("");
-  const [quantity, setQuantity] = useState<number>(0);
+  const [quantity, setQuantity] = useState<number>(1);
 
   useEffect(() => {
     if (location && location.pathname.includes("/products/")) {
@@ -190,7 +190,7 @@ const FrcProduct: React.FC<IAppConfig> = ({ shopifyClient }) => {
         `}
       </style>
       <div className={`frc-product__container`}>
-        <Header />
+        <Header store={store} setStore={setStore} />
         <div className="frc-product__content-container">
           <div className="frc-product__carousel-container">
             <div className="frc-product__image-preview-col">
@@ -228,15 +228,8 @@ const FrcProduct: React.FC<IAppConfig> = ({ shopifyClient }) => {
                 ref={buttonRef}
                 className={`frc-product__cta-button-wrapper`}
                 style={{ backgroundColor: theme.secondary }}
-                onClick={async () => {
-                  const cartId = await addToCart(shopifyClient, sku, quantity);
-                  if (cartId) {
-                    const checkoutUrl = await getCheckoutUrl(
-                      shopifyClient,
-                      cartId
-                    );
-                    console.log(checkoutUrl);
-                  }
+                onClick={() => {
+                  addToCart(store, setStore, sku, quantity);
                 }}
               >
                 <span className="frc-product__cta-button">Add to Cart</span>

@@ -5,8 +5,9 @@ import config from "../core/config";
 import smoothScrollTo from "./util/smoothScrollTo";
 import Hero from "./Hero";
 import theme from "../core/theme";
+import { IAppStore, ISectionProps } from "@/src/index";
 
-const FrcLanding: React.FC = () => {
+const FrcLanding: React.FC<ISectionProps> = ({ store, setStore }) => {
   const featuredProductRef = useRef<HTMLDivElement>(null);
   const sectionIndexRef = useRef<number>(0);
   const lastIndexSwitchTime = useRef<number>(0);
@@ -111,7 +112,7 @@ const FrcLanding: React.FC = () => {
         `}
       </style>
       <div className={`frc-landing__container`}>
-        <Header />
+        <Header store={store} setStore={setStore} />
         <Hero
           scrollIndex={scrollIndex}
           setScrollIndex={debouncedSetScrollIndex}
