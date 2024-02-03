@@ -12,6 +12,7 @@ const AnySuspense = Suspense as any;
 export interface ThreeModelProps {
   posY: number;
   posX: number;
+  scrollIndex: number;
   objectUrl: string;
   offset?: number;
   scale?: number;
@@ -22,13 +23,33 @@ const Model = React.forwardRef((props: ThreeModelProps, ref): any => {
 });
 
 const ThreeModel: React.FC<ThreeModelProps> = ({
+  scrollIndex,
   posX,
   posY,
   objectUrl,
   offset = 0,
 }) => {
-  const [rotation, setRotation] = useState(0.9999);
+  const [rotationAccumulator, setRotationAccumulator] = useState<number>(0.99);
+  const [rotation, setRotation] = useState<number>(rotationAccumulator);
   const modelRef = useRef<Object3D>(null);
+
+  const [prevPos, setPrevPos] = useState([0, 0]);
+
+  const [lock, setLock] = useState<boolean>(true);
+
+  useEffect(() => {
+    if (scrollIndex === 0) {
+      setLock(true);
+      return;
+    }
+    if (scrollIndex === 1) {
+      setTimeout(() => {
+        setLock(false);
+      }, config.scrollAnimationTimingMs);
+
+      return;
+    }
+  }, [scrollIndex]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,10 +65,21 @@ const ThreeModel: React.FC<ThreeModelProps> = ({
   }, []);
 
   useEffect(() => {
+    if (lock) {
+      return;
+    }
     if (posY && posX) {
-      setRotation((r) => posY * 0.0015 + posX * 0.0015);
+      const distance = Math.sqrt(
+        (posX - prevPos[0]) ** 2 + (posY - prevPos[1]) ** 2
+      );
+      setRotationAccumulator((r) => r + distance * 0.0015);
+      setPrevPos([posX, posY]);
     }
   }, [posY, posX]);
+
+  useEffect(() => {
+    setRotation(rotationAccumulator);
+  }, [rotationAccumulator]);
 
   return (
     <>
@@ -62,6 +94,7 @@ const ThreeModel: React.FC<ThreeModelProps> = ({
           >
             <Stage environment={null} intensity={0.5} shadows={false}>
               <Model
+                scrollIndex={scrollIndex}
                 posX={posX}
                 posY={posY}
                 objectUrl={objectUrl}

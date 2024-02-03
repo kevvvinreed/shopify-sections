@@ -126,6 +126,7 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                     style={{ marginTop: "-3vh" }}
                   >
                     <ThreeModel
+                      scrollIndex={scrollIndex}
                       posX={posX}
                       posY={posY}
                       objectUrl={product.glbUrl}
