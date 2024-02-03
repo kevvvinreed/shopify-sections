@@ -46,6 +46,13 @@ const assets = {
         },
       ],
     },
+    {
+      name: "Treadmill SKU #3",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+      cost: 649.99,
+      glbUrl: config.assetBaseUrl + "/5rc/treadmill-2/3d.glb",
+    },
   ],
 };
 export default assets;

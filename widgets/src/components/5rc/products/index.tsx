@@ -4,14 +4,7 @@ import assets from "../core/assets";
 import { useLocation } from "react-router-dom";
 import addToCart from "../core/shopify/addToCart";
 import { ISectionProps } from "@/src/index";
-import getCheckoutUrl from "../core/shopify/getCheckoutUrl";
-
-const theme = {
-  primary: "#121212",
-  secondary: "#271d23",
-  accent: "#df2935",
-  textColor: "#fff",
-};
+import theme from "../core/theme";
 
 const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
   let location = useLocation();
@@ -62,7 +55,7 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             display: flex;
             width: 100%;
             height: 100%;
-            background: linear-gradient(225deg, rgba(36,36,36,1) 0%, rgba(0,0,0,1) 80%);
+            background: ${theme.gradientBg};
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;

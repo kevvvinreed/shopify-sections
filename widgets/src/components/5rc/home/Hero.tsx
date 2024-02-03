@@ -155,37 +155,47 @@ const Hero: React.FC<HeroProps> = ({ scrollIndex, setScrollIndex }) => {
                 position: relative;
                 z-index: 2;
             }
-
-            @keyframes darkenAnimation {
-                from { 
-                    background: rgba(0, 0, 0, 0.0);
-                }
-                to { 
-                    background: rgba(0, 0, 0, 0.5);
-                }
-            }
-            @keyframes lightenAnimation {
-                from { 
-                    background: rgba(0, 0, 0, 0.5);
-                }
-                to { 
-                    background: rgba(0, 0, 0, 0.0);
-                }
-            }
-            .darkenOverlay {
-                animation: darkenAnimation ${config.scrollAnimationTimingMs}ms linear forwards;
-            }
-            .lightenOverlay {
-                animation: lightenAnimation ${config.scrollAnimationTimingMs}ms linear forwards;
-            }
             .frc-landing__hero-overlay {
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-                z-index: 1; /* Above the background image but below the content */
+              position: absolute;
+              top: 0;
+              right: 0;
+              bottom: 0;
+              left: 0;
+              z-index: 1;
+              overflow: hidden;
+              transition: opacity ${config.scrollAnimationTimingMs}ms linear;
+              background: linear-gradient(225deg, rgba(36, 36, 36, 0) 0%, rgba(0, 0, 0, 0) 80%);
             }
+
+            .frc-landing__hero-overlay::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(225deg, rgba(36, 36, 36, 0) 0%, rgba(0, 0, 0, 0) 80%);
+              transition: opacity ${config.scrollAnimationTimingMs}ms linear;
+              opacity: 0;
+          }
+          
+          .darkenOverlay::before {
+              opacity: 1;
+              background: linear-gradient(225deg, rgba(36, 36, 36, 0.5) 0%, rgba(0, 0, 0, 0.5) 80%);
+          }
+          
+          @keyframes lightenOverlayAnimation { 
+            0% {
+              opacity: 1;
+            }
+            100% {
+              opacity: 0;
+            }
+          }
+          .lightenOverlay::before {
+              background: linear-gradient(225deg, rgba(36, 36, 36, 0.5) 0%, rgba(0, 0, 0, 0.5) 80%);
+              transition: opacity ${config.scrollAnimationTimingMs}ms ease-in forwards;
+          }
         `}
       </style>
       <div className={`frc-landing__hero-container`}>

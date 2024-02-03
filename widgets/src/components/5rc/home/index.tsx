@@ -7,7 +7,12 @@ import Hero from "./Hero";
 import theme from "../core/theme";
 import { ISectionProps } from "@/src/index";
 
-const FrcLanding: React.FC<ISectionProps> = ({ store, setStore }) => {
+const FrcLanding: React.FC<ISectionProps> = ({
+  posX,
+  posY,
+  store,
+  setStore,
+}) => {
   const featuredProductRef = useRef<HTMLDivElement>(null);
   const sectionIndexRef = useRef<number>(0);
   const lastIndexSwitchTime = useRef<number>(0);
@@ -117,7 +122,12 @@ const FrcLanding: React.FC<ISectionProps> = ({ store, setStore }) => {
           scrollIndex={scrollIndex}
           setScrollIndex={debouncedSetScrollIndex}
         />
-        <FeaturedProducts ref={featuredProductRef} />
+        <FeaturedProducts
+          ref={featuredProductRef}
+          scrollIndex={scrollIndex}
+          posY={posY}
+          posX={posX}
+        />
 
         <div className="footer-placeholder"></div>
       </div>

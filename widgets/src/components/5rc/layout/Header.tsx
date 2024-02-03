@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 const Header: React.FC<ISectionProps> = ({ store, setStore }) => {
   const [cartQuantity, setCartQuantity] = useState<number>(0);
   useEffect(() => {
-    console.log({ store });
     if (store.cartQuantity !== null && cartQuantity !== store.cartQuantity) {
       setCartQuantity(store.cartQuantity);
     }

@@ -10,6 +10,8 @@ const AnyCanvas = Canvas as any;
 const AnySuspense = Suspense as any;
 
 export interface ThreeModelProps {
+  posY: number;
+  posX: number;
   objectUrl: string;
   offset?: number;
   scale?: number;
@@ -19,7 +21,12 @@ const Model = React.forwardRef((props: ThreeModelProps, ref): any => {
   return handle3dModel(props, ref);
 });
 
-const ThreeModel: React.FC<ThreeModelProps> = ({ objectUrl, offset = 0 }) => {
+const ThreeModel: React.FC<ThreeModelProps> = ({
+  posX,
+  posY,
+  objectUrl,
+  offset = 0,
+}) => {
   const [rotation, setRotation] = useState(0.9999);
   const modelRef = useRef<Object3D>(null);
 
@@ -35,6 +42,13 @@ const ThreeModel: React.FC<ThreeModelProps> = ({ objectUrl, offset = 0 }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    if (posY && posX) {
+      setRotation((r) => posY * 0.0015 + posX * 0.0015);
+    }
+  }, [posY, posX]);
+
   return (
     <>
       <AnyCanvas dpr={[1, 2]} shadows camera={{ fov: 45 }}>
@@ -48,6 +62,8 @@ const ThreeModel: React.FC<ThreeModelProps> = ({ objectUrl, offset = 0 }) => {
           >
             <Stage environment={null} intensity={0.5} shadows={false}>
               <Model
+                posX={posX}
+                posY={posY}
                 objectUrl={objectUrl}
                 ref={modelRef}
                 scale={0.01}

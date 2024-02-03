@@ -8,6 +8,7 @@ import FrcProduct from "./components/5rc/products";
 import Client from "shopify-buy";
 import ShopifyBuy from "shopify-buy";
 import updateCheckoutState from "./components/5rc/core/shopify/updateCheckoutState";
+import useCursor from "./components/5rc/core/useCursor";
 
 interface IInitConfig {
   section_id: string;
@@ -30,6 +31,8 @@ export interface IAppStore {
 export interface ISectionProps {
   store: IAppStore;
   setStore: React.Dispatch<React.SetStateAction<IAppStore>>;
+  posY?: number;
+  posX?: number;
 }
 
 const App: React.FC<IAppConfig> = ({ section_id }) => {
@@ -53,9 +56,7 @@ const App: React.FC<IAppConfig> = ({ section_id }) => {
 
   const [store, setStore] = useState<IAppStore>(defaultState);
 
-  useEffect(() => {
-    console.log(store.cartQuantity);
-  }, [store]);
+  const { posX, posY } = useCursor();
 
   useEffect(() => {
     updateCheckoutState(store, setStore);
@@ -75,7 +76,7 @@ const App: React.FC<IAppConfig> = ({ section_id }) => {
       Section = () => <div></div>;
       break;
   }
-  return <Section store={store} setStore={setStore} />;
+  return <Section store={store} setStore={setStore} posY={posY} posX={posX} />;
 };
 
 window.initReactComponent = ({ section_id, shop_id }: IInitConfig) => {
