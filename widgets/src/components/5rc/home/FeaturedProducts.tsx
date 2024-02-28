@@ -1,6 +1,5 @@
 import ThreeModel from "./ThreeModel";
 import React, { forwardRef } from "react";
-import hexToRgba from "./util/hexToRGBA";
 import theme from "../core/theme";
 import assets from "../core/assets";
 

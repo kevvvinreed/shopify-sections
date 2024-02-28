@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import FeaturedProducts from "./FeaturedProducts";
 import Header from "../layout/Header";
 import config from "../core/config";
-import smoothScrollTo from "./util/smoothScrollTo";
+import smoothScrollTo from "../util/smoothScrollTo";
 import Hero from "./Hero";
 import theme from "../core/theme";
 import { ISectionProps } from "@/src/index";

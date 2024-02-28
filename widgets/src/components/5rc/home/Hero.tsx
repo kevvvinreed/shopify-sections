@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import config from "../core/config";
 import theme from "../core/theme";
 import assets from "../core/assets";
