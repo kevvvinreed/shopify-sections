@@ -164,7 +164,7 @@ const Hero: React.FC<HeroProps> = ({ scrollIndex, setScrollIndex }) => {
               z-index: 1;
               overflow: hidden;
               transition: opacity ${config.scrollAnimationTimingMs}ms linear;
-              background: linear-gradient(225deg, rgba(36, 36, 36, 0) 0%, rgba(0, 0, 0, 0) 80%);
+              background: linear-gradient(225deg, rgba(200, 200, 200, 0) 0%, rgba(80, 80, 80, 0) 80%);
             }
 
             .frc-landing__hero-overlay::before {
@@ -174,14 +174,14 @@ const Hero: React.FC<HeroProps> = ({ scrollIndex, setScrollIndex }) => {
               left: 0;
               width: 100%;
               height: 100%;
-              background: linear-gradient(225deg, rgba(36, 36, 36, 0) 0%, rgba(0, 0, 0, 0) 80%);
+              background: linear-gradient(225deg, rgba(200, 200, 200, 0) 0%, rgba(80, 80, 80, 0) 80%);
               transition: opacity ${config.scrollAnimationTimingMs}ms linear;
               opacity: 0;
           }
           
           .darkenOverlay::before {
               opacity: 1;
-              background: linear-gradient(225deg, rgba(36, 36, 36, 0.5) 0%, rgba(0, 0, 0, 0.5) 80%);
+              background: linear-gradient(225deg, rgba(200, 200, 200, 0.5) 0%, rgba(80, 80, 80, 0.5) 80%);
           }
           
           @keyframes lightenOverlayAnimation { 
@@ -193,7 +193,7 @@ const Hero: React.FC<HeroProps> = ({ scrollIndex, setScrollIndex }) => {
             }
           }
           .lightenOverlay::before {
-              background: linear-gradient(225deg, rgba(36, 36, 36, 0.5) 0%, rgba(0, 0, 0, 0.5) 80%);
+              background: linear-gradient(225deg, rgba(200, 200, 200, 0.5) 0%, rgba(80, 80, 80, 0.5) 80%);
               transition: opacity ${config.scrollAnimationTimingMs}ms ease-in forwards;
           }
         `}

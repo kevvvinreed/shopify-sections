@@ -99,6 +99,22 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                 background-color: transparent;
                 border: none;
                 cursor: pointer;
+                text-shadow: 
+                -1px -1px 0 #000,
+                1px -1px 0 #000,  
+                -1px  1px 0 #000,  
+                1px  1px 0 #000;  
+            }
+            .frc-landing__product-cta-button-wrapper-disabled {
+              cursor: not-allowed;
+            }
+            .frc-landing__product-cta-button-disabled {
+              color: ${theme.accent};
+              text-shadow: 
+              -1px -1px 0 #000,
+              1px -1px 0 #000,  
+              -1px  1px 0 #000,  
+              1px  1px 0 #000;  
             }
         `}
         </style>
@@ -133,13 +149,25 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                     />
                   </div>
                   <button
-                    className={`frc-landing__product-cta-button-wrapper `}
+                    className={`frc-landing__product-cta-button-wrapper ${
+                      index !== 0
+                        ? "frc-landing__product-cta-button-wrapper-disabled"
+                        : ""
+                    }`}
                     onClick={() => {
-                      window.open(`/products/${index}`, "_self");
+                      if (index === 0) {
+                        window.open(`/products/${index}`, "_self");
+                      }
                     }}
                   >
-                    <span className="frc-landing__product-cta-button">
-                      View Product
+                    <span
+                      className={`frc-landing__product-cta-button ${
+                        index !== 0
+                          ? "frc-landing__product-cta-button-disabled"
+                          : ""
+                      }`}
+                    >
+                      {index === 0 ? `View Product` : `Coming Soon`}
                     </span>
                   </button>
                 </div>

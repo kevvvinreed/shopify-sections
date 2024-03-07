@@ -67,6 +67,7 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             display: flex;
             flex-direction: row;
             padding-left: 2rem;
+            padding-right: 2rem;
             justify-content: center;
             align-items: center;
 
@@ -103,7 +104,6 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             margin-bottom: -3px;
           }
           .frc-product__carousel-container {
-            height: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -113,7 +113,9 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
           .frc-product__product-specs {
             display: flex;
             flex-direction: column;
-            padding-left: 60px;
+            align-items: flex-start;
+            padding-left: 4rem;
+            padding-right: 4rem;
             gap: 15px;
 
             max-width: 600px;
@@ -122,16 +124,16 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             font-family: 'Oswald', sans-serif;
             color: ${theme.textColor};
             text-transform: uppercase;
+            text-align: right;
             font-size: 3rem;
             margin: 0;
-            line-height: 3rem;
-            margin-bottom: 1rem;
+            line-height: 4rem;
 
-            // text-shadow: 
-            // -1px -1px 0 #000,
-            // 1px -1px 0 #000,  
-            // -1px  1px 0 #000,  
-            // 1px  1px 0 #000;  
+            text-shadow: 
+            -1px -1px 0 #000,
+            1px -1px 0 #000,  
+            -1px  1px 0 #000,  
+            1px  1px 0 #000;  
 
             user-select: none;
           }
@@ -143,11 +145,11 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             font-size: 1.2rem;
             margin: 0;
 
-            // text-shadow: 
-            // -1px -1px 0 #000,
-            // 1px -1px 0 #000,
-            // -1px  1px 0 #000,
-            // 1px  1px 0 #000;
+            text-shadow: 
+            -1px -1px 0 #000,
+            1px -1px 0 #000,
+            -1px  1px 0 #000,
+            1px  1px 0 #000;
 
             user-select: none;
           }
@@ -219,6 +221,12 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
           }
 
           @media only screen and (max-width: 1200px) {
+            .frc-product__product-title {
+              text-align: center;
+            }
+            .frc-product__product-specs {
+              align-items: center;
+            }
             .frc-product__selected-image {
               width: 600px;
               height: 600px;
@@ -246,7 +254,31 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
               width: 400px;
               height: 400px;
             }
+            .frc-product__image-preview {
+              width: 74px;
+              height: 74px;
+            }
           
+          }
+          @media only screen and (max-width: 500px) {
+            .frc-product__product-description {
+              max-width: 300px;
+            }
+            .frc-product__product-title {
+              font-size: 2.5rem;
+              line-height: 2.5rem;
+            }
+            .frc-product__content-container {
+              height: 100%;
+            }
+            .frc-product__selected-image {
+              width: 300px;
+              height: 300px;
+            }
+            .frc-product__image-preview {
+              width: 61px;
+              height: 61px;
+            }
           }
         `}
       </style>
