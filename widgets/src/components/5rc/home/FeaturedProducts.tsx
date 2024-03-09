@@ -1,7 +1,8 @@
 import ThreeModel from "./ThreeModel";
-import React, { forwardRef } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import theme from "../core/theme";
 import assets from "../core/assets";
+import useWindow from "../util/useWindow";
 
 export interface FeaturedProductsProps {
   scrollIndex: number;
@@ -11,6 +12,28 @@ export interface FeaturedProductsProps {
 
 const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
   ({ scrollIndex, posX, posY }, ref) => {
+    const { windowWidth } = useWindow();
+
+    const [isDesktop, setIsDesktop] = useState<boolean>(true);
+    const [buttonHover, setButtonHover] = useState<boolean[]>([
+      false,
+      false,
+      false,
+    ]);
+
+    const updateButtonHover = (index: number) => {
+      setButtonHover((prev) =>
+        prev.map((item, i) => (i === index ? !item : item))
+      );
+    };
+
+    useEffect(() => {
+      if (windowWidth < 1200) {
+        setIsDesktop(false);
+      } else {
+        setIsDesktop(true);
+      }
+    }, [windowWidth]);
     return (
       <>
         <style>
@@ -50,6 +73,7 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                 padding-bottom: 15px;
             }
             .frc-landing__product-display {
+                position: relative;
                 height: 28vh;
                 width: 28vh;
                 min-width: 28vh;
@@ -70,8 +94,6 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
             .no-animate {
               animation: none !important;
             }
-
-            
             .frc-landing__product-cta-button {
               user-select: none;
               font-family: 'Oswald', sans-serif;
@@ -87,6 +109,15 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
               background-size: 0% 1px;
               background-repeat: no-repeat;
               transition: background-size 0.3s, background-position 0s 0.3s;
+              
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              z-index: 100;
+            }
+            .frc-landing__product-cta-button-hovered {
+              font-size: 30px !important;
             }
             .frc-landing__product-cta-button-wrapper:hover .frc-landing__product-cta-button {
                 background-position: 100% 100%;
@@ -109,12 +140,16 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
               cursor: not-allowed;
             }
             .frc-landing__product-cta-button-disabled {
-              color: ${theme.accent};
               text-shadow: 
               -1px -1px 0 #000,
               1px -1px 0 #000,  
               -1px  1px 0 #000,  
               1px  1px 0 #000;  
+            }
+            @media only screen and (max-width: 1200px) {
+              .frc-landing__product-button-wrapper {
+                flex-direction: column;
+              }
             }
         `}
         </style>
@@ -133,7 +168,8 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                 <div
                   className="frc-landing__product-button-wrapper"
                   style={{
-                    flexDirection: index % 2 !== 0 ? "row-reverse" : "unset",
+                    flexDirection:
+                      index % 2 !== 0 && isDesktop ? "row-reverse" : "unset",
                   }}
                 >
                   <div
@@ -141,11 +177,17 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                     style={{ marginTop: "-3vh" }}
                   >
                     <ThreeModel
+                      onMouseEnter={() => updateButtonHover(index)}
+                      onMouseLeave={() => {
+                        updateButtonHover(index);
+                      }}
                       scrollIndex={scrollIndex}
                       posX={posX}
                       posY={posY}
+                      index={index}
                       objectUrl={product.glbUrl}
                       offset={60 * index}
+                      scale={0.006}
                     />
                   </div>
                   <button
@@ -165,6 +207,9 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                         index !== 0
                           ? "frc-landing__product-cta-button-disabled"
                           : ""
+                      } ${
+                        buttonHover[index] &&
+                        "frc-landing__product-cta-button-hovered"
                       }`}
                     >
                       {index === 0 ? `View Product` : `Coming Soon`}
@@ -173,6 +218,57 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                 </div>
               </div>
             );
+            // : (
+            //   <div
+            //     className="frc-landing__featured-row"
+            //     key={`${product.name}-${index}`}
+            //   >
+            //     <div className="frc-landing__product-button-wrapper">
+            //       <div
+            //         className="frc-landing__product-display"
+            //         style={{ marginTop: "-3vh" }}
+            //       >
+            //         <ThreeModel
+            //           onMouseEnter={() => {
+            //             setMobileObjScale(0.005);
+            //           }}
+            //           onMouseLeave={() => {
+            //             setMobileObjScale(0.004);
+            //           }}
+            //           scrollIndex={scrollIndex}
+            //           posX={posX}
+            //           posY={posY}
+            //           index={index}
+            //           objectUrl={product.glbUrl}
+            //           offset={60 * index}
+            //           scale={}
+            //         />
+            //       </div>
+            //       <button
+            //         className={`frc-landing__product-cta-button-wrapper ${
+            //           index !== 0
+            //             ? "frc-landing__product-cta-button-wrapper-disabled"
+            //             : ""
+            //         }`}
+            //         onClick={() => {
+            //           if (index === 0) {
+            //             window.open(`/products/${index}`, "_self");
+            //           }
+            //         }}
+            //       >
+            //         <span
+            //           className={`frc-landing__product-cta-button ${
+            //             index !== 0
+            //               ? "frc-landing__product-cta-button-disabled"
+            //               : ""
+            //           }`}
+            //         >
+            //           {index === 0 ? `View Product` : `Coming Soon`}
+            //         </span>
+            //       </button>
+            //     </div>
+            //   </div>
+            // );
           })}
         </div>
       </>

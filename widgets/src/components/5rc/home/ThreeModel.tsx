@@ -13,7 +13,9 @@ export interface ThreeModelProps {
   posY: number;
   posX: number;
   scrollIndex: number;
+  scale: number;
   objectUrl: string;
+  index: number;
   offset?: number;
   scale?: number;
   rotation?: number[];
@@ -28,6 +30,8 @@ const ThreeModel: React.FC<ThreeModelProps> = ({
   posY,
   objectUrl,
   offset = 0,
+  index,
+  scale,
 }) => {
   const [rotationAccumulator, setRotationAccumulator] = useState<number>(0.99);
   const [rotation, setRotation] = useState<number>(rotationAccumulator);
@@ -92,14 +96,15 @@ const ThreeModel: React.FC<ThreeModelProps> = ({
             zoom={0.7}
             polar={[-0.1, Math.PI / 4]}
           >
-            <Stage environment={null} intensity={0.5} shadows={false}>
+            <Stage environment={null} intensity={0.05} shadows={false}>
               <Model
                 scrollIndex={scrollIndex}
                 posX={posX}
                 posY={posY}
                 objectUrl={objectUrl}
                 ref={modelRef}
-                scale={0.01}
+                index={index}
+                scale={scale}
                 rotation={[0, rotation + offset, 0]}
               />
             </Stage>

@@ -12,10 +12,15 @@ export const handle3dModel = (
   const { scene } = obj;
 
   useEffect(() => {
-    scene.traverse(
-      (obj: any) =>
-        obj.type === "Mesh" && (obj.receiveShadow = obj.castShadow = true)
-    );
+    scene.traverse((obj: any) => {
+      if (obj.type === "Mesh") {
+        obj.material.roughness = 1.0;
+        if (props.index !== 0) {
+          obj.material.color = new Color(0x000000);
+          obj.material.metalness = 0;
+        }
+      }
+    });
   }, [scene]);
   return <primitive object={scene} {...props} />;
 };
