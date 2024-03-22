@@ -116,9 +116,6 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
               transform: translate(-50%, -50%);
               z-index: 100;
             }
-            .frc-landing__product-cta-button-hovered {
-              font-size: 30px !important;
-            }
             .frc-landing__product-cta-button-wrapper:hover .frc-landing__product-cta-button {
                 background-position: 100% 100%;
                 background-size: 100% 1px;
@@ -192,27 +189,27 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                   </div>
                   <button
                     className={`frc-landing__product-cta-button-wrapper ${
-                      index !== 0
-                        ? "frc-landing__product-cta-button-wrapper-disabled"
-                        : ""
+                      index !== 2
+                        ? ""
+                        : "frc-landing__product-cta-button-wrapper-disabled"
                     }`}
                     onClick={() => {
-                      if (index === 0) {
+                      if (index !== 2) {
                         window.open(`/products/${index}`, "_self");
                       }
                     }}
                   >
                     <span
                       className={`frc-landing__product-cta-button ${
-                        index !== 0
-                          ? "frc-landing__product-cta-button-disabled"
-                          : ""
+                        index !== 2
+                          ? ""
+                          : "frc-landing__product-cta-button-disabled"
                       } ${
                         buttonHover[index] &&
                         "frc-landing__product-cta-button-hovered"
                       }`}
                     >
-                      {index === 0 ? `View Product` : `Coming Soon`}
+                      {index !== 2 ? `View Product` : `Coming Soon`}
                     </span>
                   </button>
                 </div>

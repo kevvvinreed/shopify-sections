@@ -18,7 +18,7 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
   >(undefined);
   const [productName, setProductName] = useState<string>("");
   const [productCost, setProductCost] = useState<number>(0);
-  const [productDescription, setProductDescription] = useState<string>("");
+  const [productDescription, setProductDescription] = useState<string[]>([""]);
   const [quantity, setQuantity] = useState<number>(1);
 
   useEffect(() => {
@@ -191,6 +191,10 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
               background-position: 100% 100%;
               background-size: 100% 1px;
           }
+          .frc-product__product-description-break {
+            height: 20px;
+            width: 100%;
+          }
 
           @media only screen and (max-width: 1550px) {
             .frc-product__selected-image {
@@ -333,7 +337,20 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             <QuantityInput quantity={quantity} setQuantity={setQuantity} />
             <div className="frc-product__product-cost">{`$${productCost}`}</div>
             <div className="frc-product__product-description">
-              {productDescription}
+              {productDescription.map((descItem, index) => {
+                if (index > 0) {
+                  return (
+                    <>
+                      <div
+                        key={`${descItem}-${index}`}
+                        className="frc-product__product-description-break"
+                      />
+                      <span>{descItem}</span>
+                    </>
+                  );
+                }
+                return <span>{descItem}</span>;
+              })}
             </div>
             {/* <button
                 ref={buttonRef}

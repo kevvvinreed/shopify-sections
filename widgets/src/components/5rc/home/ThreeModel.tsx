@@ -10,6 +10,8 @@ const AnyCanvas = Canvas as any;
 const AnySuspense = Suspense as any;
 
 export interface ThreeModelProps {
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
   posY: number;
   posX: number;
   scrollIndex: number;
@@ -17,7 +19,6 @@ export interface ThreeModelProps {
   objectUrl: string;
   index: number;
   offset?: number;
-  scale?: number;
   rotation?: number[];
 }
 const Model = React.forwardRef((props: ThreeModelProps, ref): any => {
