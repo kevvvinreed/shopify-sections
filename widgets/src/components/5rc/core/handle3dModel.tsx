@@ -15,7 +15,7 @@ export const handle3dModel = (
     scene.traverse((obj: any) => {
       if (obj.type === "Mesh") {
         obj.material.roughness = 1.0;
-        if (props.index !== 0) {
+        if (props.index === 2) {
           obj.material.color = new Color(0x000000);
           obj.material.metalness = 0;
         }

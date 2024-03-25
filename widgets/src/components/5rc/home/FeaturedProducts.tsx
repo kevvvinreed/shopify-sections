@@ -28,7 +28,7 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
     };
 
     useEffect(() => {
-      if (windowWidth < 1200) {
+      if (windowWidth < 1600) {
         setIsDesktop(false);
       } else {
         setIsDesktop(true);
@@ -79,6 +79,13 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                 min-width: 28vh;
                 min-height: 28vh;
             }
+            .frc-landing__product-display-mobile {
+              position: absolute;
+              height: 28vh;
+              width: 28vh;
+              min-width: 28vh;
+              min-height: 28vh;
+            }
             .frc-landing__product-description {
               font-family: 'Oswald', sans-serif;
               font-weight: 400;
@@ -110,7 +117,6 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
               background-repeat: no-repeat;
               transition: background-size 0.3s, background-position 0s 0.3s;
               
-              position: absolute;
               top: 50%;
               left: 50%;
               transform: translate(-50%, -50%);
@@ -136,6 +142,30 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
             .frc-landing__product-cta-button-wrapper-disabled {
               cursor: not-allowed;
             }
+
+            .frc-landing__product-cta-button-wrapper-mobile {
+              position: absolute;
+              margin-top: 12px;
+              width: 180px;
+              height: 60px;
+              background-color: transparent;
+              border: none;
+              cursor: pointer;
+              text-shadow: 
+              -1px -1px 0 #000,
+              1px -1px 0 #000,  
+              -1px  1px 0 #000,  
+              1px  1px 0 #000;  
+              z-index: 1;
+            }
+            .frc-landing__product-display-mobile:hover .frc-landing__product-cta-button {
+              background-position: 100% 100%;
+              background-size: 100% 1px;
+            }
+            .frc-landing__product-cta-button-wrapper-mobile:hover .frc-landing__product-cta-button {
+              background-position: 100% 100%;
+              background-size: 100% 1px;
+            }
             .frc-landing__product-cta-button-disabled {
               text-shadow: 
               -1px -1px 0 #000,
@@ -143,9 +173,12 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
               -1px  1px 0 #000,  
               1px  1px 0 #000;  
             }
-            @media only screen and (max-width: 1200px) {
+            @media only screen and (max-width: 1600px) {
               .frc-landing__product-button-wrapper {
                 flex-direction: column;
+              }
+              .frc-landing__featured-row {
+                justify-content: center;
               }
             }
         `}
@@ -157,7 +190,7 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
           ref={ref}
         >
           {assets.products.map((product, index) => {
-            return (
+            return isDesktop ? (
               <div
                 className="frc-landing__featured-row"
                 key={`${product.name}-${index}`}
@@ -214,58 +247,58 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                   </button>
                 </div>
               </div>
+            ) : (
+              <div
+                className="frc-landing__featured-row"
+                style={{ alignItems: "center" }}
+                key={`${product.name}-${index}`}
+              >
+                <button
+                  className={`frc-landing__product-cta-button-wrapper-mobile ${
+                    index !== 2
+                      ? ""
+                      : "frc-landing__product-cta-button-wrapper-disabled"
+                  }`}
+                  onClick={() => {
+                    if (index !== 2) {
+                      window.open(`/products/${index}`, "_self");
+                    }
+                  }}
+                >
+                  <span
+                    className={`frc-landing__product-cta-button ${
+                      index !== 2
+                        ? ""
+                        : "frc-landing__product-cta-button-disabled"
+                    } ${
+                      buttonHover[index] &&
+                      "frc-landing__product-cta-button-hovered"
+                    }`}
+                  >
+                    {index !== 2 ? `View Product` : `Coming Soon`}
+                  </span>
+                </button>
+
+                <div
+                  className="frc-landing__product-display-mobile"
+                  style={{ marginTop: "-3vh" }}
+                >
+                  <ThreeModel
+                    onMouseEnter={() => updateButtonHover(index)}
+                    onMouseLeave={() => {
+                      updateButtonHover(index);
+                    }}
+                    scrollIndex={scrollIndex}
+                    posX={posX}
+                    posY={posY}
+                    index={index}
+                    objectUrl={product.glbUrl}
+                    offset={60 * index}
+                    scale={0.004}
+                  />
+                </div>
+              </div>
             );
-            // : (
-            //   <div
-            //     className="frc-landing__featured-row"
-            //     key={`${product.name}-${index}`}
-            //   >
-            //     <div className="frc-landing__product-button-wrapper">
-            //       <div
-            //         className="frc-landing__product-display"
-            //         style={{ marginTop: "-3vh" }}
-            //       >
-            //         <ThreeModel
-            //           onMouseEnter={() => {
-            //             setMobileObjScale(0.005);
-            //           }}
-            //           onMouseLeave={() => {
-            //             setMobileObjScale(0.004);
-            //           }}
-            //           scrollIndex={scrollIndex}
-            //           posX={posX}
-            //           posY={posY}
-            //           index={index}
-            //           objectUrl={product.glbUrl}
-            //           offset={60 * index}
-            //           scale={}
-            //         />
-            //       </div>
-            //       <button
-            //         className={`frc-landing__product-cta-button-wrapper ${
-            //           index !== 0
-            //             ? "frc-landing__product-cta-button-wrapper-disabled"
-            //             : ""
-            //         }`}
-            //         onClick={() => {
-            //           if (index === 0) {
-            //             window.open(`/products/${index}`, "_self");
-            //           }
-            //         }}
-            //       >
-            //         <span
-            //           className={`frc-landing__product-cta-button ${
-            //             index !== 0
-            //               ? "frc-landing__product-cta-button-disabled"
-            //               : ""
-            //           }`}
-            //         >
-            //           {index === 0 ? `View Product` : `Coming Soon`}
-            //         </span>
-            //       </button>
-            //     </div>
-            //   </div>
-            // );
           })}
         </div>
       </>
