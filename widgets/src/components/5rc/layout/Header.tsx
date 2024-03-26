@@ -1,10 +1,15 @@
-import { ISectionProps } from "@/src/index";
+import { IAppStore, ISectionProps } from "@/src/index";
 import assets from "../core/assets";
 import config from "../core/config";
 import getCheckoutUrl from "../core/shopify/getCheckoutUrl";
 import { useEffect, useState } from "react";
 
-const Header: React.FC<ISectionProps> = ({ store, setStore }) => {
+export interface HeaderProps {
+  store: IAppStore;
+  setStore: React.Dispatch<React.SetStateAction<IAppStore>>;
+  top?: boolean;
+}
+const Header: React.FC<HeaderProps> = ({ store, setStore, top }) => {
   const [cartQuantity, setCartQuantity] = useState<number>(0);
   useEffect(() => {
     if (store.cartQuantity !== null && cartQuantity !== store.cartQuantity) {
@@ -68,7 +73,10 @@ const Header: React.FC<ISectionProps> = ({ store, setStore }) => {
             }
         `}
       </style>
-      <div className="frc-landing__header-container">
+      <div
+        className="frc-landing__header-container"
+        style={top ? { position: "absolute" } : {}}
+      >
         <img
           className="frc-landing__header-home-icon"
           src={assets.nav.transparentLogoWhite}

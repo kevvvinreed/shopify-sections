@@ -56,9 +56,9 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             position: relative;
             left: 0px;
             top: 0px;
-            display: flex;
             width: 100%;
             height: 100%;
+            min-height: 100vh;
             background: ${theme.gradientBg};
             background-size: cover;
             background-repeat: no-repeat;
@@ -254,6 +254,10 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
           }
           
           @media only screen and (max-width: 800px) {
+            .frc-product__content-container {
+              padding-left: 1rem;
+              padding-right: 1rem;
+            }
             .frc-product__selected-image {
               width: 400px;
               height: 400px;
@@ -263,6 +267,12 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
               height: 74px;
             }
           
+          }
+          @media only screen and (max-width: 550px) {
+            .frc-product__content-container {
+              padding-left: 0px;
+              padding-right: 0px;
+            }
           }
           @media only screen and (max-width: 500px) {
             .frc-product__product-description {
@@ -287,8 +297,11 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
         `}
       </style>
       <div className={`frc-product__container`}>
-        <Header store={store} setStore={setStore} />
-        <div className="frc-product__content-container">
+        <Header store={store} setStore={setStore} top={true} />
+        <div
+          className="frc-product__content-container"
+          style={windowWidth < 500 ? { maxWidth: windowWidth } : {}}
+        >
           {windowWidth <= 1200 && (
             <div className="frc-product__product-title">{productName}</div>
           )}
