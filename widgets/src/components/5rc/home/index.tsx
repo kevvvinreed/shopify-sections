@@ -6,6 +6,7 @@ import smoothScrollTo from "../util/smoothScrollTo";
 import Hero from "./Hero";
 import theme from "../core/theme";
 import { ISectionProps } from "@/src/index";
+import useWindow from "../util/useWindow";
 
 const FrcLanding: React.FC<ISectionProps> = ({
   posX,
@@ -17,6 +18,9 @@ const FrcLanding: React.FC<ISectionProps> = ({
   const sectionIndexRef = useRef<number>(0);
   const lastIndexSwitchTime = useRef<number>(0);
   const [scrollIndex, setScrollIndex] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  const { windowWidth } = useWindow();
 
   const debouncedSetScrollIndex = (index: number) => {
     const now = Date.now();
@@ -61,37 +65,60 @@ const FrcLanding: React.FC<ISectionProps> = ({
     }
   }, [scrollIndex]);
 
-  /**
-   * Start untested mobile code
-   */
-  const touchStartRef = useRef<number>(0);
+  useEffect(() => {
+    if (windowWidth < 800) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [windowWidth]);
+
+  const touchStartRefX = useRef<number>(0);
+  const touchStartRefY = useRef<number>(0);
 
   const handleTouchStart = (event: TouchEvent) => {
-    touchStartRef.current = event.touches[0].clientY;
+    touchStartRefY.current = event.touches[0].clientY;
+    touchStartRefX.current = event.touches[0].clientX;
   };
 
   const handleTouchEnd = (event: TouchEvent) => {
-    const touchEnd = event.changedTouches[0].clientY;
-    if (touchStartRef.current > touchEnd) {
+    let touchEndX = event.changedTouches[0].clientX;
+    let touchEndY = event.changedTouches[0].clientY;
+
+    const distanceX = touchEndX - touchStartRefX.current;
+    const distanceY = touchEndY - touchStartRefY.current;
+
+    if (Math.abs(distanceY) < 10 && Math.abs(distanceX) < 10) {
+      // It's a tap, do nothing or handle tap specifically.
+      return;
+    }
+
+    // Detect swipe for scroll animation triggering
+    if (touchStartRefY.current > touchEndY) {
       sectionIndexRef.current = shiftSection("increment");
     } else {
       sectionIndexRef.current = shiftSection("decrement");
     }
     debouncedSetScrollIndex(sectionIndexRef.current);
   };
-  /**
-   * End untested mobile code
-   */
+
+  const preventMobileScrolling = (event: TouchEvent) => {
+    event.preventDefault();
+  };
 
   useEffect(() => {
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: false });
     window.addEventListener("touchend", handleTouchEnd, { passive: false });
+    window.addEventListener("touchmove", preventMobileScrolling, {
+      passive: false,
+    });
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
+      window.removeEventListener("touchmove", preventMobileScrolling);
     };
   }, []);
 
@@ -117,16 +144,19 @@ const FrcLanding: React.FC<ISectionProps> = ({
         `}
       </style>
       <div className={`frc-landing__container`}>
-        <Header store={store} setStore={setStore} />
+        <Header store={store} setStore={setStore} scrollIndex={scrollIndex} />
         <Hero
           scrollIndex={scrollIndex}
           setScrollIndex={debouncedSetScrollIndex}
+          isMobile={isMobile}
         />
         <FeaturedProducts
           ref={featuredProductRef}
           scrollIndex={scrollIndex}
           posY={posY}
           posX={posX}
+          windowWidth={windowWidth}
+          isMobile={isMobile}
         />
 
         <div className="footer-placeholder"></div>

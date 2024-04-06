@@ -7,10 +7,22 @@ import { useEffect, useState } from "react";
 export interface HeaderProps {
   store: IAppStore;
   setStore: React.Dispatch<React.SetStateAction<IAppStore>>;
+  scrollIndex: number;
   top?: boolean;
 }
-const Header: React.FC<HeaderProps> = ({ store, setStore, top }) => {
+const Header: React.FC<HeaderProps> = ({
+  store,
+  setStore,
+  top,
+  scrollIndex,
+}) => {
   const [cartQuantity, setCartQuantity] = useState<number>(0);
+
+  const navItemStyle = {
+    filter: scrollIndex > 0 ? "brightness(0%)" : "brightness(100%)",
+    transition: `filter ${config.scrollAnimationTimingMs}ms ease-in`,
+  };
+
   useEffect(() => {
     if (store.cartQuantity !== null && cartQuantity !== store.cartQuantity) {
       setCartQuantity(store.cartQuantity);
@@ -78,7 +90,8 @@ const Header: React.FC<HeaderProps> = ({ store, setStore, top }) => {
         style={top ? { position: "absolute" } : {}}
       >
         <img
-          className="frc-landing__header-home-icon"
+          className={`frc-landing__header-home-icon`}
+          // style={navItemStyle}
           src={assets.nav.transparentLogoWhite}
           onClick={() => {
             window.open("/", "_self");
@@ -97,7 +110,10 @@ const Header: React.FC<HeaderProps> = ({ store, setStore, top }) => {
             window.open(checkoutUrl, "_self");
           }}
         >
-          <div className="frc-header__cart-button">
+          <div
+            className={`frc-header__cart-button`}
+            // style={navItemStyle}
+          >
             <img
               className="frc-landing__header-cart-icon"
               src={assets.nav.cart}

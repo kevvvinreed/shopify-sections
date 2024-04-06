@@ -18,6 +18,7 @@ export interface ThreeModelProps {
   scale: number;
   objectUrl: string;
   index: number;
+  isMobile: boolean;
   offset?: number;
   rotation?: number[];
 }
@@ -33,6 +34,7 @@ const ThreeModel: React.FC<ThreeModelProps> = ({
   offset = 0,
   index,
   scale,
+  isMobile,
 }) => {
   const [rotationAccumulator, setRotationAccumulator] = useState<number>(0.99);
   const [rotation, setRotation] = useState<number>(rotationAccumulator);
@@ -58,6 +60,10 @@ const ThreeModel: React.FC<ThreeModelProps> = ({
 
   useEffect(() => {
     const handleScroll = () => {
+      if (isMobile) {
+        return;
+      }
+      console.log("here");
       const scrollY = window.scrollY;
       setRotation((r) => scrollY * 0.002);
     };
@@ -67,20 +73,18 @@ const ThreeModel: React.FC<ThreeModelProps> = ({
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [isMobile]);
 
   useEffect(() => {
-    if (lock) {
+    if (!isMobile) {
       return;
     }
-    if (posY && posX) {
-      const distance = Math.sqrt(
-        (posX - prevPos[0]) ** 2 + (posY - prevPos[1]) ** 2
-      );
-      setRotationAccumulator((r) => r + distance * 0.0015);
-      setPrevPos([posX, posY]);
-    }
-  }, [posY, posX]);
+    const intervalId = setInterval(() => {
+      setRotation((prevRotation) => prevRotation + 0.01);
+    }, 20);
+
+    return () => clearInterval(intervalId);
+  }, [isMobile]);
 
   useEffect(() => {
     setRotation(rotationAccumulator);
@@ -107,6 +111,7 @@ const ThreeModel: React.FC<ThreeModelProps> = ({
                 index={index}
                 scale={scale}
                 rotation={[0, rotation + offset, 0]}
+                isMobile={isMobile}
               />
             </Stage>
           </PresentationControls>

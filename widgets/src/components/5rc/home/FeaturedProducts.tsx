@@ -2,18 +2,17 @@ import ThreeModel from "./ThreeModel";
 import React, { forwardRef, useEffect, useState } from "react";
 import theme from "../core/theme";
 import assets from "../core/assets";
-import useWindow from "../util/useWindow";
 
 export interface FeaturedProductsProps {
   scrollIndex: number;
   posY: number;
   posX: number;
+  windowWidth: number;
+  isMobile: boolean;
 }
 
 const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
-  ({ scrollIndex, posX, posY }, ref) => {
-    const { windowWidth } = useWindow();
-
+  ({ scrollIndex, posX, posY, windowWidth, isMobile }, ref) => {
     const [isDesktop, setIsDesktop] = useState<boolean>(true);
     const [buttonHover, setButtonHover] = useState<boolean[]>([
       false,
@@ -218,6 +217,7 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                       objectUrl={product.glbUrl}
                       offset={60 * index}
                       scale={0.006}
+                      isMobile={isMobile}
                     />
                   </div>
                   <button
@@ -295,6 +295,7 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                     objectUrl={product.glbUrl}
                     offset={60 * index}
                     scale={0.004}
+                    isMobile={isMobile}
                   />
                 </div>
               </div>

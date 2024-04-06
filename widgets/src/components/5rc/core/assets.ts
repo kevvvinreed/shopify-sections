@@ -8,7 +8,8 @@ const assets = {
   },
   home: {
     heroGif: config.assetBaseUrl + "/5rc/home/example-hero.gif",
-    mobileBg: config.assetBaseUrl + "/5rc/home/mobile.webm",
+    mobileBgWebm: config.assetBaseUrl + "/5rc/home/mobile.webm",
+    mobileBgMp4: config.assetBaseUrl + "/5rc/home/mobile.mp4",
   },
   products: [
     {
