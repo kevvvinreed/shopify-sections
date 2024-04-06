@@ -7,9 +7,8 @@ const assets = {
     cart: config.assetBaseUrl + "/5rc/nav/cart.svg",
   },
   home: {
-    heroImagePattern:
-      config.assetBaseUrl + "/5rc/home/s (%REPLACE_STRING%).JPG",
     heroGif: config.assetBaseUrl + "/5rc/home/example-hero.gif",
+    mobileBg: config.assetBaseUrl + "/5rc/home/mobile.webm",
   },
   products: [
     {

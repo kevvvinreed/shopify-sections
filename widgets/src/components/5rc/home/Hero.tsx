@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import config from "../core/config";
 import theme from "../core/theme";
 import assets from "../core/assets";
+import useWindow from "../util/useWindow";
 interface HeroProps {
   scrollIndex: number;
   setScrollIndex: (index: number) => void;
@@ -10,10 +11,15 @@ const Hero: React.FC<HeroProps> = ({ scrollIndex, setScrollIndex }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const heroTextRef = useRef<HTMLHeadingElement>(null);
   const heroSubTextRef = useRef<HTMLHeadingElement>(null);
+  const heroContainerRef = useRef<HTMLDivElement>(null);
 
   const [animate, setAnimate] = useState<boolean>(false);
   const [firstRender, setFirstRender] = useState<boolean>(true);
   const [zeros, setZeros] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  const { windowWidth } = useWindow();
+
   useEffect(() => {
     setZeros((e) => e + 1);
     if (zeros > 1) {
@@ -25,6 +31,14 @@ const Hero: React.FC<HeroProps> = ({ scrollIndex, setScrollIndex }) => {
       setAnimate(false);
     }
   }, [scrollIndex]);
+
+  useEffect(() => {
+    if (windowWidth < 800) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [windowWidth]);
 
   return (
     <>
@@ -50,10 +64,9 @@ const Hero: React.FC<HeroProps> = ({ scrollIndex, setScrollIndex }) => {
                 display: flex;
                 width: 100%;
                 height: 100%;
-                background: url("${assets.home.heroGif}");
-                background-size: cover;
-                background-repeat: no-repeat;
-                background-position: center;
+                background-size: cover !important;
+                background-repeat: no-repeat !important;
+                background-position: center !important;
             
                 display: flex;
                 flex-direction: column;
@@ -155,18 +168,20 @@ const Hero: React.FC<HeroProps> = ({ scrollIndex, setScrollIndex }) => {
                 position: relative;
                 z-index: 2;
             }
+            @keyframes static {
+              100% {background-position: 50% 0, 60% 50%}
+            }
             .frc-landing__hero-overlay {
               position: absolute;
               top: 0;
               right: 0;
               bottom: 0;
               left: 0;
-              z-index: 1;
+              z-index: 10;
               overflow: hidden;
               transition: opacity ${config.scrollAnimationTimingMs}ms linear;
               background: linear-gradient(225deg, rgba(200, 200, 200, 0) 0%, rgba(80, 80, 80, 0) 80%);
             }
-
             .frc-landing__hero-overlay::before {
               content: '';
               position: absolute;
@@ -174,14 +189,13 @@ const Hero: React.FC<HeroProps> = ({ scrollIndex, setScrollIndex }) => {
               left: 0;
               width: 100%;
               height: 100%;
-              background: linear-gradient(225deg, rgba(200, 200, 200, 0) 0%, rgba(80, 80, 80, 0) 80%);
               transition: opacity ${config.scrollAnimationTimingMs}ms linear;
               opacity: 0;
           }
           
           .darkenOverlay::before {
               opacity: 1;
-              background: linear-gradient(225deg, rgba(200, 200, 200, 0.5) 0%, rgba(80, 80, 80, 0.5) 80%);
+              background: linear-gradient(225deg, rgba(200, 200, 200, 0.6) 0%, rgba(80, 80, 80, 0.6) 80%);
           }
           
           @keyframes lightenOverlayAnimation { 
@@ -193,12 +207,16 @@ const Hero: React.FC<HeroProps> = ({ scrollIndex, setScrollIndex }) => {
             }
           }
           .lightenOverlay::before {
-              background: linear-gradient(225deg, rgba(200, 200, 200, 0.5) 0%, rgba(80, 80, 80, 0.5) 80%);
+              background: linear-gradient(225deg, rgba(200, 200, 200, 0.6) 0%, rgba(80, 80, 80, 0.6) 80%);
               transition: opacity ${config.scrollAnimationTimingMs}ms ease-in forwards;
           }
         `}
       </style>
-      <div className={`frc-landing__hero-container`}>
+
+      <div
+        className={`frc-landing__hero-container`}
+        style={isMobile ? {} : { background: `url("${assets.home.heroGif}")` }}
+      >
         <div
           className={`frc-landing__hero-overlay ${
             scrollIndex > 0
@@ -208,6 +226,23 @@ const Hero: React.FC<HeroProps> = ({ scrollIndex, setScrollIndex }) => {
               : "lightenOverlay"
           }`}
         ></div>
+        {isMobile && (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{
+              position: "fixed",
+              left: "0px",
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          >
+            <source src={assets.home.mobileBg} type="video/webm" />
+          </video>
+        )}
         <h1
           className={`frc-landing__hero-header-text ${
             animate ? "fadeOffScreen" : firstRender ? "" : "fadeInScreen"
