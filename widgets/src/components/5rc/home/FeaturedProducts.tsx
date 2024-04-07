@@ -216,7 +216,6 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                       index={index}
                       objectUrl={product.glbUrl}
                       offset={60 * index}
-                      scale={0.006}
                       isMobile={isMobile}
                     />
                   </div>
@@ -294,7 +293,6 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
                     index={index}
                     objectUrl={product.glbUrl}
                     offset={60 * index}
-                    scale={0.004}
                     isMobile={isMobile}
                   />
                 </div>

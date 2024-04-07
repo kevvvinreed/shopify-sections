@@ -1,10 +1,22 @@
 import { Color } from "three";
 import { useEffect } from "react";
 import { useGLTF } from "@react-three/drei";
-import { ThreeModelProps } from "../home/ThreeModel";
-
+export interface ModelProps {
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  posY: number;
+  posX: number;
+  scrollIndex: number;
+  scale: number;
+  scaleMultiplier: number;
+  objectUrl: string;
+  index: number;
+  isMobile: boolean;
+  offset?: number;
+  rotation?: number[];
+}
 export const handle3dModel = (
-  props: ThreeModelProps,
+  props: ModelProps,
   ref: React.ForwardedRef<unknown>
 ) => {
   const obj = useGLTF(`${props.objectUrl}`);
@@ -22,5 +34,8 @@ export const handle3dModel = (
       }
     });
   }, [scene]);
+  if (props.scaleMultiplier) {
+    scene.scale.setScalar(props.scaleMultiplier);
+  }
   return <primitive object={scene} {...props} />;
 };

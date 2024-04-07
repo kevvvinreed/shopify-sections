@@ -4,7 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { Environment, Stage, PresentationControls } from "@react-three/drei";
 import React from "react";
 import config from "../core/config";
-import { handle3dModel } from "../core/handle3dModel";
+import { ModelProps, handle3dModel } from "../core/handle3dModel";
 
 const AnyCanvas = Canvas as any;
 const AnySuspense = Suspense as any;
@@ -15,14 +15,14 @@ export interface ThreeModelProps {
   posY: number;
   posX: number;
   scrollIndex: number;
-  scale: number;
   objectUrl: string;
   index: number;
   isMobile: boolean;
   offset?: number;
   rotation?: number[];
 }
-const Model = React.forwardRef((props: ThreeModelProps, ref): any => {
+
+const Model = React.forwardRef((props: ModelProps, ref): any => {
   return handle3dModel(props, ref);
 });
 
@@ -33,52 +33,13 @@ const ThreeModel: React.FC<ThreeModelProps> = ({
   objectUrl,
   offset = 0,
   index,
-  scale,
   isMobile,
 }) => {
   const [rotationAccumulator, setRotationAccumulator] = useState<number>(0.99);
   const [rotation, setRotation] = useState<number>(rotationAccumulator);
   const modelRef = useRef<Object3D>(null);
 
-  const [prevPos, setPrevPos] = useState([0, 0]);
-
-  const [lock, setLock] = useState<boolean>(true);
-
   useEffect(() => {
-    if (scrollIndex === 0) {
-      setLock(true);
-      return;
-    }
-    if (scrollIndex === 1) {
-      setTimeout(() => {
-        setLock(false);
-      }, config.scrollAnimationTimingMs);
-
-      return;
-    }
-  }, [scrollIndex]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (isMobile) {
-        return;
-      }
-      console.log("here");
-      const scrollY = window.scrollY;
-      setRotation((r) => scrollY * 0.002);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [isMobile]);
-
-  useEffect(() => {
-    if (!isMobile) {
-      return;
-    }
     const intervalId = setInterval(() => {
       setRotation((prevRotation) => prevRotation + 0.01);
     }, 20);
@@ -109,7 +70,8 @@ const ThreeModel: React.FC<ThreeModelProps> = ({
                 objectUrl={objectUrl}
                 ref={modelRef}
                 index={index}
-                scale={scale}
+                scale={0.06}
+                scaleMultiplier={isMobile ? 0.04 : 0.05}
                 rotation={[0, rotation + offset, 0]}
                 isMobile={isMobile}
               />
