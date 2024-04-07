@@ -297,7 +297,7 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
         `}
       </style>
       <div className={`frc-product__container`}>
-        <Header store={store} setStore={setStore} top={true} />
+        <Header store={store} setStore={setStore} top={true} scrollIndex={0} />
         <div
           className="frc-product__content-container"
           style={windowWidth < 500 ? { maxWidth: windowWidth } : {}}
