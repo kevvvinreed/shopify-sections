@@ -66,6 +66,15 @@ const Hero: React.FC<HeroProps> = ({
                 padding-left: 2rem;
                 justify-content: center;
             }
+            .frc-landing__hero-content-container {
+              display: flex;
+              flex-direction: column;
+              justify-content: center;
+              align-items: flex-start;
+              width: 100%;
+              height: 100%;
+              z-index: 4;
+            }
             .frc-landing__hero-header-text {
                 font-family: 'Oswald', sans-serif;
                 color: ${theme.textColor};
@@ -113,7 +122,7 @@ const Hero: React.FC<HeroProps> = ({
                 border: 3px solid ${hexToRgba(theme.primary, 0.3)};
 
                 user-select: none;
-                z-index: 4;
+                // z-index: 4;
             }
             .frc-landing__hero-cta-button {
                 user-select: none;
@@ -204,9 +213,18 @@ const Hero: React.FC<HeroProps> = ({
               }ms ease-in forwards;
           }
 
-          .frc-landing__hero-container > *:not(.frc-landing__hero-overlay):not(.frc-landing__hero-cta-button-wrapper) {
+          .frc-landing__hero-container > *:not(.frc-landing__hero-overlay):not(.frc-landing__hero-content-container) {
             position: relative;
             z-index: 2;
+          }
+
+          @media only screen and (max-width: 800px) {
+            .frc-landing__hero-header-text {
+              font-size: 5rem;
+            }
+            .frc-landing__hero-subheader-text {
+              font-size: 1.1rem;
+            }
           }
         `}
       </style>
@@ -241,35 +259,32 @@ const Hero: React.FC<HeroProps> = ({
             </video>
           </div>
         )}
-        <h1
-          className={`frc-landing__hero-header-text ${
+        <div
+          className={`frc-landing__hero-content-container  ${
             animate ? "fadeOffScreen" : firstRender ? "" : "fadeInScreen"
           }`}
-          ref={heroTextRef}
         >
-          Race beyond
-          <br />
-          your limits
-        </h1>
-        <h3
-          className={`frc-landing__hero-subheader-text ${
-            animate ? "fadeOffScreen" : firstRender ? "" : "fadeInScreen"
-          }`}
-          ref={heroSubTextRef}
-        >
-          Reach new heights with 5th Round Cardio
-        </h3>
-        <button
-          ref={buttonRef}
-          className={`frc-landing__hero-cta-button-wrapper ${
-            animate ? "fadeOffScreen" : firstRender ? "" : "fadeInScreen"
-          }`}
-          onClick={() => {
-            setScrollIndex(1);
-          }}
-        >
-          <span className="frc-landing__hero-cta-button">Shop Equipment</span>
-        </button>
+          <h1 className={`frc-landing__hero-header-text`} ref={heroTextRef}>
+            Race beyond
+            <br />
+            your limits
+          </h1>
+          <h3
+            className={`frc-landing__hero-subheader-text`}
+            ref={heroSubTextRef}
+          >
+            Reach new heights with 5th Round Cardio
+          </h3>
+          <button
+            ref={buttonRef}
+            className={`frc-landing__hero-cta-button-wrapper`}
+            onClick={() => {
+              setScrollIndex(1);
+            }}
+          >
+            <span className="frc-landing__hero-cta-button">Shop Equipment</span>
+          </button>
+        </div>
         <div
           className={`frc-landing__hero-overlay ${
             scrollIndex > 0

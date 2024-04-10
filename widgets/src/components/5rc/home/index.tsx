@@ -20,6 +20,8 @@ const FrcLanding: React.FC<ISectionProps> = ({
   const [scrollIndex, setScrollIndex] = useState<number>(0);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
+  const [debug, setDebug] = useState<string>("init");
+
   const { windowWidth } = useWindow();
 
   const debouncedSetScrollIndex = (index: number) => {
@@ -29,6 +31,54 @@ const FrcLanding: React.FC<ISectionProps> = ({
       lastIndexSwitchTime.current = now;
     }
   };
+
+  useEffect(() => {
+    // Function to simulate touch move
+    const simulateTouchMove = () => {
+      try {
+        const touchStartEvent = new TouchEvent("touchstart", {
+          touches: [
+            new Touch({
+              identifier: Date.now(),
+              target: document.body,
+              clientX: 0,
+              clientY: 0,
+              radiusX: 2.5,
+              radiusY: 2.5,
+              rotationAngle: 10,
+              force: 0.5,
+            }),
+          ],
+          bubbles: true,
+          cancelable: true,
+        });
+
+        const touchMoveEvent = new TouchEvent("touchmove", {
+          touches: [
+            new Touch({
+              identifier: Date.now(),
+              target: document.body,
+              clientX: 0,
+              clientY: 50, // Moving 50 pixels down
+              radiusX: 2.5,
+              radiusY: 2.5,
+              rotationAngle: 10,
+              force: 0.5,
+            }),
+          ],
+          bubbles: true,
+          cancelable: true,
+        });
+
+        document.body.dispatchEvent(touchStartEvent);
+        document.body.dispatchEvent(touchMoveEvent);
+      } catch (error) {
+        setDebug("fail");
+      }
+    };
+
+    simulateTouchMove();
+  }, []);
 
   const shiftSection = (direction: "increment" | "decrement") => {
     const max = 1;
@@ -103,6 +153,7 @@ const FrcLanding: React.FC<ISectionProps> = ({
   };
 
   const preventMobileScrolling = (event: TouchEvent) => {
+    setDebug("prevent");
     event.preventDefault();
   };
 
@@ -121,6 +172,17 @@ const FrcLanding: React.FC<ISectionProps> = ({
       window.removeEventListener("touchmove", preventMobileScrolling);
     };
   }, []);
+
+  // useEffect(() => {
+  //   if (scrollIndex === 1) {
+  //     window.addEventListener("touchmove", preventMobileScrolling, {
+  //       passive: false,
+  //     });
+  //     return () => {
+  //       window.removeEventListener("touchmove", preventMobileScrolling);
+  //     };
+  //   }
+  // }, [scrollIndex]);
 
   return (
     <>
@@ -144,6 +206,20 @@ const FrcLanding: React.FC<ISectionProps> = ({
         `}
       </style>
       <div className={`frc-landing__container`}>
+        {/* <div
+          style={{
+            position: "fixed",
+            zIndex: 999,
+            color: "#f00",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: 20,
+            backgroundColor: "#000",
+          }}
+        >
+          {debug}
+        </div> */}
         <Header store={store} setStore={setStore} scrollIndex={scrollIndex} />
         <Hero
           scrollIndex={scrollIndex}

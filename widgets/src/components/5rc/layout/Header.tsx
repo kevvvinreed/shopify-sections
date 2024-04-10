@@ -3,6 +3,10 @@ import assets from "../core/assets";
 import config from "../core/config";
 import getCheckoutUrl from "../core/shopify/getCheckoutUrl";
 import { useEffect, useState } from "react";
+import Cart from "../assets/Cart";
+import Logo from "../assets/Logo";
+import brightenHex from "../util/brightenHex";
+import theme from "../core/theme";
 
 export interface HeaderProps {
   store: IAppStore;
@@ -17,17 +21,15 @@ const Header: React.FC<HeaderProps> = ({
   scrollIndex,
 }) => {
   const [cartQuantity, setCartQuantity] = useState<number>(0);
-
-  const navItemStyle = {
-    filter: scrollIndex > 0 ? "brightness(0%)" : "brightness(100%)",
-    transition: `filter ${config.scrollAnimationTimingMs}ms ease-in`,
-  };
+  const [cartFill, setCartFill] = useState<string>("#fff");
+  const [logoFill, setLogoFill] = useState<string>("#fff");
 
   useEffect(() => {
     if (store.cartQuantity !== null && cartQuantity !== store.cartQuantity) {
       setCartQuantity(store.cartQuantity);
     }
   }, [store]);
+
   return (
     <>
       <style>
@@ -52,16 +54,12 @@ const Header: React.FC<HeaderProps> = ({
                 filter: brightness(90%);
             }
             .frc-landing__header-right-tray {
-                padding-right: 40px;
                 display: flex;
             }
             .frc-landing__header-cart-icon {
                 width: 35px;
                 height: 35px;
                 color: #fff;
-            }
-            .frc-header__cart-button:hover .frc-landing__header-cart-icon {
-                filter: brightness(90%);
             }
             .frc-header__cart-quantity {
               color: white;
@@ -79,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({
               font-size: 15px;
               line-height: 23px;
             }
-            .frc-header__cart-button {
+            .frc-header__icon-button {
               user-select: none;
               cursor: pointer;
             }
@@ -89,14 +87,20 @@ const Header: React.FC<HeaderProps> = ({
         className="frc-landing__header-container"
         style={top ? { position: "absolute" } : {}}
       >
-        <img
-          className={`frc-landing__header-home-icon`}
-          // style={navItemStyle}
-          src={assets.nav.transparentLogoWhite}
+        <div
+          className={`frc-header__icon-button`}
+          onMouseEnter={() => {
+            setLogoFill(brightenHex(theme.accent, 0.3));
+          }}
+          onMouseLeave={() => {
+            setLogoFill("#fff");
+          }}
           onClick={() => {
             window.open("/", "_self");
           }}
-        />
+        >
+          <Logo stroke={"#000"} fill={logoFill} />
+        </div>
         <div
           className="frc-landing__header-right-tray"
           onClick={async () => {
@@ -111,13 +115,15 @@ const Header: React.FC<HeaderProps> = ({
           }}
         >
           <div
-            className={`frc-header__cart-button`}
-            // style={navItemStyle}
+            className={`frc-header__icon-button`}
+            onMouseEnter={() => {
+              setCartFill(brightenHex(theme.accent, 0.3));
+            }}
+            onMouseLeave={() => {
+              setCartFill("#fff");
+            }}
           >
-            <img
-              className="frc-landing__header-cart-icon"
-              src={assets.nav.cart}
-            />
+            <Cart stroke={"#000"} fill={cartFill} />
 
             {cartQuantity > 0 && (
               <div className="frc-header__cart-quantity">{cartQuantity}</div>
