@@ -7,6 +7,7 @@ import Cart from "../assets/Cart";
 import Logo from "../assets/Logo";
 import brightenHex from "../util/brightenHex";
 import theme from "../core/theme";
+import { isMobile } from "react-device-detect";
 
 export interface HeaderProps {
   store: IAppStore;
@@ -91,6 +92,11 @@ const Header: React.FC<HeaderProps> = ({
           className={`frc-header__icon-button`}
           onMouseEnter={() => {
             setLogoFill(brightenHex(theme.accent, 0.3));
+            if (isMobile) {
+              setInterval(() => {
+                setLogoFill("#fff");
+              }, 200);
+            }
           }}
           onMouseLeave={() => {
             setLogoFill("#fff");
@@ -118,6 +124,11 @@ const Header: React.FC<HeaderProps> = ({
             className={`frc-header__icon-button`}
             onMouseEnter={() => {
               setCartFill(brightenHex(theme.accent, 0.3));
+              if (isMobile) {
+                setInterval(() => {
+                  setCartFill("#fff");
+                }, 200);
+              }
             }}
             onMouseLeave={() => {
               setCartFill("#fff");

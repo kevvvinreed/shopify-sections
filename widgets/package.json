@@ -4,6 +4,7 @@
     "@react-three/fiber": "^8.15.12",
     "@vitejs/plugin-react": "^4.2.1",
     "react": "^18.2.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "18.0.0",
     "react-router-dom": "^6.21.3",
     "shopify-buy": "^2.21.1",
