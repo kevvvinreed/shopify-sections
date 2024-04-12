@@ -119,10 +119,9 @@ const Hero: React.FC<HeroProps> = ({
                 border: none;
                 cursor: pointer;
                 animation: fadeInLeft 0.5s ease-out forwards;
-                border: 3px solid ${hexToRgba(theme.primary, 0.3)};
+                border: 3px solid ${hexToRgba(theme.secondary, 0.3)};
 
                 user-select: none;
-                // z-index: 4;
             }
             .frc-landing__hero-cta-button {
                 user-select: none;

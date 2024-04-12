@@ -85,6 +85,7 @@ const QuantityInput: React.FC<IQuanityInput> = ({ quantity, setQuantity }) => {
 
             
             .frc-product__amountInput[type="number"] {
+                border-radius: 0;
                 -moz-appearance: textfield;
             }
             .frc-product__amountInput::-webkit-outer-spin-button,

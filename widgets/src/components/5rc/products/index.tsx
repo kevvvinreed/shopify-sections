@@ -7,6 +7,7 @@ import { ISectionProps } from "@/src/index";
 import theme from "../core/theme";
 import QuantityInput from "./quantityInput";
 import useWindow from "../util/useWindow";
+import hexToRgba from "../util/hexToRGBA";
 
 const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
   let location = useLocation();
@@ -50,6 +51,7 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             display: flex;
             flex-direction: column;
             align-items: center;
+            overflow-x: hidden;
           }
           
           .frc-product__content-container {
@@ -59,7 +61,7 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             width: 100%;
             height: 100%;
             min-height: 100vh;
-            background: ${theme.gradientBg};
+            background: ${theme.primary};
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
@@ -78,9 +80,10 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
           }
 
           .frc-product__selected-image {
+            border: 1px solid ${theme.textColor};
             width: 700px;
             height: 700px;
-            border-radius: 25px;
+            border-radius: 0px;
           }
 
           .frc-product__image-preview-col {
@@ -91,17 +94,19 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
           .frc-product__image-preview {
             width: 94px;
             height: 94px;
-            border-radius: 25px;
+            box-sizing: border-box;
+            border: 1px solid ${theme.textColor};
+            border-radius: 0px;
 
             cursor: pointer;
           }
           .frc-product__image-preview-selected {
-            width: 100px;
-            height: 100px;
+            width: 94px;
+            height: 94px;
             box-sizing: border-box;
-            border: 3px solid ${theme.accent};
-            margin-top: -3px;
-            margin-bottom: -3px;
+            border: 2px solid ${theme.accent};
+            margin-top: -1px;
+            margin-bottom: -1px;
           }
           .frc-product__carousel-container {
             display: flex;
@@ -156,7 +161,7 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
           .frc-product__product-description {
             font-family: 'Oswald', sans-serif;
             font-weight: 400;
-            margin-top: 20px;
+            margin-top: 10px;
             color: ${theme.textColor};
             border-top: 1px solid ${theme.textColor};
             border-bottom: 1px solid ${theme.textColor};
@@ -164,12 +169,16 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             padding-bottom: 20px;
           }
           .frc-product__cta-button-wrapper {
-              margin-top: 12px;
-              width: 150px;
-              height: 60px;
-              background-color: ${theme.accent};
-              border: none;
-              cursor: pointer;
+            margin-top: 12px;
+            width: 180px;
+            height: 60px;
+            background-color: ${hexToRgba(theme.accent, 1)};
+            border: none;
+            cursor: pointer;
+            animation: fadeInLeft 0.5s ease-out forwards;
+            border: 3px solid ${hexToRgba(theme.secondary, 0.3)};
+
+            user-select: none;
           }
           .frc-product__cta-button {
               user-select: none;
@@ -186,6 +195,12 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
               background-size: 0% 1px;
               background-repeat: no-repeat;
               transition: background-size 0.3s, background-position 0s 0.3s;
+
+              text-shadow: 
+              -1px -1px 0 #000,
+              1px -1px 0 #000,
+              -1px  1px 0 #000,
+              1px  1px 0 #000;
           }
           .frc-product__cta-button-wrapper:hover .frc-product__cta-button {
               background-position: 100% 100%;
@@ -248,7 +263,7 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
               flex-direction: row;
             }
             .frc-product__content-container {
-              gap: 20px;
+              gap: 10px;
               height: auto;
             }
           }
@@ -269,6 +284,13 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
           
           }
           @media only screen and (max-width: 550px) {
+            .frc-product__selected-image {
+              border-radius: 5px;
+            }
+  
+            .frc-product__image-preview {
+              border-radius: 5px;
+            }
             .frc-product__content-container {
               padding-left: 0px;
               padding-right: 0px;

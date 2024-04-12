@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#000">
     <title>Your App Title</title>
     <!-- Other head elements like stylesheets, etc. -->
 </head>
@@ -26,7 +27,7 @@ body {
         document.getElementById('widget-script').addEventListener('load', function () {
         if (window.initReactComponent) {
             window.initReactComponent({
-                section_id: '5rc-hero',
+                section_id: '5rc-product',
                 shop_id: 'shop_id'
             });
             console.log('initReactComponent called');

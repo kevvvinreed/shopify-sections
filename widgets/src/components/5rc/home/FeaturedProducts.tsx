@@ -2,6 +2,7 @@ import ThreeModel from "./ThreeModel";
 import React, { forwardRef, useEffect, useState } from "react";
 import theme from "../core/theme";
 import assets from "../core/assets";
+import { isMobile as isMobileDevice, isSafari } from "react-device-detect";
 
 export interface FeaturedProductsProps {
   scrollIndex: number;
@@ -186,6 +187,13 @@ const FeaturedProducts = forwardRef<HTMLDivElement, FeaturedProductsProps>(
           className={`frc-landing__featured-product-section ${
             scrollIndex === 1 ? "productsFadeIn" : ""
           }`}
+          style={
+            isMobileDevice && isSafari
+              ? { marginTop: "92.5vh", gap: 25 }
+              : isMobileDevice
+              ? { marginTop: "calc(100vh + 50px)" }
+              : {}
+          }
           ref={ref}
         >
           {assets.products.map((product, index) => {

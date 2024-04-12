@@ -32,54 +32,6 @@ const FrcLanding: React.FC<ISectionProps> = ({
     }
   };
 
-  useEffect(() => {
-    // Function to simulate touch move
-    const simulateTouchMove = () => {
-      try {
-        const touchStartEvent = new TouchEvent("touchstart", {
-          touches: [
-            new Touch({
-              identifier: Date.now(),
-              target: document.body,
-              clientX: 0,
-              clientY: 0,
-              radiusX: 2.5,
-              radiusY: 2.5,
-              rotationAngle: 10,
-              force: 0.5,
-            }),
-          ],
-          bubbles: true,
-          cancelable: true,
-        });
-
-        const touchMoveEvent = new TouchEvent("touchmove", {
-          touches: [
-            new Touch({
-              identifier: Date.now(),
-              target: document.body,
-              clientX: 0,
-              clientY: 50, // Moving 50 pixels down
-              radiusX: 2.5,
-              radiusY: 2.5,
-              rotationAngle: 10,
-              force: 0.5,
-            }),
-          ],
-          bubbles: true,
-          cancelable: true,
-        });
-
-        document.body.dispatchEvent(touchStartEvent);
-        document.body.dispatchEvent(touchMoveEvent);
-      } catch (error) {
-        setDebug("fail");
-      }
-    };
-
-    simulateTouchMove();
-  }, []);
-
   const shiftSection = (direction: "increment" | "decrement") => {
     const max = 1;
     const min = 0;
