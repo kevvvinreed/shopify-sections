@@ -20,7 +20,7 @@ const assets = {
         "What sets the Middleweight Treadmill apart is its innovative resistance dial. With a simple twist, you can dial up the intensity of your run, adding an extra layer of challenge to your workout. Whether you're looking to build endurance or ramp up your calorie burn, this feature allows you to tailor your workout to your fitness goals with ease.",
         "Powered by your own momentum, the Middleweight Treadmill offers a natural and fluid running experience. The curved design promotes a more efficient stride, engaging more muscles and reducing the risk of injury. Say goodbye to the monotony of traditional treadmills and hello to a dynamic workout that keeps you coming back for more.",
       ],
-      cost: 899.99,
+      cost: 849.99,
       glbUrl: config.assetBaseUrl + "/5rc/treadmill-0/3d.glb",
       images: [
         {
