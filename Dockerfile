@@ -18,6 +18,6 @@ COPY . .
 RUN ls -la /app
 
 # Try building with verbose output
-RUN yarn build --verbose
+RUN yarn build
 
 CMD ["yarn", "start"]
