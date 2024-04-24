@@ -8,16 +8,10 @@ COPY package.json package.json
 
 RUN apk add --no-cache git
 
-# Add debugging commands
-RUN ls -la /app
-RUN yarn install
+RUN yarn
 
 COPY . .
 
-# Check for files after copy
-RUN ls -la /app
-
-# Try building with verbose output
 RUN yarn build
 
 CMD ["yarn", "start"]
