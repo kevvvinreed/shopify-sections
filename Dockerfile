@@ -8,7 +8,7 @@ COPY package.json package.json
 
 RUN apk add --no-cache git
 
-RUN yarn install --frozen-lockfile
+RUN yarn
 
 COPY . .
 
