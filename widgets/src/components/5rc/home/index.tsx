@@ -7,6 +7,7 @@ import Hero from "./Hero";
 import theme from "../core/theme";
 import { ISectionProps } from "@/src/index";
 import useWindow from "../util/useWindow";
+import Modal from "../layout/Modal";
 
 const FrcLanding: React.FC<ISectionProps> = ({
   posX,
@@ -124,17 +125,6 @@ const FrcLanding: React.FC<ISectionProps> = ({
       window.removeEventListener("touchmove", preventMobileScrolling);
     };
   }, []);
-
-  // useEffect(() => {
-  //   if (scrollIndex === 1) {
-  //     window.addEventListener("touchmove", preventMobileScrolling, {
-  //       passive: false,
-  //     });
-  //     return () => {
-  //       window.removeEventListener("touchmove", preventMobileScrolling);
-  //     };
-  //   }
-  // }, [scrollIndex]);
 
   return (
     <>

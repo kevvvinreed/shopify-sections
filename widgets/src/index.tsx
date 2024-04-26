@@ -29,6 +29,8 @@ export interface IAppStore {
 }
 
 export interface ISectionProps {
+  modalActive: boolean;
+  setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
   store: IAppStore;
   setStore: React.Dispatch<React.SetStateAction<IAppStore>>;
   posY?: number;
@@ -55,6 +57,7 @@ const App: React.FC<IAppConfig> = ({ section_id }) => {
   };
 
   const [store, setStore] = useState<IAppStore>(defaultState);
+  const [modalActive, setModalActive] = useState<boolean>(false);
 
   const { posX, posY } = useCursor();
 
@@ -76,7 +79,16 @@ const App: React.FC<IAppConfig> = ({ section_id }) => {
       Section = () => <div></div>;
       break;
   }
-  return <Section store={store} setStore={setStore} posY={posY} posX={posX} />;
+  return (
+    <Section
+      store={store}
+      setStore={setStore}
+      posY={posY}
+      posX={posX}
+      modalActive={modalActive}
+      setModalActive={setModalActive}
+    />
+  );
 };
 
 window.initReactComponent = ({ section_id, shop_id }: IInitConfig) => {

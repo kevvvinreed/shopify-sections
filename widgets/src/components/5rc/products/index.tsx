@@ -8,8 +8,15 @@ import theme from "../core/theme";
 import QuantityInput from "./quantityInput";
 import useWindow from "../util/useWindow";
 import hexToRgba from "../util/hexToRGBA";
+import Info from "../assets/Info";
+import Modal from "../layout/Modal";
 
-const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
+const FrcProduct: React.FC<ISectionProps> = ({
+  store,
+  setStore,
+  modalActive,
+  setModalActive,
+}) => {
   let location = useLocation();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [sku, setSku] = useState<string>("");
@@ -21,6 +28,12 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
   const [productCost, setProductCost] = useState<number>(0);
   const [productDescription, setProductDescription] = useState<string[]>([""]);
   const [quantity, setQuantity] = useState<number>(1);
+
+  const [modalContent, setModalContent] = useState<{
+    productName: string;
+    productCost: number;
+    productDescription: string[];
+  } | null>(null);
 
   useEffect(() => {
     if (location && location.pathname.includes("/products/")) {
@@ -34,6 +47,11 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
       setProductName((assets.products as any)[sku].name);
       setProductCost((assets.products as any)[sku].cost);
       setProductDescription((assets.products as any)[sku].description);
+      setModalContent({
+        productDescription: (assets.products as any)[sku].description,
+        productName: (assets.products as any)[sku].name,
+        productCost: (assets.products as any)[sku].cost,
+      });
     }
   }, [sku]);
 
@@ -169,14 +187,13 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             padding-bottom: 20px;
           }
           .frc-product__cta-button-wrapper {
-            margin-top: 12px;
-            width: 180px;
-            height: 60px;
+            width: 150px;
+            height: 50px;
             background-color: ${hexToRgba(theme.accent, 1)};
             border: none;
             cursor: pointer;
             animation: fadeInLeft 0.5s ease-out forwards;
-            border: 3px solid ${hexToRgba(theme.secondary, 0.3)};
+            border: 2px solid ${hexToRgba(theme.secondary, 0.3)};
 
             user-select: none;
           }
@@ -202,6 +219,18 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
               -1px  1px 0 #000,
               1px  1px 0 #000;
           }
+          .frc-product__button-price-row {
+            gap: 20px;
+            display: flex;
+            align-items: center;
+          }
+          .frc-product__button-col {
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
           .frc-product__cta-button-wrapper:hover .frc-product__cta-button {
               background-position: 100% 100%;
               background-size: 100% 1px;
@@ -209,6 +238,12 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
           .frc-product__product-description-break {
             height: 20px;
             width: 100%;
+          }
+          .frc-product__product-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            text-align: center;
           }
 
           @media only screen and (max-width: 1550px) {
@@ -240,6 +275,13 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
           }
 
           @media only screen and (max-width: 1200px) {
+            .frc-product__product-header-row {
+              width: 414px;
+            }
+            .frc-product__button-price-row {
+              width: 414px;
+              justify-content: center;
+            }
             .frc-product__product-title {
               text-align: center;
             }
@@ -247,8 +289,8 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
               align-items: center;
             }
             .frc-product__selected-image {
-              width: 600px;
-              height: 600px;
+              width: 500px;
+              height: 500px;
             }
             .frc-product__image-preview {
               width: 96px;
@@ -269,6 +311,13 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
           }
           
           @media only screen and (max-width: 800px) {
+            .frc-product__product-header-row {
+              width: 326px;
+            }
+            .frc-product__product-title {
+              font-size: 2.2rem;
+              line-height: 2.2rem;
+            }
             .frc-product__content-container {
               padding-left: 1rem;
               padding-right: 1rem;
@@ -297,36 +346,55 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             }
           }
           @media only screen and (max-width: 500px) {
-            .frc-product__product-description {
-              max-width: 300px;
+            // .frc-product__product-description {
+            //   max-width: 300px;
+            // }
+            .frc-product__product-header-row {
+              width: 274px;
             }
             .frc-product__product-title {
-              font-size: 2.5rem;
-              line-height: 2.5rem;
+              font-size: 1.8rem;
+              line-height: 1.8rem;
+            }
+            .frc-product__product-info-btn {
+              color: ${theme.textColor};
+              font-family: 'Oswald', sans-serif;
+              font-size: 1rem;
+              border: 2px solid ${theme.textColor};
+              border-radius: 25px;
+              width: 25px;
+              height: 25px;
             }
             .frc-product__content-container {
               height: 100%;
             }
             .frc-product__selected-image {
-              width: 300px;
-              height: 300px;
+              width: 270px;
+              height: 270px;
             }
             .frc-product__image-preview {
               width: 61px;
               height: 61px;
             }
           }
+          @media only screen and (max-width: 500px) and (max-height: 800px) {
+            .frc-product__content-container {
+              padding-top: 75px;
+            }
+          }
         `}
       </style>
       <div className={`frc-product__container`}>
         <Header store={store} setStore={setStore} top={true} scrollIndex={0} />
+        <Modal
+          active={modalActive}
+          setActive={setModalActive}
+          content={modalContent}
+        />
         <div
           className="frc-product__content-container"
           style={windowWidth < 500 ? { maxWidth: windowWidth } : {}}
         >
-          {windowWidth <= 1200 && (
-            <div className="frc-product__product-title">{productName}</div>
-          )}
           <div className="frc-product__carousel-container">
             <img
               className="frc-product__selected-image"
@@ -357,42 +425,56 @@ const FrcProduct: React.FC<ISectionProps> = ({ store, setStore }) => {
             {windowWidth > 1200 && (
               <div className="frc-product__product-title">{productName}</div>
             )}
-
-            <button
-              ref={buttonRef}
-              className={`frc-product__cta-button-wrapper`}
-              // style={{ backgroundColor: theme.secondary }}
-              onClick={() => {
-                addToCart(store, setStore, sku, quantity);
-              }}
-            >
-              <span className="frc-product__cta-button">Add to Cart</span>
-            </button>
-
-            <QuantityInput quantity={quantity} setQuantity={setQuantity} />
-            <div className="frc-product__product-cost">{`$${productCost}`}</div>
-            <div className="frc-product__product-description">
-              {productDescription.map((descItem, index) => {
-                if (index > 0) {
-                  return (
-                    <>
-                      <div
-                        key={`${descItem}-${index}`}
-                        className="frc-product__product-description-break"
-                      />
-                      <span>{descItem}</span>
-                    </>
-                  );
-                }
-                return <span>{descItem}</span>;
-              })}
+            {windowWidth <= 1200 && (
+              <div className={`frc-product__product-header-row`}>
+                <div className="frc-product__product-title">{productName}</div>
+                {/* <div className="frc-product__product-info-btn">i</div> */}
+                <Info
+                  width={"28px"}
+                  height={"28px"}
+                  onClick={() => {
+                    setModalActive((p) => !p);
+                  }}
+                />
+              </div>
+            )}
+            <div className={`frc-product__button-price-row`}>
+              <div className={`frc-product__button-col`}>
+                <button
+                  ref={buttonRef}
+                  className={`frc-product__cta-button-wrapper`}
+                  // style={{ backgroundColor: theme.secondary }}
+                  onClick={() => {
+                    addToCart(store, setStore, sku, quantity);
+                  }}
+                >
+                  <span className="frc-product__cta-button">Add to Cart</span>
+                </button>
+                <QuantityInput quantity={quantity} setQuantity={setQuantity} />
+              </div>
+              {windowWidth > 1200 && (
+                <div className="frc-product__product-cost">{`$${productCost}`}</div>
+              )}
             </div>
-            {/* <button
-                ref={buttonRef}
-                className={`frc-product__cta-button-wrapper`}
-              >
-                <span className="frc-product__cta-button">Buy Now</span>
-              </button> */}
+
+            {windowWidth > 1200 && (
+              <div className="frc-product__product-description">
+                {productDescription.map((descItem, index) => {
+                  if (index > 0) {
+                    return (
+                      <>
+                        <div
+                          key={`${descItem}-${index}`}
+                          className="frc-product__product-description-break"
+                        />
+                        <span>{descItem}</span>
+                      </>
+                    );
+                  }
+                  return <span>{descItem}</span>;
+                })}
+              </div>
+            )}
           </div>
         </div>
 
