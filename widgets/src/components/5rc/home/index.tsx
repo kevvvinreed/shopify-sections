@@ -25,6 +25,29 @@ const FrcLanding: React.FC<ISectionProps> = ({
 
   const { windowWidth } = useWindow();
 
+  useEffect(() => {
+    if (windowWidth < 800) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [windowWidth]);
+
+  useEffect(() => {
+    if (!window) {
+      return;
+    }
+
+    switch (scrollIndex) {
+      case 0:
+        smoothScrollTo(0, 1250);
+        break;
+      case 1:
+        smoothScrollTo(window.innerHeight + config.headerHeight, 1250);
+        break;
+    }
+  }, [scrollIndex]);
+
   const debouncedSetScrollIndex = (index: number) => {
     const now = Date.now();
     if (now - lastIndexSwitchTime.current > config.scrollAnimationTimingMs) {
@@ -52,29 +75,6 @@ const FrcLanding: React.FC<ISectionProps> = ({
     }
     debouncedSetScrollIndex(sectionIndexRef.current);
   };
-
-  useEffect(() => {
-    if (!window) {
-      return;
-    }
-
-    switch (scrollIndex) {
-      case 0:
-        smoothScrollTo(0, 1250);
-        break;
-      case 1:
-        smoothScrollTo(window.innerHeight + config.headerHeight, 1250);
-        break;
-    }
-  }, [scrollIndex]);
-
-  useEffect(() => {
-    if (windowWidth < 800) {
-      setIsMobile(true);
-    } else {
-      setIsMobile(false);
-    }
-  }, [windowWidth]);
 
   const touchStartRefX = useRef<number>(0);
   const touchStartRefY = useRef<number>(0);

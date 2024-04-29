@@ -111,6 +111,25 @@ const QuantityInput: React.FC<IQuanityInput> = ({ quantity, setQuantity }) => {
                 height: 50px;
                 user-select: none;
             }
+
+            @media only screen and (max-width: 500px) {
+              .frc-product__amountContainer {
+                width: 130px;
+                height: 40px;
+              }
+              .frc-product__button-up {
+                width: 40px;
+                height: 40px;
+              }
+              .frc-product__button-down {
+                width: 40px;
+                height: 40px;
+              }
+              .frc-product__amountInput {
+                width: 40px;
+                height: 40px;
+              }
+            }
         `}
       </style>
       <div className="frc-product__amountContainer">

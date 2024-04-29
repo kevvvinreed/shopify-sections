@@ -10,6 +10,7 @@ import useWindow from "../util/useWindow";
 import hexToRgba from "../util/hexToRGBA";
 import Info from "../assets/Info";
 import Modal from "../layout/Modal";
+import { isSafari } from "react-device-detect";
 
 const FrcProduct: React.FC<ISectionProps> = ({
   store,
@@ -57,6 +58,16 @@ const FrcProduct: React.FC<ISectionProps> = ({
 
   const { windowWidth } = useWindow();
 
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (windowWidth && windowWidth > 1200) {
+      setIsMobile(false);
+    } else {
+      setIsMobile(true);
+    }
+  }, [windowWidth]);
+
   return (
     <>
       <style>
@@ -88,8 +99,8 @@ const FrcProduct: React.FC<ISectionProps> = ({
             flex-direction: row;
             padding-left: 2rem;
             padding-right: 2rem;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
 
             border-top: 1px solid ${theme.secondary};
             border-bottom: 1px solid ${theme.secondary};
@@ -245,6 +256,9 @@ const FrcProduct: React.FC<ISectionProps> = ({
             justify-content: space-around;
             text-align: center;
           }
+          .frc-product__container-mobile {
+            overflow: hidden;
+          }
 
           @media only screen and (max-width: 1550px) {
             .frc-product__selected-image {
@@ -346,9 +360,13 @@ const FrcProduct: React.FC<ISectionProps> = ({
             }
           }
           @media only screen and (max-width: 500px) {
-            // .frc-product__product-description {
-            //   max-width: 300px;
-            // }
+            .frc-product__cta-button-wrapper {
+              width: 130px;
+              height: 40px;
+            }
+            .frc-product__cta-button {
+              font-size: 16px;
+            }
             .frc-product__product-header-row {
               width: 274px;
             }
@@ -379,7 +397,11 @@ const FrcProduct: React.FC<ISectionProps> = ({
           }
           @media only screen and (max-width: 500px) and (max-height: 800px) {
             .frc-product__content-container {
+              justify-content: flex-start;
               padding-top: 75px;
+            }
+            .frc-product__content-container-safari {
+              padding-top: 120px;
             }
           }
         `}
@@ -390,11 +412,17 @@ const FrcProduct: React.FC<ISectionProps> = ({
           active={modalActive}
           setActive={setModalActive}
           content={modalContent}
+          isMobile={isMobile}
         />
         <div
-          className="frc-product__content-container"
+          className={`frc-product__content-container ${
+            isSafari && "frc-product__content-container-safari"
+          }`}
           style={windowWidth < 500 ? { maxWidth: windowWidth } : {}}
         >
+          {windowWidth <= 1200 && (
+            <div className="frc-product__product-title">{productName}</div>
+          )}
           <div className="frc-product__carousel-container">
             <img
               className="frc-product__selected-image"
@@ -427,31 +455,30 @@ const FrcProduct: React.FC<ISectionProps> = ({
             )}
             {windowWidth <= 1200 && (
               <div className={`frc-product__product-header-row`}>
-                <div className="frc-product__product-title">{productName}</div>
                 {/* <div className="frc-product__product-info-btn">i</div> */}
-                <Info
+                {/* <Info
                   width={"28px"}
                   height={"28px"}
                   onClick={() => {
                     setModalActive((p) => !p);
                   }}
-                />
+                /> */}
               </div>
             )}
             <div className={`frc-product__button-price-row`}>
-              <div className={`frc-product__button-col`}>
-                <button
-                  ref={buttonRef}
-                  className={`frc-product__cta-button-wrapper`}
-                  // style={{ backgroundColor: theme.secondary }}
-                  onClick={() => {
-                    addToCart(store, setStore, sku, quantity);
-                  }}
-                >
-                  <span className="frc-product__cta-button">Add to Cart</span>
-                </button>
-                <QuantityInput quantity={quantity} setQuantity={setQuantity} />
-              </div>
+              {/* <div className={`frc-product__button-col`}> */}
+              <QuantityInput quantity={quantity} setQuantity={setQuantity} />
+              <button
+                ref={buttonRef}
+                className={`frc-product__cta-button-wrapper`}
+                // style={{ backgroundColor: theme.secondary }}
+                onClick={() => {
+                  addToCart(store, setStore, sku, quantity);
+                }}
+              >
+                <span className="frc-product__cta-button">Add to Cart</span>
+              </button>
+              {/* </div> */}
               {windowWidth > 1200 && (
                 <div className="frc-product__product-cost">{`$${productCost}`}</div>
               )}
