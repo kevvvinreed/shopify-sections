@@ -38,10 +38,10 @@ const Modal: React.FC<ModalProps> = ({
   };
 
   useEffect(() => {
-    if (scrollIndex !== 0) {
+    if (active) {
       setIsFirstRender(false);
     }
-  }, [scrollIndex]);
+  }, [active]);
 
   const handleWheel = (event: WheelEvent) => {
     event.preventDefault();
@@ -209,7 +209,7 @@ const Modal: React.FC<ModalProps> = ({
               top: 0px;
               left: 0px;
               height: 100vh;
-              padding-top: 40vh;
+              padding-top: 30vh;
               transition: top ${
                 config.scrollAnimationProductTimingMs
               }ms linear, 
@@ -228,6 +228,9 @@ const Modal: React.FC<ModalProps> = ({
               justify-content: center;
               gap: 5px;
               height: 100%;
+              user-select: none;
+              
+              cursor: pointer;
             }
             .frc-layout__modal-caret {
               font-size: 12px;

@@ -15,10 +15,8 @@ const assets = {
     {
       name: "The Middle Weight",
       description: [
-        "Introducing the Middleweight Treadmill - where durability meets performance for an unbeatable workout experience. Built to withstand the toughest of challenges, this treadmill combines rugged design with advanced features to push your fitness journey to new heights.",
-        "Designed with the same sleek aesthetics as our flagship model, The Executive, the Middleweight Treadmill exudes strength and resilience. Its robust construction ensures stability even during the most intense workouts, making it the perfect companion for your fitness regimen.",
-        "What sets the Middleweight Treadmill apart is its innovative resistance dial. With a simple twist, you can dial up the intensity of your run, adding an extra layer of challenge to your workout. Whether you're looking to build endurance or ramp up your calorie burn, this feature allows you to tailor your workout to your fitness goals with ease.",
-        "Powered by your own momentum, the Middleweight Treadmill offers a natural and fluid running experience. The curved design promotes a more efficient stride, engaging more muscles and reducing the risk of injury. Say goodbye to the monotony of traditional treadmills and hello to a dynamic workout that keeps you coming back for more.",
+        "Experience the durability and performance of our Middleweight Treadmill, designed for intense workouts and heavy use. With a rugged design and an added resistance dial, this treadmill offers customizable intensity, making it perfect for universities/colleges, apartment complexes, and fitness centers.",
+        "The Middleweight Treadmill is engineered to withstand rigorous training sessions while providing a challenging workout experience. Its durable construction and versatility make it an ideal choice for facilities seeking reliable and high-performance cardio equipment.",
       ],
       cost: 2250,
       glbUrl: config.assetBaseUrl + "/5rc/treadmill-0/3d.glb",
