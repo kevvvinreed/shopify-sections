@@ -230,7 +230,9 @@ const Hero: React.FC<HeroProps> = ({
 
       <div
         className={`frc-landing__hero-container`}
-        style={isMobile ? {} : { background: `url("${assets.home.heroGif}")` }}
+        style={
+          isMobile ? {} : { background: `url("${assets.home.desktopHeroImg}")` }
+        }
       >
         {isMobile && (
           <div

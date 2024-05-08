@@ -7,6 +7,7 @@ const assets = {
     cart: config.assetBaseUrl + "/5rc/nav/cart.svg",
   },
   home: {
+    desktopHeroImg: config.assetBaseUrl + "/5rc/home/dt.webp",
     heroGif: config.assetBaseUrl + "/5rc/home/example-hero.gif",
     mobileBgWebm: config.assetBaseUrl + "/5rc/home/mobile.webm",
     mobileBgMp4: config.assetBaseUrl + "/5rc/home/mobile.mp4",

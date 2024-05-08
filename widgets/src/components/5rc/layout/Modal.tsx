@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import theme from "../core/theme";
 import config from "../core/config";
 import { isSafari } from "react-device-detect";
+import useWindow from "../util/useWindow";
 
 interface ModalProps {
   active: boolean;
@@ -23,9 +24,19 @@ const Modal: React.FC<ModalProps> = ({
   const sectionIndexRef = useRef<number>(0);
   const lastIndexSwitchTime = useRef<number>(0);
   const [scrollIndex, setScrollIndex] = useState<number>(0);
+  const [descriptionHeight, setDescriptionHeight] = useState<number>(0);
 
   const touchStartRefX = useRef<number>(0);
   const touchStartRefY = useRef<number>(0);
+  const descriptionRef = useRef(null);
+
+  const { windowWidth } = useWindow();
+
+  useEffect(() => {
+    if (descriptionRef && descriptionRef.current) {
+      setDescriptionHeight(descriptionRef.current.offsetHeight + 40);
+    }
+  }, [windowWidth, descriptionRef.current]);
 
   const shiftSection = (direction: "increment" | "decrement") => {
     const max = 1;
@@ -209,7 +220,6 @@ const Modal: React.FC<ModalProps> = ({
               top: 0px;
               left: 0px;
               height: 100vh;
-              padding-top: 30vh;
               transition: top ${
                 config.scrollAnimationProductTimingMs
               }ms linear, 
@@ -243,6 +253,13 @@ const Modal: React.FC<ModalProps> = ({
               font-weight: 400;
               color: ${theme.textColor};
             }
+            .frc-layout__modal-backdrop-close-area {
+              position: absolute;
+              width: 100vw;
+              top: 0px;
+              left: 0px;
+              z-index: 1000000000;
+            }
         `}
         </style>
         <div
@@ -252,12 +269,36 @@ const Modal: React.FC<ModalProps> = ({
               : "frc-layout__modal-root-backdrop-delayed-hide"
           } ${isFirstRender && "frc-layout__modal-root-backdrop-initial-hide"}`}
         />
+        {active && (
+          <div
+            className={`frc-layout__modal-backdrop-close-area`}
+            style={
+              descriptionHeight && active
+                ? { height: `${window.innerHeight - descriptionHeight}px` }
+                : {}
+            }
+            onClick={() => {
+              setActive(false);
+            }}
+          />
+        )}
         <div
+          style={
+            descriptionHeight && active
+              ? { paddingTop: `${window.innerHeight - descriptionHeight}px` }
+              : {}
+          }
           className={`frc-layout__modal-root ${
             active
               ? "frc-layout__modal-root-active"
               : "frc-layout__modal-root-inactive"
           } ${!active && isSafari && "frc-layout__modal-root-inactive-safari"}`}
+          onClick={() => {
+            console.log("test");
+            if (active) {
+              // setActive(false);
+            }
+          }}
         >
           <div className={`frc-layout__modal-container`}>
             <div className={`frc-layout__modal-header`}>
@@ -278,7 +319,10 @@ const Modal: React.FC<ModalProps> = ({
                 </span>
               </div>
             </div>
-            <div className="frc-layout__modal-description-container">
+            <div
+              className="frc-layout__modal-description-container"
+              ref={descriptionRef}
+            >
               {content &&
                 content.productDescription.map((descItem, index) => {
                   if (index > 0) {

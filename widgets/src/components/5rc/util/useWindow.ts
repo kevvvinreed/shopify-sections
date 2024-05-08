@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 const useWindow = () => {
   const [windowCtx, setWindowCtx] = useState({
-    width: 0,
-    height: 0,
-    y: 0,
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
+    height: typeof window !== "undefined" ? window.innerHeight : 0,
+    y: typeof window !== "undefined" ? window.scrollY : 0,
   });
 
   useEffect(() => {
