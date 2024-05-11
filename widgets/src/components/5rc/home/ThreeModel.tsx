@@ -53,7 +53,7 @@ const ThreeModel: React.FC<ThreeModelProps> = ({
 
   return (
     <>
-      <AnyCanvas dpr={[1, 2]} shadows camera={{ fov: 45 }}>
+      <AnyCanvas dpr={[1, 2]} shadows camera={{ fov: 45, near: 0.1, far: 900 }}>
         <AnySuspense fallback={null}>
           <Environment path={`${config.assetBaseUrl}/cube`} />
           <PresentationControls

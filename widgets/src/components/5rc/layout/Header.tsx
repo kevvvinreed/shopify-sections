@@ -111,12 +111,14 @@ const Header: React.FC<HeaderProps> = ({
           className="frc-landing__header-right-tray"
           onClick={async () => {
             let checkoutUrl = await getCheckoutUrl(store);
-            checkoutUrl = window.location.origin.includes("127.0.0.1")
-              ? checkoutUrl
-              : checkoutUrl.replace(
-                  "https://266823-3.myshopify.com",
-                  window.location.origin
-                );
+            checkoutUrl =
+              window.location.origin.includes("127.0.0.1") ||
+              window.location.origin.includes("localhost")
+                ? checkoutUrl
+                : checkoutUrl.replace(
+                    "https://5throundcardio.com",
+                    window.location.origin
+                  );
             window.open(checkoutUrl, "_self");
           }}
         >
