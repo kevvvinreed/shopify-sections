@@ -1,18 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import theme from "../core/theme";
+import { getCookie, setCookie } from "../core/manageCookies";
+import assets from "../core/assets";
 
 interface ModalProps {
   active: boolean;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
   children: React.ReactNode;
+  requireCheckbox?: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({ active, setActive, children }) => {
+const Modal: React.FC<ModalProps> = ({
+  active,
+  setActive,
+  children,
+  requireCheckbox = false,
+}) => {
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(false);
+  const [acceptedTerms, setAcceptedTerms] = useState<boolean>(false);
+  const [shake, setShake] = useState<boolean>(false);
+
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.classList.contains("modal-overlay")) {
-        setActive(false);
+        if (requireCheckbox && !isCheckboxChecked) {
+          setShake(true);
+          setTimeout(() => setShake(false), 500);
+        } else {
+          setActive(false);
+        }
       }
     };
 
@@ -23,19 +40,48 @@ const Modal: React.FC<ModalProps> = ({ active, setActive, children }) => {
     return () => {
       document.removeEventListener("click", handleOutsideClick);
     };
-  }, [active, setActive]);
+  }, [active, setActive, requireCheckbox, isCheckboxChecked]);
+
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsCheckboxChecked(e.target.checked);
+  };
+
+  const handleCloseClick = () => {
+    if (requireCheckbox && !isCheckboxChecked) {
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+    } else {
+      setActive(false);
+      setCookie("accepted_terms", assets.terms.version, 365);
+    }
+  };
+
+  useEffect(() => {
+    const accepted_terms = getCookie("accepted_terms");
+    if (accepted_terms === assets.terms.version) {
+      setAcceptedTerms(true);
+    } else {
+    }
+  }, []);
 
   return (
     <>
       <style>
         {`
+          @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(5px); }
+            75% { transform: translateX(-5px); }
+            100% { transform: translateX(0); }
+          }
           .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -50,10 +96,11 @@ const Modal: React.FC<ModalProps> = ({ active, setActive, children }) => {
             padding: 20px;
             width: 100%;
             height: 100%;
-            max-width: 80vw;
-            max-height: 60vh;
+            max-width: 40vw;
+            max-height: 65vh;
             z-index: 10000000000;
             overflow-y: auto;
+            ${shake ? "animation: shake 0.5s;" : ""}
           }
           .close-button {
             position: absolute;
@@ -65,15 +112,49 @@ const Modal: React.FC<ModalProps> = ({ active, setActive, children }) => {
             color: ${theme.textColor};
             cursor: pointer;
           }
+          .close-button:disabled {
+            cursor: not-allowed;
+            color: ${theme.textColor};
+          }
+          .tos-checkbox label {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            color: ${shake ? `${theme.accent}` : `${theme.textColor}`};
+            cursor: pointer;
+          }
+          .line-padding {
+            width: 100%;
+            height: 10px;
+          }
+          @media only screen and (max-width: 500px) {
+            .modal-content {
+                max-width: 60vw;
+            }
+          }
         `}
       </style>
       {active && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <button className="close-button" onClick={() => setActive(false)}>
+            <button className="close-button" onClick={handleCloseClick}>
               &times;
             </button>
+            <h1 style={{ textAlign: "center" }}>Terms and Conditions</h1>
             {children}
+            <div className="line-padding" />
+            {requireCheckbox && (
+              <div className="tos-checkbox">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={isCheckboxChecked}
+                    onChange={handleCheckboxChange}
+                  />
+                  I agree to the terms and conditions
+                </label>
+              </div>
+            )}
           </div>
         </div>
       )}

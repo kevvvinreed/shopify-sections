@@ -127,20 +127,24 @@ const DrawerProps: React.FC<DrawerProps> = ({
   };
 
   useEffect(() => {
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: false });
-    window.addEventListener("touchend", handleTouchEnd, { passive: false });
-    window.addEventListener("touchmove", preventMobileScrolling, {
-      passive: false,
-    });
+    if (!lockedRef.current) {
+      window.addEventListener("wheel", handleWheel, { passive: false });
+      window.addEventListener("touchstart", handleTouchStart, {
+        passive: false,
+      });
+      window.addEventListener("touchend", handleTouchEnd, { passive: false });
+      window.addEventListener("touchmove", preventMobileScrolling, {
+        passive: false,
+      });
 
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchend", handleTouchEnd);
-      window.removeEventListener("touchmove", preventMobileScrolling);
-    };
-  }, []);
+      return () => {
+        window.removeEventListener("wheel", handleWheel);
+        window.removeEventListener("touchstart", handleTouchStart);
+        window.removeEventListener("touchend", handleTouchEnd);
+        window.removeEventListener("touchmove", preventMobileScrolling);
+      };
+    }
+  }, [locked]);
 
   return (
     isMobile && (

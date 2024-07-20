@@ -8,7 +8,6 @@ import theme from "../core/theme";
 import QuantityInput from "./quantityInput";
 import useWindow from "../util/useWindow";
 import hexToRgba from "../util/hexToRGBA";
-import Info from "../assets/Info";
 import { isSafari } from "react-device-detect";
 import DrawerProps from "../layout/Drawer";
 import Modal from "../layout/Modal";
@@ -411,9 +410,11 @@ const FrcProduct: React.FC<ISectionProps> = ({
       </style>
       <div className={`frc-product__container`}>
         <Header store={store} setStore={setStore} top={true} scrollIndex={0} />
-        <Modal active={modalActive} setActive={setModalActive}>
+        <Modal active={modalActive} setActive={setModalActive} requireCheckbox>
           <>
-            <p>{modalActive.toString()}</p>
+            {assets.terms.text.map((line, index) => {
+              return <p key={`tos-${index}`}>{line}</p>;
+            })}
           </>
         </Modal>
         <DrawerProps
@@ -474,6 +475,15 @@ const FrcProduct: React.FC<ISectionProps> = ({
                 <span className="frc-product__cta-button">Add to Cart</span>
               </button>
 
+              <button
+                ref={buttonRef}
+                className={`frc-product__cta-button-wrapper`}
+                onClick={() => {
+                  setModalActive(true);
+                }}
+              >
+                <span className="frc-product__cta-button">Open Modal</span>
+              </button>
               {windowWidth > 1200 && (
                 <div className="frc-product__product-cost">{`$${productCost}`}</div>
               )}
