@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import theme from "../../core/theme";
+import { isMobile } from "react-device-detect";
 interface IQuanityInput {
   quantity: number;
   setQuantity: React.Dispatch<React.SetStateAction<number>>;
@@ -22,6 +24,18 @@ const QuantityInput: React.FC<IQuanityInput> = ({ quantity, setQuantity }) => {
 
     setQuantity(input);
   };
+
+  useEffect(() => {
+    if (isMobile) {
+      const buttons = document.querySelectorAll(
+        ".frc-product__button-up, .frc-product__button-down"
+      );
+      buttons.forEach((button) => {
+        button.classList.add("frc-product__button-mobile");
+      });
+    }
+  }, []);
+
   return (
     <>
       <style>
@@ -30,7 +44,6 @@ const QuantityInput: React.FC<IQuanityInput> = ({ quantity, setQuantity }) => {
                 display: flex;
                 justify-content: flex-start;
                 align-items: center;
-
             }
             .frc-product__button-down {
                 display: flex;
@@ -70,17 +83,21 @@ const QuantityInput: React.FC<IQuanityInput> = ({ quantity, setQuantity }) => {
 
                 cursor: pointer;
                 user-select: none;
+                pointer-events: auto;
             }
+                
+            .frc-product__button-down:hover,
             .frc-product__button-up:hover {
                 background-color: ${theme.accent};
-                // color: ${theme.accent};
-                // border-color: ${theme.accent};
             }
-            
-            .frc-product__button-down:hover {
+
+            .frc-product__button-mobile:hover {
+              background-color: unset;
+            }
+                
+            .frc-product__button-down:active,
+            .frc-product__button-up:active {
                 background-color: ${theme.accent};
-                // color: ${theme.accent};
-                // border-color: ${theme.accent};
             }
 
             

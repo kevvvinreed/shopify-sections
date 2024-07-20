@@ -43,6 +43,24 @@ const FrcProduct: React.FC<ISectionProps> = ({
   }, [location]);
 
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerHeight < document.documentElement.clientHeight) {
+        document.body.style.height = `${window.innerHeight}px`;
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.height = "";
+        document.body.style.overflow = "";
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
     if (sku && sku !== "") {
       setProductImages((assets.products as any)[sku].images);
       setProductName((assets.products as any)[sku].name);

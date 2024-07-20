@@ -3,6 +3,7 @@ import theme from "../core/theme";
 import config from "../core/config";
 import { isSafari } from "react-device-detect";
 import useWindow from "../util/useWindow";
+import { send } from "vite";
 
 interface ModalProps {
   active: boolean;
@@ -23,7 +24,6 @@ const Modal: React.FC<ModalProps> = ({
   const [isFirstRender, setIsFirstRender] = useState<boolean>(true);
   const sectionIndexRef = useRef<number>(0);
   const lastIndexSwitchTime = useRef<number>(0);
-  const [scrollIndex, setScrollIndex] = useState<number>(0);
   const [descriptionHeight, setDescriptionHeight] = useState<number>(0);
 
   const touchStartRefX = useRef<number>(0);
@@ -33,10 +33,18 @@ const Modal: React.FC<ModalProps> = ({
   const { windowWidth } = useWindow();
 
   useEffect(() => {
-    if (descriptionRef && descriptionRef.current) {
-      setDescriptionHeight(descriptionRef.current.offsetHeight + 40);
-    }
-  }, [windowWidth, descriptionRef.current]);
+    const calculateHeight = () => {
+      if (descriptionRef.current) {
+        setDescriptionHeight(descriptionRef.current.offsetHeight + 40);
+      }
+    };
+
+    // Add a delay to ensure content is fully loaded
+    const timeoutId = setTimeout(calculateHeight, 100);
+
+    // Clean up the timeout on component unmount
+    return () => clearTimeout(timeoutId);
+  }, [windowWidth, windowWidth, active]);
 
   const shiftSection = (direction: "increment" | "decrement") => {
     const max = 1;
@@ -61,16 +69,15 @@ const Modal: React.FC<ModalProps> = ({
     } else if (event.deltaY > 0) {
       sectionIndexRef.current = shiftSection("increment");
     }
-    debouncedSetScrollIndex(sectionIndexRef.current);
+    debouncedSetActive(sectionIndexRef.current);
   };
 
-  const debouncedSetScrollIndex = (index: number) => {
+  const debouncedSetActive = (index: number) => {
     const now = Date.now();
     if (
       now - lastIndexSwitchTime.current >
       config.scrollAnimationProductTimingMs
     ) {
-      setScrollIndex(index);
       if (index > 0) {
         setActive(true);
       } else {
@@ -103,7 +110,7 @@ const Modal: React.FC<ModalProps> = ({
     } else {
       sectionIndexRef.current = shiftSection("decrement");
     }
-    debouncedSetScrollIndex(sectionIndexRef.current);
+    debouncedSetActive(sectionIndexRef.current);
   };
 
   const preventMobileScrolling = (event: TouchEvent) => {
@@ -168,7 +175,7 @@ const Modal: React.FC<ModalProps> = ({
             
             .frc-layout__modal-root-backdrop {
               z-index: 999999998;
-              position: absolute;
+              position: fixed;
               width: 100vw;
               height: 100vh;
               top: 0px;
@@ -200,7 +207,7 @@ const Modal: React.FC<ModalProps> = ({
             }
 
             .frc-layout__modal-root-inactive {
-              position: absolute;
+              position: fixed;
               z-index: 999999999;
               top: calc(100vh - 40px);
               left: 0px;
@@ -215,7 +222,7 @@ const Modal: React.FC<ModalProps> = ({
               top: calc(100vh - 120px);
             }
             .frc-layout__modal-root-active {
-              position: absolute;
+              position: fixed;
               z-index: 999999999;
               top: 0px;
               left: 0px;
@@ -254,7 +261,7 @@ const Modal: React.FC<ModalProps> = ({
               color: ${theme.textColor};
             }
             .frc-layout__modal-backdrop-close-area {
-              position: absolute;
+              position: fixed;
               width: 100vw;
               top: 0px;
               left: 0px;
@@ -293,12 +300,6 @@ const Modal: React.FC<ModalProps> = ({
               ? "frc-layout__modal-root-active"
               : "frc-layout__modal-root-inactive"
           } ${!active && isSafari && "frc-layout__modal-root-inactive-safari"}`}
-          onClick={() => {
-            console.log("test");
-            if (active) {
-              // setActive(false);
-            }
-          }}
         >
           <div className={`frc-layout__modal-container`}>
             <div className={`frc-layout__modal-header`}>
@@ -327,16 +328,13 @@ const Modal: React.FC<ModalProps> = ({
                 content.productDescription.map((descItem, index) => {
                   if (index > 0) {
                     return (
-                      <>
-                        <div
-                          key={`${descItem}-${index}`}
-                          className="frc-product__product-description-break"
-                        />
+                      <span key={`${descItem}-${index}`}>
+                        <div className="frc-product__product-description-break" />
                         <span>{descItem}</span>
-                      </>
+                      </span>
                     );
                   }
-                  return <span>{descItem}</span>;
+                  return <span key={`${descItem}-${index}`}>{descItem}</span>;
                 })}
             </div>
           </div>
