@@ -67,7 +67,7 @@ const Modal: React.FC<ModalProps> = ({
           setHighlight(true);
           setTimeout(() => setHighlight(false), 500);
         } else {
-          setActive(false);
+          closeAndAccept();
         }
       }
     };
@@ -94,14 +94,20 @@ const Modal: React.FC<ModalProps> = ({
       setHighlight(true);
       setTimeout(() => setHighlight(false), 500);
     } else {
-      setActive(false);
-      setCookie("accepted_terms", assets.terms.version, 365);
+      closeAndAccept();
     }
+  };
+
+  const closeAndAccept = () => {
+    setAcceptedTerms(true);
+    setActive(false);
+    setCookie("accepted_terms", assets.terms.version, 365);
   };
 
   useEffect(() => {
     const accepted_terms = getCookie("accepted_terms");
     if (accepted_terms === assets.terms.version) {
+      console.log("terms already accepted");
       setAcceptedTerms(true);
     }
   }, []);
@@ -135,22 +141,29 @@ const Modal: React.FC<ModalProps> = ({
             color: ${theme.textColor};
             font-family: 'Oswald', sans-serif;
             border: 1px solid ${theme.textColor};
-            padding: 20px;
             width: 100%;
             height: 100%;
-            max-width: 40vw;
+            max-width: 50vw;
             max-height: 65vh;
             z-index: 10000000000;
             overflow-y: auto;
+            padding: 0 20px 20px 20px;
             ${shake ? "animation: shake 0.5s;" : ""}
           }
           .modal-header {
-          
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: ${theme.primary};
+            color: ${theme.textColor};
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            z-index: 1001;
           }
           .close-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
             background: none;
             border: none;
             font-size: 1.5rem;
@@ -166,16 +179,24 @@ const Modal: React.FC<ModalProps> = ({
             display: flex;
             justify-content: center;
             align-items: center;
-            color:  ${highlight ? `${theme.accent}` : `${theme.textColor}`};
+            color: ${highlight ? `${theme.accent}` : `${theme.textColor}`};
+            cursor: pointer;
+          }
+          .tos-checkbox input[type="checkbox"] {
             cursor: pointer;
           }
           .line-padding {
             width: 100%;
             height: 10px;
           }
-          @media only screen and (max-width: 500px) {
+          @media only screen and (max-width: 1200px) {
             .modal-content {
-                max-width: 60vw;
+                max-width: 70vw;
+            }
+          }
+          @media only screen and (max-width: 800px) {
+            .modal-content {
+                max-width: 80vw;
             }
           }
         `}
@@ -183,10 +204,11 @@ const Modal: React.FC<ModalProps> = ({
       {active && (
         <div className="modal-overlay">
           <div className="modal-content" ref={modalContentRef}>
-            <div className="modal-header"></div>
-            <button className="close-button" onClick={handleCloseClick}>
-              &times;
-            </button>
+            <div className="modal-header">
+              <button className="close-button" onClick={handleCloseClick}>
+                &times;
+              </button>
+            </div>
             <h1 style={{ textAlign: "center" }}>Terms and Conditions</h1>
             {children}
             <div className="line-padding" />
