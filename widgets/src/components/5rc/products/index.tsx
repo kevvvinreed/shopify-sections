@@ -411,11 +411,9 @@ const FrcProduct: React.FC<ISectionProps> = ({
       <div className={`frc-product__container`}>
         <Header store={store} setStore={setStore} top={true} scrollIndex={0} />
         <Modal active={modalActive} setActive={setModalActive} requireCheckbox>
-          <>
-            {assets.terms.text.map((line, index) => {
-              return <p key={`tos-${index}`}>{line}</p>;
-            })}
-          </>
+          {assets.terms.text.map((line, index) => {
+            return <p key={`tos-${index}`}>{line}</p>;
+          })}
         </Modal>
         <DrawerProps
           active={drawerActive}

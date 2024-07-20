@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import theme from "../core/theme";
 import { getCookie, setCookie } from "../core/manageCookies";
 import assets from "../core/assets";
@@ -19,14 +19,53 @@ const Modal: React.FC<ModalProps> = ({
   const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(false);
   const [acceptedTerms, setAcceptedTerms] = useState<boolean>(false);
   const [shake, setShake] = useState<boolean>(false);
+  const [highlight, setHighlight] = useState<boolean>(false);
+  const modalContentRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    return new Promise<void>((resolve) => {
+      if (modalContentRef.current) {
+        const element = modalContentRef.current;
+        const checkIfScrolledToBottom = () => {
+          if (
+            element.scrollTop + element.clientHeight >=
+            element.scrollHeight
+          ) {
+            element.removeEventListener("scroll", checkIfScrolledToBottom);
+            resolve();
+          }
+        };
+        element.addEventListener("scroll", checkIfScrolledToBottom);
+        element.scrollTo({
+          top: element.scrollHeight,
+          behavior: "smooth",
+        });
+
+        // Fallback in case the scroll event doesn't fire as expected
+        setTimeout(() => {
+          element.removeEventListener("scroll", checkIfScrolledToBottom);
+          resolve();
+        }, 1000);
+
+        // Initial check
+        checkIfScrolledToBottom();
+      } else {
+        resolve();
+      }
+    });
+  };
 
   useEffect(() => {
-    const handleOutsideClick = (e: MouseEvent) => {
+    const handleOutsideClick = async (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (target.classList.contains("modal-overlay")) {
         if (requireCheckbox && !isCheckboxChecked) {
           setShake(true);
-          setTimeout(() => setShake(false), 500);
+          await new Promise((resolve) => setTimeout(resolve, 500)); // Wait for shake to complete
+          setShake(false);
+          await scrollToBottom();
+          setHighlight(true);
+          setTimeout(() => setHighlight(false), 500);
         } else {
           setActive(false);
         }
@@ -46,10 +85,14 @@ const Modal: React.FC<ModalProps> = ({
     setIsCheckboxChecked(e.target.checked);
   };
 
-  const handleCloseClick = () => {
+  const handleCloseClick = async () => {
     if (requireCheckbox && !isCheckboxChecked) {
       setShake(true);
-      setTimeout(() => setShake(false), 500);
+      await new Promise((resolve) => setTimeout(resolve, 500)); // Wait for shake to complete
+      setShake(false);
+      await scrollToBottom();
+      setHighlight(true);
+      setTimeout(() => setHighlight(false), 500);
     } else {
       setActive(false);
       setCookie("accepted_terms", assets.terms.version, 365);
@@ -60,7 +103,6 @@ const Modal: React.FC<ModalProps> = ({
     const accepted_terms = getCookie("accepted_terms");
     if (accepted_terms === assets.terms.version) {
       setAcceptedTerms(true);
-    } else {
     }
   }, []);
 
@@ -102,6 +144,9 @@ const Modal: React.FC<ModalProps> = ({
             overflow-y: auto;
             ${shake ? "animation: shake 0.5s;" : ""}
           }
+          .modal-header {
+          
+          }
           .close-button {
             position: absolute;
             top: 10px;
@@ -120,7 +165,8 @@ const Modal: React.FC<ModalProps> = ({
             width: 100%;
             display: flex;
             justify-content: center;
-            color: ${shake ? `${theme.accent}` : `${theme.textColor}`};
+            align-items: center;
+            color:  ${highlight ? `${theme.accent}` : `${theme.textColor}`};
             cursor: pointer;
           }
           .line-padding {
@@ -136,7 +182,8 @@ const Modal: React.FC<ModalProps> = ({
       </style>
       {active && (
         <div className="modal-overlay">
-          <div className="modal-content">
+          <div className="modal-content" ref={modalContentRef}>
+            <div className="modal-header"></div>
             <button className="close-button" onClick={handleCloseClick}>
               &times;
             </button>
