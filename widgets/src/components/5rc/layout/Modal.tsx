@@ -218,7 +218,9 @@ const Modal: React.FC<ModalProps> = ({
                 &times;
               </button>
             </div>
-            <h2 style={{ textAlign: "center" }}>Terms and Conditions</h2>
+            <h2 style={{ textAlign: "center", color: `${theme.textColor}` }}>
+              Terms and Conditions
+            </h2>
             {children}
             <div className="line-padding" />
             {requireCheckbox && (
