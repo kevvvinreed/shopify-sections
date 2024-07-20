@@ -17,7 +17,6 @@ const Modal: React.FC<ModalProps> = ({
   requireCheckbox = false,
 }) => {
   const [isCheckboxChecked, setIsCheckboxChecked] = useState<boolean>(false);
-  const [acceptedTerms, setAcceptedTerms] = useState<boolean>(false);
   const [shake, setShake] = useState<boolean>(false);
   const [highlight, setHighlight] = useState<boolean>(false);
   const modalContentRef = useRef<HTMLDivElement>(null);
@@ -99,18 +98,28 @@ const Modal: React.FC<ModalProps> = ({
   };
 
   const closeAndAccept = () => {
-    setAcceptedTerms(true);
     setActive(false);
     setCookie("accepted_terms", assets.terms.version, 365);
   };
 
   useEffect(() => {
     const accepted_terms = getCookie("accepted_terms");
-    if (accepted_terms === assets.terms.version) {
-      console.log("terms already accepted");
-      setAcceptedTerms(true);
+    if (accepted_terms !== assets.terms.version) {
+      const handleUserActivity = () => {
+        setTimeout(() => {
+          setActive(true);
+        }, 15000);
+      };
+
+      window.addEventListener("mousemove", handleUserActivity, { once: true });
+      window.addEventListener("touchstart", handleUserActivity, { once: true });
+
+      return () => {
+        window.removeEventListener("mousemove", handleUserActivity);
+        window.removeEventListener("touchstart", handleUserActivity);
+      };
     }
-  }, []);
+  }, [setActive]);
 
   return (
     <>
@@ -209,7 +218,7 @@ const Modal: React.FC<ModalProps> = ({
                 &times;
               </button>
             </div>
-            <h1 style={{ textAlign: "center" }}>Terms and Conditions</h1>
+            <h2 style={{ textAlign: "center" }}>Terms and Conditions</h2>
             {children}
             <div className="line-padding" />
             {requireCheckbox && (

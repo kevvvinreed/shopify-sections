@@ -472,16 +472,6 @@ const FrcProduct: React.FC<ISectionProps> = ({
               >
                 <span className="frc-product__cta-button">Add to Cart</span>
               </button>
-
-              <button
-                ref={buttonRef}
-                className={`frc-product__cta-button-wrapper`}
-                onClick={() => {
-                  setModalActive(true);
-                }}
-              >
-                <span className="frc-product__cta-button">Open Modal</span>
-              </button>
               {windowWidth > 1200 && (
                 <div className="frc-product__product-cost">{`$${productCost}`}</div>
               )}
@@ -501,7 +491,7 @@ const FrcProduct: React.FC<ISectionProps> = ({
                       </>
                     );
                   }
-                  return <span>{descItem}</span>;
+                  return <span key={`${descItem}-${index}`}>{descItem}</span>;
                 })}
               </div>
             )}
