@@ -6,6 +6,7 @@ declare global {
       shop_id: string;
       section_id: string;
       config: string;
+      ssr?: string;
     }) => void;
   }
 }

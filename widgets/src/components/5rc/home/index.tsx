@@ -7,7 +7,7 @@ import Hero from "./Hero";
 import theme from "../core/theme";
 import { ISectionProps } from "@/src/index";
 import useWindow from "../util/useWindow";
-import Modal from "../layout/Modal";
+import Modal from "../layout/Drawer";
 
 const FrcLanding: React.FC<ISectionProps> = ({
   posX,

@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom";
 import React, { useEffect, useState } from "react";
 import "./styles/index.css";
 import ThreeJS from "./components/ThreeJS";
@@ -10,9 +9,12 @@ import ShopifyBuy from "shopify-buy";
 import updateCheckoutState from "./components/5rc/core/shopify/updateCheckoutState";
 import useCursor from "./components/5rc/core/useCursor";
 
+import { hydrateRoot, createRoot } from "react-dom/client";
+
 interface IInitConfig {
   section_id: string;
   shop_id: string;
+  ssr?: string;
 }
 export interface IAppConfig {
   section_id: string;
@@ -31,6 +33,8 @@ export interface IAppStore {
 export interface ISectionProps {
   modalActive: boolean;
   setModalActive: React.Dispatch<React.SetStateAction<boolean>>;
+  drawerActive: boolean;
+  setDrawerActive: React.Dispatch<React.SetStateAction<boolean>>;
   store: IAppStore;
   setStore: React.Dispatch<React.SetStateAction<IAppStore>>;
   posY?: number;
@@ -57,6 +61,7 @@ const App: React.FC<IAppConfig> = ({ section_id }) => {
   };
 
   const [store, setStore] = useState<IAppStore>(defaultState);
+  const [drawerActive, setDrawerActive] = useState<boolean>(false);
   const [modalActive, setModalActive] = useState<boolean>(false);
 
   const { posX, posY } = useCursor();
@@ -85,17 +90,33 @@ const App: React.FC<IAppConfig> = ({ section_id }) => {
       setStore={setStore}
       posY={posY}
       posX={posX}
+      drawerActive={drawerActive}
+      setDrawerActive={setDrawerActive}
       modalActive={modalActive}
       setModalActive={setModalActive}
     />
   );
 };
 
-window.initReactComponent = ({ section_id, shop_id }: IInitConfig) => {
-  ReactDOM.render(
-    <BrowserRouter>
-      <App section_id={section_id} />
-    </BrowserRouter>,
-    document.getElementById(`${shop_id}`)
-  );
+window.initReactComponent = ({
+  section_id,
+  shop_id,
+  ssr = "true",
+}: IInitConfig) => {
+  const container = document.getElementById(`${shop_id}`);
+  if (ssr === "true") {
+    hydrateRoot(
+      container,
+      <BrowserRouter>
+        <App section_id={section_id} />
+      </BrowserRouter>
+    );
+  } else {
+    const root = createRoot(container);
+    root.render(
+      <BrowserRouter>
+        <App section_id={section_id} />
+      </BrowserRouter>
+    );
+  }
 };

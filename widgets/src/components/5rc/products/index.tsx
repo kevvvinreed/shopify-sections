@@ -9,12 +9,15 @@ import QuantityInput from "./quantityInput";
 import useWindow from "../util/useWindow";
 import hexToRgba from "../util/hexToRGBA";
 import Info from "../assets/Info";
-import Modal from "../layout/Modal";
 import { isSafari } from "react-device-detect";
+import DrawerProps from "../layout/Drawer";
+import Modal from "../layout/Modal";
 
 const FrcProduct: React.FC<ISectionProps> = ({
   store,
   setStore,
+  drawerActive,
+  setDrawerActive,
   modalActive,
   setModalActive,
 }) => {
@@ -408,11 +411,17 @@ const FrcProduct: React.FC<ISectionProps> = ({
       </style>
       <div className={`frc-product__container`}>
         <Header store={store} setStore={setStore} top={true} scrollIndex={0} />
-        <Modal
-          active={modalActive}
-          setActive={setModalActive}
+        <Modal active={modalActive} setActive={setModalActive}>
+          <>
+            <p>{modalActive.toString()}</p>
+          </>
+        </Modal>
+        <DrawerProps
+          active={drawerActive}
+          setActive={setDrawerActive}
           content={modalContent}
           isMobile={isMobile}
+          locked={modalActive}
         />
         <div
           className={`frc-product__content-container ${
@@ -453,32 +462,18 @@ const FrcProduct: React.FC<ISectionProps> = ({
             {windowWidth > 1200 && (
               <div className="frc-product__product-title">{productName}</div>
             )}
-            {windowWidth <= 1200 && (
-              <div className={`frc-product__product-header-row`}>
-                {/* <div className="frc-product__product-info-btn">i</div> */}
-                {/* <Info
-                  width={"28px"}
-                  height={"28px"}
-                  onClick={() => {
-                    setModalActive((p) => !p);
-                  }}
-                /> */}
-              </div>
-            )}
             <div className={`frc-product__button-price-row`}>
-              {/* <div className={`frc-product__button-col`}> */}
               <QuantityInput quantity={quantity} setQuantity={setQuantity} />
               <button
                 ref={buttonRef}
                 className={`frc-product__cta-button-wrapper`}
-                // style={{ backgroundColor: theme.secondary }}
                 onClick={() => {
                   addToCart(store, setStore, sku, quantity);
                 }}
               >
                 <span className="frc-product__cta-button">Add to Cart</span>
               </button>
-              {/* </div> */}
+
               {windowWidth > 1200 && (
                 <div className="frc-product__product-cost">{`$${productCost}`}</div>
               )}
