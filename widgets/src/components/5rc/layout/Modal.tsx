@@ -108,7 +108,7 @@ const Modal: React.FC<ModalProps> = ({
       const handleUserActivity = () => {
         setTimeout(() => {
           setActive(true);
-        }, 15000);
+        }, 7000);
       };
 
       window.addEventListener("mousemove", handleUserActivity, { once: true });
