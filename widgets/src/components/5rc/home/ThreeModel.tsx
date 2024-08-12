@@ -23,7 +23,20 @@ export interface ThreeModelProps {
 }
 
 const Model = React.forwardRef((props: ModelProps, ref): any => {
-  return handle3dModel(props, ref);
+  const [tickValue, setTickValue] = useState<number>(0);
+
+  // Define the tick function
+  const tick = () => {
+    setTickValue((prevTickValue) => prevTickValue + 1);
+  };
+
+  // Use effect to call tick on a regular interval
+  useEffect(() => {
+    const intervalId = setInterval(tick, 20);
+
+    return () => clearInterval(intervalId);
+  }, []);
+  return handle3dModel(props, ref, tickValue);
 });
 
 const ThreeModel: React.FC<ThreeModelProps> = ({
@@ -70,7 +83,6 @@ const ThreeModel: React.FC<ThreeModelProps> = ({
                 objectUrl={objectUrl}
                 ref={modelRef}
                 index={index}
-                scale={0.06}
                 scaleMultiplier={isMobile ? 0.04 : 0.05}
                 rotation={[0, rotation + offset, 0]}
                 isMobile={isMobile}
