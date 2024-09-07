@@ -266,9 +266,9 @@ const Hero: React.FC<HeroProps> = ({
           }`}
         >
           <h1 className={`frc-landing__hero-header-text`} ref={heroTextRef}>
-            Race beyond
+            Elite Cardio
             <br />
-            your limits
+            Equipment
           </h1>
           <h3
             className={`frc-landing__hero-subheader-text`}
